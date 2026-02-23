@@ -1,0 +1,15 @@
+[
+  {
+    "id": "dp1",
+    "courseId": "c1",
+    "authorId": "u1",
+    "authorName": "Rahul Sharma",
+    "title": "Best approach for dynamic programming?",
+    "content": "I'm struggling with identifying overlapping subproblems. Any tips?",
+    "createdAt": "2025-03-12T14:00:00",
+    "replies": [
+      { "id": "dr1", "authorId": "u6", "authorName": "Dr. Meera Krishnan", "content": "Start by drawing the recursion tree. Overlapping subproblems will appear as repeated nodes.", "createdAt": "2025-03-12T15:30:00" },
+      { "id": "dr2", "authorId": "u2", "authorName": "Priya Patel", "content": "I found that memoization with a hash map works well for top-down approach.", "createdAt": "2025-03-12T16:00:00" }
+    ]
+  }
+]

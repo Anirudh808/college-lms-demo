@@ -1,0 +1,3 @@
+[
+  { "id": "qa1", "quizId": "q1", "studentId": "u1", "startedAt": "2025-03-10T09:00:00", "submittedAt": "2025-03-10T09:12:00", "score": 2, "answers": [{ "questionId": "q1-1", "selectedIndex": 0 }, { "questionId": "q1-2", "selectedIndex": 0 }, { "questionId": "q1-3", "selectedIndex": 1 }] }
+]

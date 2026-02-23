@@ -1,0 +1,43 @@
+[
+  {
+    "id": "c1",
+    "title": "Data Structures and Algorithms",
+    "code": "CS201",
+    "departmentId": "d1",
+    "facultyId": "u6",
+    "semester": 3,
+    "syllabus": "Arrays, Linked Lists, Stacks, Queues, Trees, Graphs, Sorting, Searching",
+    "modules": [
+      { "id": "m1", "title": "Foundation", "order": 1, "lessonIds": ["l1", "l2"] },
+      { "id": "m2", "title": "Recursion & Trees", "order": 2, "lessonIds": ["l3"] }
+    ],
+    "enrollmentIds": ["u1", "u2", "u3", "u5"]
+  },
+  {
+    "id": "c2",
+    "title": "Database Management Systems",
+    "code": "CS202",
+    "departmentId": "d1",
+    "facultyId": "u7",
+    "semester": 4,
+    "syllabus": "ER Modeling, SQL, Normalization, Transactions, Indexing",
+    "modules": [
+      { "id": "m3", "title": "ER and Relational Model", "order": 1, "lessonIds": ["l4", "l5"] },
+      { "id": "m4", "title": "SQL and Queries", "order": 2, "lessonIds": ["l6"] }
+    ],
+    "enrollmentIds": ["u1", "u2", "u3", "u5"]
+  },
+  {
+    "id": "c3",
+    "title": "Digital Logic Design",
+    "code": "EC201",
+    "departmentId": "d2",
+    "facultyId": "u8",
+    "semester": 2,
+    "syllabus": "Logic Gates, Combinational Circuits, Sequential Circuits",
+    "modules": [
+      { "id": "m5", "title": "Boolean Algebra", "order": 1, "lessonIds": ["l7", "l8"] }
+    ],
+    "enrollmentIds": ["u4"]
+  }
+]

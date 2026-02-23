@@ -1,0 +1,83 @@
+[
+  {
+    "id": "l1",
+    "title": "Introduction to Data Structures",
+    "content": "Data structures are ways to organize and store data for efficient access and modification. The most common data structures include arrays, linked lists, stacks, queues, trees, and graphs. Arrays store elements in contiguous memory locations, allowing O(1) random access. Linked lists use nodes with pointers to the next element, enabling dynamic sizing. Stacks follow LIFO (Last In First Out) while queues follow FIFO (First In First Out). Trees are hierarchical structures with a root node and child nodes. Graphs consist of vertices and edges representing relationships.",
+    "moduleId": "m1",
+    "order": 1,
+    "references": [
+      { "id": "r1", "title": "Arrays and Pointers", "excerpt": "Arrays provide contiguous memory allocation..." },
+      { "id": "r2", "title": "Linked List Implementation", "excerpt": "Each node contains data and a pointer to the next node..." }
+    ]
+  },
+  {
+    "id": "l2",
+    "title": "Arrays and Complexity Analysis",
+    "content": "Arrays are the simplest data structure. Access time is O(1) for indexed access. Insertion at the end is O(1) amortized, but insertion at the beginning requires shifting elements, making it O(n). Deletion has similar complexity. Big O notation describes the upper bound of complexity. Space complexity considers auxiliary space used by the algorithm. When analyzing algorithms, we consider best, average, and worst cases. The worst case is most commonly used for guarantees.",
+    "moduleId": "m1",
+    "order": 2,
+    "references": [
+      { "id": "r3", "title": "Big O Notation", "excerpt": "O(1) constant, O(n) linear, O(n²) quadratic..." }
+    ]
+  },
+  {
+    "id": "l3",
+    "title": "Recursion Fundamentals",
+    "content": "Recursion is when a function calls itself to solve a problem. Every recursive function needs a base case to prevent infinite recursion. The recursive case breaks the problem into smaller subproblems. Classic examples include factorial, Fibonacci, and tree traversals. Recursion can be converted to iteration using a stack. Tail recursion allows some compilers to optimize into iteration. Watch for stack overflow with deep recursion. Memoization can optimize overlapping subproblems.",
+    "moduleId": "m2",
+    "order": 1,
+    "references": [
+      { "id": "r4", "title": "Base Case Design", "excerpt": "The base case must be reachable and terminate..." }
+    ]
+  },
+  {
+    "id": "l4",
+    "title": "ER Diagrams and Entity Relationships",
+    "content": "Entity-Relationship (ER) diagrams model the structure of a database. Entities represent real-world objects (e.g., Student, Course, Instructor). Attributes describe properties of entities. Relationships show associations between entities with cardinality (one-to-one, one-to-many, many-to-many). Keys uniquely identify entities: primary keys, foreign keys, and composite keys. Weak entities depend on a strong entity. ER diagrams are the first step before converting to relational schema.",
+    "moduleId": "m3",
+    "order": 1,
+    "references": [
+      { "id": "r5", "title": "Relational Model Basics", "excerpt": "Tables, rows, and columns map from ER concepts..." }
+    ]
+  },
+  {
+    "id": "l5",
+    "title": "Relational Model and Normalization",
+    "content": "The relational model organizes data into tables (relations) with rows (tuples) and columns (attributes). Normalization reduces redundancy: 1NF (atomic values), 2NF (no partial dependencies), 3NF (no transitive dependencies). BCNF handles additional cases. Denormalization is sometimes used for performance. Understanding dependencies (functional, multivalued) is key to good schema design.",
+    "moduleId": "m3",
+    "order": 2,
+    "references": [
+      { "id": "r6", "title": "Functional Dependencies", "excerpt": "A determines B when each A value maps to one B..." }
+    ]
+  },
+  {
+    "id": "l6",
+    "title": "SQL SELECT and Basic Queries",
+    "content": "SQL (Structured Query Language) is the standard for relational databases. SELECT retrieves data: SELECT columns FROM table WHERE conditions. Use JOIN to combine tables: INNER, LEFT, RIGHT, FULL. Aggregate functions: COUNT, SUM, AVG, MIN, MAX. GROUP BY and HAVING filter groups. ORDER BY sorts results. Subqueries can appear in FROM, WHERE, or SELECT. Practice writing queries for common reporting needs.",
+    "moduleId": "m4",
+    "order": 1,
+    "references": [
+      { "id": "r7", "title": "SQL Reference", "excerpt": "Complete syntax for SELECT, JOIN, and aggregates..." }
+    ]
+  },
+  {
+    "id": "l7",
+    "title": "Logic Gates and Boolean Algebra",
+    "content": "Logic gates implement Boolean functions. Basic gates: AND, OR, NOT. Derived gates: NAND, NOR, XOR, XNOR. Truth tables define output for all input combinations. Boolean algebra uses laws: commutative, associative, distributive, De Morgan's. Simplification reduces circuit complexity. Logic expressions can be converted to gate-level circuits and vice versa.",
+    "moduleId": "m5",
+    "order": 1,
+    "references": [
+      { "id": "r8", "title": "Boolean Laws", "excerpt": "A + A = A, A · A = A, A + A' = 1, A · A' = 0..." }
+    ]
+  },
+  {
+    "id": "l8",
+    "title": "Combinational Circuits",
+    "content": "Combinational circuits have outputs that depend only on current inputs (no memory). Examples: adders, multiplexers, decoders, encoders. Half-adder and full-adder add binary digits. Multiplexers select one of several inputs. Decoders convert n-bit input to 2^n outputs. Design process: truth table → Boolean expression → simplified expression → circuit.",
+    "moduleId": "m5",
+    "order": 2,
+    "references": [
+      { "id": "r9", "title": "Karnaugh Maps", "excerpt": "K-maps visualize and simplify Boolean expressions..." }
+    ]
+  }
+]

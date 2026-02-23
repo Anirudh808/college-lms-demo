@@ -1,0 +1,5 @@
+[
+  { "id": "lc1", "courseId": "c1", "title": "DSA - Binary Trees Deep Dive", "scheduledAt": "2025-03-18T10:00:00", "duration": 60, "meetingUrl": "https://meet.example.com/dsa-mar18", "status": "scheduled" },
+  { "id": "lc2", "courseId": "c1", "title": "DSA - Graph Algorithms", "scheduledAt": "2025-03-25T10:00:00", "duration": 60, "meetingUrl": "https://meet.example.com/dsa-mar25", "status": "scheduled" },
+  { "id": "lc3", "courseId": "c2", "title": "DBMS - Normalization", "scheduledAt": "2025-03-20T14:00:00", "duration": 45, "meetingUrl": "https://meet.example.com/dbms-mar20", "status": "scheduled" }
+]

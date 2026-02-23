@@ -1,0 +1,12 @@
+[
+  { "id": "u1", "name": "Rahul Sharma", "email": "rahul@axon.edu", "role": "student", "departmentId": "d1", "programId": "p1" },
+  { "id": "u2", "name": "Priya Patel", "email": "priya@axon.edu", "role": "student", "departmentId": "d1", "programId": "p1" },
+  { "id": "u3", "name": "Arjun Nair", "email": "arjun@axon.edu", "role": "student", "departmentId": "d1", "programId": "p1" },
+  { "id": "u4", "name": "Sneha Reddy", "email": "sneha@axon.edu", "role": "student", "departmentId": "d2", "programId": "p2" },
+  { "id": "u5", "name": "Vikram Singh", "email": "vikram@axon.edu", "role": "student", "departmentId": "d1", "programId": "p1" },
+  { "id": "u6", "name": "Dr. Meera Krishnan", "email": "meera@axon.edu", "role": "faculty", "departmentId": "d1" },
+  { "id": "u7", "name": "Prof. Rajesh Kumar", "email": "rajesh@axon.edu", "role": "faculty", "departmentId": "d1" },
+  { "id": "u8", "name": "Dr. Anita Desai", "email": "anita@axon.edu", "role": "faculty", "departmentId": "d2" },
+  { "id": "u9", "name": "Dr. Suresh Nambiar", "email": "suresh@axon.edu", "role": "hod", "departmentId": "d1" },
+  { "id": "u10", "name": "Ms. Kavitha Admin", "email": "kavitha@axon.edu", "role": "admin", "departmentId": "d1" }
+]

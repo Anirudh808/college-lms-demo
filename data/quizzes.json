@@ -1,0 +1,24 @@
+[
+  {
+    "id": "q1",
+    "courseId": "c1",
+    "title": "DSA Quiz 1 - Arrays & Lists",
+    "description": "Basic concepts of arrays and linked lists",
+    "timeLimit": 15,
+    "questions": [
+      { "id": "q1-1", "question": "What is the time complexity of accessing an element in an array by index?", "options": ["O(1)", "O(n)", "O(log n)", "O(n²)"], "correctIndex": 0, "type": "mcq" },
+      { "id": "q1-2", "question": "A linked list allows O(1) insertion at the head.", "options": ["True", "False"], "correctIndex": 0, "type": "truefalse" },
+      { "id": "q1-3", "question": "Which data structure uses LIFO?", "options": ["Queue", "Stack", "Array", "Tree"], "correctIndex": 1, "type": "mcq" }
+    ]
+  },
+  {
+    "id": "q2",
+    "courseId": "c2",
+    "title": "DBMS Quiz - SQL Basics",
+    "description": "Basic SQL queries",
+    "timeLimit": 20,
+    "questions": [
+      { "id": "q2-1", "question": "Which keyword is used to filter rows in SQL?", "options": ["FILTER", "WHERE", "HAVING", "SELECT"], "correctIndex": 1, "type": "mcq" }
+    ]
+  }
+]

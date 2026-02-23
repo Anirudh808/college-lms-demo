@@ -1,0 +1,7 @@
+[
+  { "id": "att1", "courseId": "c1", "date": "2025-03-10", "studentId": "u1", "status": "present" },
+  { "id": "att2", "courseId": "c1", "date": "2025-03-10", "studentId": "u2", "status": "present" },
+  { "id": "att3", "courseId": "c1", "date": "2025-03-10", "studentId": "u3", "status": "absent" },
+  { "id": "att4", "courseId": "c1", "date": "2025-03-11", "studentId": "u1", "status": "present" },
+  { "id": "att5", "courseId": "c1", "date": "2025-03-11", "studentId": "u2", "status": "late" }
+]

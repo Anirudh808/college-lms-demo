@@ -1,0 +1,12 @@
+{
+  "passRates": { "c1": 78, "c2": 82, "c3": 75 },
+  "enrollmentStats": { "c1": 45, "c2": 42, "c3": 38 },
+  "atRiskStudents": ["u3", "u5"],
+  "facultyEngagement": { "u6": 92, "u7": 88, "u8": 85 },
+  "coPoAttainment": { "c1": { "CO1": 72, "CO2": 78, "CO3": 65 }, "c2": { "CO1": 80, "CO2": 75 } },
+  "usageSpikes": [
+    { "date": "2025-03-10", "credits": 450 },
+    { "date": "2025-03-11", "credits": 520 },
+    { "date": "2025-03-12", "credits": 380 }
+  ]
+}

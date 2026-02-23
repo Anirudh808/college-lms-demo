@@ -1,0 +1,5 @@
+[
+  { "id": "a1", "courseId": "c1", "title": "Implement Stack using Array", "description": "Write a program to implement stack operations (push, pop, peek) using arrays.", "dueDate": "2025-03-15T23:59:00", "maxScore": 100, "type": "code" },
+  { "id": "a2", "courseId": "c1", "title": "Binary Tree Traversal", "description": "Implement in-order, pre-order, and post-order traversals for binary trees.", "dueDate": "2025-03-22T23:59:00", "maxScore": 100, "type": "code" },
+  { "id": "a3", "courseId": "c2", "title": "ER Diagram - Library System", "description": "Design an ER diagram for a library management system with books, members, borrowings.", "dueDate": "2025-03-20T23:59:00", "maxScore": 50, "type": "file" }
+]

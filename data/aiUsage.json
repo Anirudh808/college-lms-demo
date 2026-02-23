@@ -1,0 +1,6 @@
+[
+  { "id": "ai1", "userId": "u1", "action": "tutor", "credits": 1, "timestamp": "2025-03-12T09:00:00" },
+  { "id": "ai2", "userId": "u1", "action": "summary", "credits": 1, "timestamp": "2025-03-12T10:30:00" },
+  { "id": "ai3", "userId": "u2", "action": "tutor", "credits": 1, "timestamp": "2025-03-12T11:00:00" },
+  { "id": "ai4", "userId": "u6", "action": "grading_assist", "credits": 3, "timestamp": "2025-03-12T14:00:00" }
+]

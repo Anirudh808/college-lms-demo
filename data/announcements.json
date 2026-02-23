@@ -1,0 +1,4 @@
+[
+  { "id": "ann1", "title": "Mid-term Exam Schedule", "content": "Mid-term exams will be held from March 25-30. Check your course pages for detailed schedules.", "authorId": "u10", "authorName": "Ms. Kavitha Admin", "createdAt": "2025-03-01T09:00:00" },
+  { "id": "ann2", "title": "DSA Lab Session", "content": "Extra lab session for DSA on Saturday 10 AM. Bring your laptops.", "authorId": "u6", "authorName": "Dr. Meera Krishnan", "createdAt": "2025-03-08T11:00:00", "targetDepartmentId": "d1" }
+]

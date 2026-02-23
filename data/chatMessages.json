@@ -1,0 +1,4 @@
+[
+  { "id": "ch1", "liveClassId": "lc1", "userId": "u1", "userName": "Rahul Sharma", "message": "Good morning! When will we cover BFS?", "sentAt": "2025-03-10T10:05:00" },
+  { "id": "ch2", "liveClassId": "lc1", "userId": "u6", "userName": "Dr. Meera Krishnan", "message": "We'll cover BFS in the next 15 minutes.", "sentAt": "2025-03-10T10:06:00" }
+]

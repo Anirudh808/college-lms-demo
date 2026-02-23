@@ -1,0 +1,5 @@
+[
+  { "id": "d1", "name": "Computer Science & Engineering", "code": "CSE", "tenantId": "t1" },
+  { "id": "d2", "name": "Electronics & Communication", "code": "ECE", "tenantId": "t1" },
+  { "id": "d3", "name": "Mechanical Engineering", "code": "ME", "tenantId": "t1" }
+]
