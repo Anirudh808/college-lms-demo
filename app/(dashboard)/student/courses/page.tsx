@@ -4,7 +4,9 @@ import { useSession } from "@/store/session";
 import { getCourses } from "@/lib/data";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import { BookOpen, User, Clock } from "lucide-react";
 
 export default function StudentCoursesPage() {
   const { user } = useSession();
@@ -17,20 +19,54 @@ export default function StudentCoursesPage() {
         <p className="text-muted-foreground">View and access your enrolled courses</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {courses.map((c) => {
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {courses.map((c, idx) => {
           const totalLessons = c.modules.reduce((acc, m) => acc + (m.lessonIds?.length ?? 0), 0);
           const progress = totalLessons > 0 ? Math.min(100, Math.round(Math.random() * 40) + 30) : 0;
+          
+          // Generate a consistent gradient based on index for the thumbnail placeholder
+          const gradients = [
+            "from-blue-500 to-cyan-400",
+            "from-purple-500 to-pink-400",
+            "from-orange-500 to-amber-400",
+            "from-emerald-500 to-teal-400",
+            "from-indigo-500 to-purple-400",
+            "from-rose-500 to-red-400"
+          ];
+          const gradient = gradients[idx % gradients.length];
+          const isSelfPaced = idx % 3 === 0;
+
           return (
             <Link key={c.id} href={`/student/courses/${c.id}`}>
-              <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
-                <CardHeader>
-                  <p className="text-sm text-muted-foreground">{c.code}</p>
-                  <h3 className="font-semibold">{c.title}</h3>
+              <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer h-full border-muted/50 overflow-hidden flex flex-col group">
+                {/* Course Thumbnail Placeholder */}
+                <div className={`h-32 w-full bg-gradient-to-br ${gradient} flex items-center justify-center relative overflow-hidden`}>
+                   <div className="absolute inset-0 bg-black/10 transition-opacity group-hover:bg-transparent"></div>
+                   <BookOpen className="h-10 w-10 text-white/80" />
+                   <div className="absolute top-2 right-2">
+                     <Badge variant="secondary" className="bg-white/90 text-black hover:bg-white text-xs border-none font-semibold shadow-sm">
+                       {isSelfPaced ? (
+                         <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> Self-Paced</span>
+                       ) : (
+                         <span className="flex items-center gap-1"><User className="h-3 w-3" /> Prof. Smith</span>
+                       )}
+                     </Badge>
+                   </div>
+                </div>
+                
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start gap-2">
+                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{c.code}</p>
+                  </div>
+                  <h3 className="font-semibold text-lg line-clamp-1 group-hover:text-primary transition-colors">{c.title}</h3>
                 </CardHeader>
-                <CardContent>
+                
+                <CardContent className="mt-auto pt-4">
+                  <div className="flex justify-between items-center mb-2">
+                     <p className="text-xs font-medium text-muted-foreground">Course Progress</p>
+                     <p className="text-xs font-bold">{progress}%</p>
+                  </div>
                   <Progress value={progress} className="h-2" />
-                  <p className="text-xs text-muted-foreground mt-2">{progress}% complete</p>
                 </CardContent>
               </Card>
             </Link>
@@ -39,9 +75,11 @@ export default function StudentCoursesPage() {
       </div>
 
       {courses.length === 0 && (
-        <Card>
-          <CardContent className="py-12 text-center text-muted-foreground">
-            No courses enrolled. Contact your department to enroll.
+        <Card className="border-dashed border-2">
+          <CardContent className="py-16 flex flex-col items-center justify-center text-muted-foreground">
+            <BookOpen className="h-12 w-12 mb-4 opacity-20" />
+            <p className="text-lg font-medium">No courses enrolled yet</p>
+            <p className="text-sm">Contact your department or check back later.</p>
           </CardContent>
         </Card>
       )}
