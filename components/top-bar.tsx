@@ -31,14 +31,14 @@ import { DemoTour } from "@/components/demo-tour";
 
 export function TopBar() {
   const router = useRouter();
-  const { user, tenant, plan, simulateNextDay, currentDate, logout } = useSession();
+  const { user, tenant, plan, simulateNextDay, currentDate, logout } = useSession() as any;
   const [showSwitchModal, setShowSwitchModal] = useState(false);
   const [showTour, setShowTour] = useState(false);
 
   if (!user) return null;
 
-  const dept = user.departmentId ? getDepartment(user.departmentId) : null;
-  const prog = user.programs?.[0] ? getProgram(user.programs[0]) : null;
+  const dept = getDepartment(user.departmentId as string);
+  const prog = user.programId ? getProgram(user.programId as string) : null;
 
   return (
     <header className="h-14 border-b bg-background flex items-center justify-between px-4 md:px-6 gap-2">

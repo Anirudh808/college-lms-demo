@@ -20,7 +20,7 @@ export default function FacultyDashboardPage() {
   const pendingGrading = submissions.filter((s) => s.score == null && s.submittedAt);
 
   const engagementData = courses.map((c) => ({
-    name: c.title.substring(0, 10) + (c.title.length > 10 ? "..." : ""),
+    name: c.code,
     value: Math.round(70 + Math.random() * 25),
   }));
 
@@ -82,7 +82,7 @@ export default function FacultyDashboardPage() {
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
-            {courses.map((c) => (
+            {courses.map((c: any) => (
               <Link key={c.id} href={`/faculty/courses/${c.id}`}>
                 <div className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50">
                   <div>

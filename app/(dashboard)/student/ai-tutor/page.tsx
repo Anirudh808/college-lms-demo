@@ -26,13 +26,13 @@ export default function AITutorPage() {
   // Fetch courses enrolled by this student
   const allCourses = user ? getCourses(undefined, undefined, user.id) : [];
   const courses = allCourses.filter(
-    (c) =>
+    (c: any) =>
       query.trim() === "" ||
       c.title.toLowerCase().includes(query.toLowerCase()) ||
       c.program?.toLowerCase().includes(query.toLowerCase())
   );
 
-  const selectedCourse = allCourses.find((c) => c.id === selectedCourseId);
+  const selectedCourse = allCourses.find((c) => c.id === selectedCourseId) as any;
 
   // ─── Chat view ───────────────────────────────────────────────────────────
   if (selectedCourseId) {
@@ -110,7 +110,7 @@ export default function AITutorPage() {
         </div>
       ) : (
         <div className="space-y-2">
-          {courses.map((course) => (
+          {courses.map((course: any) => (
             <button
               key={course.id}
               onClick={() => setSelectedCourseId(course.id)}

@@ -51,9 +51,9 @@ export default function FacultyGradingPage() {
             <p className="text-muted-foreground">No pending submissions to grade.</p>
           ) : (
             <div className="space-y-3">
-              {pendingGrading.map((s) => {
-                const assignment = allAssignments.find((a) => a.id === s.assignmentId);
-                const course = courses.find((c) => c.id === assignment?.courseId);
+              {pendingGrading.map((s: any) => {
+                const assignment = allAssignments.find((a: any) => a.id === s.assignmentId);
+                const course = courses.find((c: any) => c.id === assignment?.courseId) as any;
                 return (
                   <div
                     key={s.id}

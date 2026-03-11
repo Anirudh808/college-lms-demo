@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
 
 export default function HodDashboardPage() {
+<<<<<<< HEAD
   const { user } = useSession();
   const dept = user?.departmentId ? getDepartment(user.departmentId) : null;
   const courses = getCourses(undefined, user?.departmentId);
@@ -14,6 +15,15 @@ export default function HodDashboardPage() {
 
   const passRateData = courses.map((c) => ({
     name: c.title.substring(0, 10) + (c.title.length > 10 ? "..." : ""),
+=======
+  const { user } = useSession() as any;
+  const dept = user ? getDepartment(user.departmentId) : null;
+  const courses = getCourses(undefined, user?.departmentId);
+  const passRates = (analyticsData as { passRates?: Record<string, number> }).passRates ?? {};
+
+  const passRateData = courses.map((c: any) => ({
+    name: c.code,
+>>>>>>> 0a185cf91d15406e3c279d4313cdeae2e4af3255
     value: passRates[c.id] ?? Math.round(70 + Math.random() * 20),
   }));
 
@@ -38,7 +48,11 @@ export default function HodDashboardPage() {
             <CardTitle className="text-sm font-medium">Faculty</CardTitle>
           </CardHeader>
           <CardContent>
+<<<<<<< HEAD
             <div className="text-2xl font-bold">{new Set(courses.map((c) => c.faculty)).size}</div>
+=======
+            <div className="text-2xl font-bold">{new Set(courses.map((c: any) => c.facultyId)).size}</div>
+>>>>>>> 0a185cf91d15406e3c279d4313cdeae2e4af3255
           </CardContent>
         </Card>
         <Card>

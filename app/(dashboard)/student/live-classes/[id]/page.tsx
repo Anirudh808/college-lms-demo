@@ -308,7 +308,7 @@ export default function LiveClassPage() {
   const id = params.id as string;
   const { user } = useSession();
   const liveClass = getLiveClass(id);
-  const course = liveClass ? getCourse(liveClass.courseId) : null;
+  const course = liveClass ? getCourse(liveClass.courseId) : null as any;
   const isTeacher = user?.role === "faculty";
 
   // Sidebar tab
@@ -316,7 +316,11 @@ export default function LiveClassPage() {
   // Current main view: "content" or "board"
   const [mainView, setMainView] = useState<"content" | "board">("content");
   // Lesson selection (from course modules)
+<<<<<<< HEAD
   const allModules = (course as any)?.modules ?? [];
+=======
+  const allModules = course?.modules ?? [];
+>>>>>>> 0a185cf91d15406e3c279d4313cdeae2e4af3255
   const allLessons = allModules.flatMap((m: any) => {
     const ls = getLessons(m.id);
     return ls.map((l: any) => ({ ...l, moduleName: m.title }));
@@ -504,11 +508,19 @@ export default function LiveClassPage() {
             <ScrollArea className="flex-1">
               <div className="p-2 space-y-3">
                 {allModules.map((mod: any) => {
+<<<<<<< HEAD
                   const modLessons = getLessons(mod.id).sort((a, b) => a.order - b.order);
                   return (
                     <div key={mod.id}>
                       <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground px-2 py-1">{mod.title}</p>
                       {modLessons.map((l, li) => {
+=======
+                  const modLessons = getLessons(mod.id).sort((a: any, b: any) => a.order - b.order);
+                  return (
+                    <div key={mod.id}>
+                      <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground px-2 py-1">{mod.title}</p>
+                      {modLessons.map((l: any, li: any) => {
+>>>>>>> 0a185cf91d15406e3c279d4313cdeae2e4af3255
                         const globalIdx = allLessons.findIndex((al: any) => al.id === l.id);
                         const isActive = l.id === currentLesson?.id;
                         const isDone = completedLessons.has(l.id);
@@ -524,8 +536,8 @@ export default function LiveClassPage() {
                             {isDone
                               ? <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-green-500" />
                               : isActive
-                              ? <Circle className="h-3.5 w-3.5 shrink-0 text-primary fill-primary" />
-                              : <Circle className="h-3.5 w-3.5 shrink-0" />
+                                ? <Circle className="h-3.5 w-3.5 shrink-0 text-primary fill-primary" />
+                                : <Circle className="h-3.5 w-3.5 shrink-0" />
                             }
                             <span className="truncate">{l.title}</span>
                           </button>
@@ -887,7 +899,8 @@ export default function LiveClassPage() {
         <CreatePollModal onClose={() => setShowCreatePoll(false)} onCreate={createPoll} />
       )}
 
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes floatUp {
           0% { transform: translateY(0); opacity: 1; }
           100% { transform: translateY(-120px); opacity: 0; }

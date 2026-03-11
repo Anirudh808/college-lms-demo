@@ -13,7 +13,7 @@ export default function CourseQuizzesPage() {
   const params = useParams();
   const courseId = params.id as string;
   const { user } = useSession();
-  const course = getCourse(courseId);
+  const course = getCourse(courseId) as any;
   const quizzes = getQuizzes(courseId);
 
   if (!course) return <p>Course not found</p>;
