@@ -20,7 +20,7 @@ export default function AdminUsersPage() {
       <Card>
         <CardContent className="pt-6">
           <div className="space-y-2">
-            {users.map((u) => {
+            {users.map((u: any) => {
               const dept = getDepartment(u.departmentId);
               const prog = u.programId ? getProgram(u.programId) : null;
               return (

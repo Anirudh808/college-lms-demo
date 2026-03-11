@@ -27,7 +27,7 @@ export default function FacultyLiveClassesPage() {
 
       <div className="space-y-4">
         {liveClasses.map((lc) => {
-          const course = courses.find((c) => c.id === lc.courseId);
+          const course = courses.find((c) => c.id === lc.courseId) as any;
           return (
             <Card key={lc.id}>
               <CardContent className="pt-6">

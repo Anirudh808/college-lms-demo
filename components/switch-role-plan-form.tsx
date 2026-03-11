@@ -74,7 +74,7 @@ export function SwitchRolePlanForm({ onSuccess }: { onSuccess?: () => void }) {
             <SelectValue placeholder="Select user" />
           </SelectTrigger>
           <SelectContent>
-            {users.map((u) => (
+            {users.map((u: any) => (
               <SelectItem key={u.id} value={u.id}>
                 {u.name}{" "}
                 {u.programId ? `(${programs.find((p) => p.id === u.programId)?.code ?? ""})` : ""}

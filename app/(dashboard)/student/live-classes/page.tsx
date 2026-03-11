@@ -23,8 +23,8 @@ export default function StudentLiveClassesPage() {
       </div>
 
       <div className="space-y-4">
-        {liveClasses.map((lc) => {
-          const course = myCourses.find((c) => c.id === lc.courseId);
+        {liveClasses.map((lc: any) => {
+          const course = myCourses.find((c: any) => c.id === lc.courseId) as any;
           return (
             <Card key={lc.id}>
               <CardHeader className="flex flex-row items-center justify-between">
