@@ -29,7 +29,7 @@ export default function AITutorPage() {
     (c) =>
       query.trim() === "" ||
       c.title.toLowerCase().includes(query.toLowerCase()) ||
-      c.code?.toLowerCase().includes(query.toLowerCase())
+      c.program?.toLowerCase().includes(query.toLowerCase())
   );
 
   const selectedCourse = allCourses.find((c) => c.id === selectedCourseId);
@@ -64,7 +64,7 @@ export default function AITutorPage() {
           </div>
           <Badge variant="secondary" className="ml-auto shrink-0 bg-primary/10 text-primary border-transparent text-xs">
             <Sparkles className="h-3 w-3 mr-1" />
-            {selectedCourse?.code ?? "Course"}
+            {selectedCourse?.program ?? "Course"}
           </Badge>
         </div>
 
@@ -131,14 +131,9 @@ export default function AITutorPage() {
                   {course.title}
                 </p>
                 <div className="flex items-center gap-2">
-                  {course.code && (
+                  {course.program && (
                     <span className="text-xs text-muted-foreground font-medium">
-                      {course.code}
-                    </span>
-                  )}
-                  {course.modules?.length > 0 && (
-                    <span className="text-xs text-muted-foreground">
-                      · {course.modules.length} module{course.modules.length !== 1 ? "s" : ""}
+                      {course.program}
                     </span>
                   )}
                 </div>

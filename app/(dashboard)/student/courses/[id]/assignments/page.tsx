@@ -28,7 +28,7 @@ export default function CourseAssignmentsPage() {
       </Link>
 
       <div>
-        <h1 className="text-2xl font-bold">Assignments - {course.code}</h1>
+        <h1 className="text-2xl font-bold">Assignments - {course.program}</h1>
         <p className="text-muted-foreground">{course.title}</p>
       </div>
 

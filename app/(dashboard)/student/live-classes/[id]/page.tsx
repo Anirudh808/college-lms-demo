@@ -316,11 +316,11 @@ export default function LiveClassPage() {
   // Current main view: "content" or "board"
   const [mainView, setMainView] = useState<"content" | "board">("content");
   // Lesson selection (from course modules)
-  const allModules = course?.modules ?? [];
-  const allLessons = allModules.flatMap((m) => {
+  const allModules = (course as any)?.modules ?? [];
+  const allLessons = allModules.flatMap((m: any) => {
     const ls = getLessons(m.id);
-    return ls.map((l) => ({ ...l, moduleName: m.title }));
-  }).sort((a, b) => a.order - b.order);
+    return ls.map((l: any) => ({ ...l, moduleName: m.title }));
+  }).sort((a: any, b: any) => a.order - b.order);
 
   const [lessonIndex, setLessonIndex] = useState(0);
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set());
@@ -503,13 +503,13 @@ export default function LiveClassPage() {
             </div>
             <ScrollArea className="flex-1">
               <div className="p-2 space-y-3">
-                {allModules.map((mod) => {
+                {allModules.map((mod: any) => {
                   const modLessons = getLessons(mod.id).sort((a, b) => a.order - b.order);
                   return (
                     <div key={mod.id}>
                       <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground px-2 py-1">{mod.title}</p>
                       {modLessons.map((l, li) => {
-                        const globalIdx = allLessons.findIndex(al => al.id === l.id);
+                        const globalIdx = allLessons.findIndex((al: any) => al.id === l.id);
                         const isActive = l.id === currentLesson?.id;
                         const isDone = completedLessons.has(l.id);
                         return (

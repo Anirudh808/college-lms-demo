@@ -77,7 +77,7 @@ export function SwitchRolePlanForm({ onSuccess }: { onSuccess?: () => void }) {
             {users.map((u) => (
               <SelectItem key={u.id} value={u.id}>
                 {u.name}{" "}
-                {u.programId ? `(${programs.find((p) => p.id === u.programId)?.code ?? ""})` : ""}
+                {u.programs?.[0] ? `(${programs.find((p) => p.id === u.programs![0])?.code ?? ""})` : ""}
                 {u.departmentId ? ` - ${departments.find((d) => d.id === u.departmentId)?.name ?? ""}` : ""}
               </SelectItem>
             ))}

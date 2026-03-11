@@ -21,8 +21,8 @@ export default function AdminUsersPage() {
         <CardContent className="pt-6">
           <div className="space-y-2">
             {users.map((u) => {
-              const dept = getDepartment(u.departmentId);
-              const prog = u.programId ? getProgram(u.programId) : null;
+              const dept = getDepartment(u.departmentId || "");
+              const prog = u.programs?.length ? getProgram(u.programs[0]) : null;
               return (
                 <div
                   key={u.id}

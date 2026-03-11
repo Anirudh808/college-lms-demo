@@ -20,7 +20,7 @@ export default function FacultyDashboardPage() {
   const pendingGrading = submissions.filter((s) => s.score == null && s.submittedAt);
 
   const engagementData = courses.map((c) => ({
-    name: c.code,
+    name: c.title.substring(0, 10) + (c.title.length > 10 ? "..." : ""),
     value: Math.round(70 + Math.random() * 25),
   }));
 
@@ -87,7 +87,7 @@ export default function FacultyDashboardPage() {
                 <div className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50">
                   <div>
                     <p className="font-medium">{c.title}</p>
-                    <p className="text-sm text-muted-foreground">{c.code}</p>
+                    <p className="text-sm text-muted-foreground">{c.program}</p>
                   </div>
                   <Button variant="ghost" size="sm">Open</Button>
                 </div>

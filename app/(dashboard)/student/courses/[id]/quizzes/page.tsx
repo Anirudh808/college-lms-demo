@@ -27,7 +27,7 @@ export default function CourseQuizzesPage() {
       </Link>
 
       <div>
-        <h1 className="text-2xl font-bold">Quizzes - {course.code}</h1>
+        <h1 className="text-2xl font-bold">Quizzes - {course.program}</h1>
         <p className="text-muted-foreground">{course.title}</p>
       </div>
 

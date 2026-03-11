@@ -25,7 +25,7 @@ export default function CourseDiscussionPage() {
       </Link>
 
       <div>
-        <h1 className="text-2xl font-bold">Discussion - {course.code}</h1>
+        <h1 className="text-2xl font-bold">Discussion - {course.program}</h1>
         <p className="text-muted-foreground">{course.title}</p>
       </div>
 

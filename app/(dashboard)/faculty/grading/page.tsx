@@ -62,7 +62,7 @@ export default function FacultyGradingPage() {
                     <div>
                       <p className="font-medium">{assignment?.title}</p>
                       <p className="text-sm text-muted-foreground">
-                        {course?.code} • Submitted {s.submittedAt && format(new Date(s.submittedAt), "MMM d")}
+                        {course?.program} • Submitted {s.submittedAt && format(new Date(s.submittedAt), "MMM d")}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">

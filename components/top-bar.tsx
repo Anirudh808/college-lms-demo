@@ -37,8 +37,8 @@ export function TopBar() {
 
   if (!user) return null;
 
-  const dept = getDepartment(user.departmentId);
-  const prog = user.programId ? getProgram(user.programId) : null;
+  const dept = user.departmentId ? getDepartment(user.departmentId) : null;
+  const prog = user.programs?.[0] ? getProgram(user.programs[0]) : null;
 
   return (
     <header className="h-14 border-b bg-background flex items-center justify-between px-4 md:px-6 gap-2">

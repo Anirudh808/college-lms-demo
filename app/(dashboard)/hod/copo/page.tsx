@@ -15,7 +15,7 @@ export default function HodCoPoPage() {
     const co = coPoAttainment[c.id];
     if (!co) return [];
     return Object.entries(co).map(([coName, val]) => ({
-      name: `${c.code} ${coName}`,
+      name: `${c.id} ${coName}`,
       value: val,
     }));
   });

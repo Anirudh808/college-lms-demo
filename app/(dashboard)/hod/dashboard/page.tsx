@@ -8,12 +8,12 @@ import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
 
 export default function HodDashboardPage() {
   const { user } = useSession();
-  const dept = user ? getDepartment(user.departmentId) : null;
+  const dept = user?.departmentId ? getDepartment(user.departmentId) : null;
   const courses = getCourses(undefined, user?.departmentId);
   const passRates = (analyticsData as { passRates?: Record<string, number> }).passRates ?? {};
 
   const passRateData = courses.map((c) => ({
-    name: c.code,
+    name: c.title.substring(0, 10) + (c.title.length > 10 ? "..." : ""),
     value: passRates[c.id] ?? Math.round(70 + Math.random() * 20),
   }));
 
@@ -38,7 +38,7 @@ export default function HodDashboardPage() {
             <CardTitle className="text-sm font-medium">Faculty</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{new Set(courses.map((c) => c.facultyId)).size}</div>
+            <div className="text-2xl font-bold">{new Set(courses.map((c) => c.faculty)).size}</div>
           </CardContent>
         </Card>
         <Card>
