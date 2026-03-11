@@ -20,7 +20,7 @@ export default function FacultyDashboardPage() {
   const pendingGrading = submissions.filter((s) => s.score == null && s.submittedAt);
 
   const engagementData = courses.map((c) => ({
-    name: c.code,
+    name: c.title.substring(0, 15),
     value: Math.round(70 + Math.random() * 25),
   }));
 

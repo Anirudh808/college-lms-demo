@@ -13,7 +13,7 @@ export default function HodDashboardPage() {
   const passRates = (analyticsData as { passRates?: Record<string, number> }).passRates ?? {};
 
   const passRateData = courses.map((c: any) => ({
-    name: c.code,
+    name: c.title.substring(0, 15),
     value: passRates[c.id] ?? Math.round(70 + Math.random() * 20),
   }));
 
@@ -38,7 +38,7 @@ export default function HodDashboardPage() {
             <CardTitle className="text-sm font-medium">Faculty</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{new Set(courses.map((c: any) => c.facultyId)).size}</div>
+            <div className="text-2xl font-bold">{new Set(courses.map((c: any) => c.faculty)).size}</div>
           </CardContent>
         </Card>
         <Card>
