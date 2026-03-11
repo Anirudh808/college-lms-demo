@@ -1,0 +1,1185 @@
+{
+  "course": {
+    "id": "EE3404",
+    "title": "Microprocessor and Microcontroller",
+    "program": "BE EEE - 3rd Year",
+    "university": "Anna University",
+    "credits": 3,
+    "description": "A comprehensive industry-relevant course covering 8085 microprocessor architecture, assembly language programming, peripheral interfacing ICs, 8051 microcontroller, and RISC-based PIC architecture with real-world applications in industrial automation, power systems, and embedded IoT systems.",
+    "modules": [
+      {
+        "id": "M1",
+        "title": "Introduction to 8085 Architecture",
+        "description": "Covers the internal architecture, memory interfacing, I/O data transfer, timing diagrams, and interrupt structure of the Intel 8085 microprocessor.",
+        "chapters": [
+          {
+            "id": "M1C1",
+            "title": "Functional Block Diagram of 8085",
+            "description": "An in-depth study of the Intel 8085 microprocessor's internal functional blocks, signal pins, and their roles in a real embedded system.",
+            "lessons": [
+              {
+                "id": "M1C1L1",
+                "title": "Overview of the Intel 8085 Microprocessor",
+                "description": "Introduction to the 8085 as an 8-bit NMOS microprocessor, its historical context, and industrial relevance.",
+                "topics": [
+                  {
+                    "id": "M1C1L1T1",
+                    "title": "What is a Microprocessor?",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L1T1S1",
+                        "title": "Definition and Core Concept",
+                        "content": "A microprocessor is a single-chip VLSI (Very Large Scale Integration) device that integrates the arithmetic, logic, and control functions of a computer's Central Processing Unit (CPU). It fetches instructions stored in external memory, decodes them, executes operations, and stores results — all coordinated by an internal clock signal. Unlike a microcontroller, the microprocessor relies on external peripherals (RAM, ROM, I/O chips) to form a complete system. The Intel 8085 is an 8-bit microprocessor, meaning it processes 8 bits of data in a single operation, has an 8-bit data bus, and a 16-bit address bus capable of addressing 64KB of memory space (2^16 = 65,536 locations).",
+                        "examples": [
+                          "In an industrial PLC (Programmable Logic Controller) used for conveyor belt speed control, the 8085 reads sensor inputs (8-bit digital values), computes control outputs, and drives relay switches — demonstrating real fetch-decode-execute cycles.",
+                          "In a smart energy meter used in Tamil Nadu Electricity Board (TNEB) installations from the 1990s–2000s, 8085-based designs read pulse inputs from current transformers, compute kWh values, and display them on 7-segment displays.",
+                          "In embedded research labs, the 8085 trainer kit (like the ASMKT-8085 used in Anna University labs) is still used to teach microprocessor fundamentals because its architecture is transparent and traceable at the hardware level."
+                        ],
+                        "images": [
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Anschlussbelegung_8085.svg",
+                          "https://static.righto.com/images/8085/alu_details-s700.png"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L1T1S2",
+                        "title": "Historical Evolution: From 8008 to 8085",
+                        "content": "Intel introduced the 8008 (1972) as the first 8-bit microprocessor, followed by the improved 8080 (1974). The Intel 8085 (1977) was an enhanced version of the 8080 with several key improvements: it required only a single +5V power supply (8080 needed +5V, -5V, +12V), it had a multiplexed address/data bus (AD0–AD7) to reduce pin count from 40 to 40 while integrating more functions, and it included two additional interrupt pins (RST 5.5, RST 6.5). The 8085 was widely deployed through the 1980s and 1990s in industrial controllers, medical instruments, and telecommunications equipment. Understanding the 8085 gives engineers a conceptual foundation for understanding modern embedded architectures like ARM Cortex-M used in STM32 and ESP32 microcontrollers.",
+                        "examples": [
+                          "The Intel 8085 was used in the ALTAIR 8800 successor systems and early IBM-compatible computing boards, forming the backbone of 1980s automation controllers in Indian textile mills.",
+                          "BHEL (Bharat Heavy Electricals Limited) used 8085-based controllers in their early numerical relay protection systems for transformer monitoring in power substations.",
+                          "Modern ESP32 SoC (used in IoT energy harvesting nodes) shares architectural concepts with 8085 — fetch-decode-execute pipeline, interrupt-driven I/O, and memory-mapped peripherals."
+                        ],
+                        "images": [
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8080_arch.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_4004.jpg"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "M1C1L1T2",
+                    "title": "Key Features and Specifications of 8085",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L1T2S1",
+                        "title": "Electrical and Operational Specifications",
+                        "content": "The Intel 8085 operates at a clock frequency of up to 3 MHz (8085) or 6 MHz (8085A-2 variant), powered by a single +5V DC supply, and is implemented in NMOS technology on a 40-pin DIP (Dual Inline Package). It dissipates approximately 1.5W of power. Key specifications include: 8-bit bidirectional data bus (AD0–AD7, multiplexed), 16-bit address bus (A8–A15 + demultiplexed AD0–AD7), 74 distinct instructions with 5 addressing modes, 1.3 to 2 microsecond instruction execution time, and a Harvard-like memory access pattern. The 8085 contains 6 general-purpose 8-bit registers (B, C, D, E, H, L), which can pair as 16-bit registers (BC, DE, HL). The accumulator (A) is the primary arithmetic register. Two hidden internal registers (W, Z) are used for temporary storage during instruction execution.",
+                        "examples": [
+                          "In a solar charge controller designed for off-grid power systems in rural India, the 8085 running at 3 MHz provides sufficient processing speed to read 8-bit ADC outputs from solar panel voltage/current sensors and drive PWM signals for battery charging.",
+                          "The 40-pin DIP package of the 8085 made it easy to prototype on breadboards and wire-wrap boards, which is why it became the standard in Indian engineering college labs and ISRO's early embedded control experiments.",
+                          "In an industrial flow meter for water treatment plants, the 8085A-2 variant at 6 MHz handles pulse counting from flow sensors and real-time computation of cumulative flow — demonstrating timing-critical embedded applications."
+                        ],
+                        "images": [
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Anschlussbelegung_8085.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/DIP_40.svg"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L1T2S2",
+                        "title": "8085 vs Modern Microprocessors: Conceptual Mapping",
+                        "content": "Although the 8085 is considered legacy technology, its architectural concepts map directly to modern processors. The 8085 Accumulator maps to ARM Cortex-M's R0 working register. The 8085 Program Counter (PC) is equivalent to ARM's PC (R15). The 8085 Stack Pointer (SP) maps to ARM's SP (R13). The 8085's interrupt structure (INTR, RST pins) corresponds to ARM's NVIC (Nested Vectored Interrupt Controller). The 8085's memory-mapped I/O concept is identical to how modern SoCs like STM32 map GPIO, UART, and SPI peripherals to fixed memory addresses. Understanding 8085 thus creates a mental model that scales to 32-bit ARM, RISC-V, and beyond.",
+                        "examples": [
+                          "An EEE student transitioning from 8085 to STM32 Cortex-M4 for a power converter control project will find that the concept of SFR (Special Function Registers) in 8085 directly corresponds to the peripheral base address registers in STM32's memory map.",
+                          "In IoT-based smart grid monitoring nodes using ESP8266 (Xtensa LX106 core), the interrupt-driven serial communication concept learned from 8085's SID/SOD pins directly applies to UART interrupt service routines.",
+                          "In a research paper on embedded SCADA systems for industrial motor control, the fetch-decode-execute pipeline of 8085 is used as a baseline to explain pipelining efficiency improvements in Cortex-M7 processors."
+                        ],
+                        "images": [
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/ARM_Cortex-A8_1.jpg",
+                          "https://static.righto.com/images/8085/alu_arch-s400.png"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C1L2",
+                "title": "Internal Architecture: Functional Blocks",
+                "description": "Detailed study of each internal functional block inside the 8085 chip.",
+                "topics": [
+                  {
+                    "id": "M1C1L2T1",
+                    "title": "Accumulator and Flags Register",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L2T1S1",
+                        "title": "The Accumulator (Register A)",
+                        "content": "The Accumulator is an 8-bit register that serves as the primary operand and result register for all arithmetic and logical operations in the 8085. Every ALU operation in the 8085 implicitly uses the Accumulator as one of its source operands and as the destination for the result. For example, in the instruction 'ADD B', the 8085 computes A = A + B and stores the result back in A. The Accumulator is also exclusively used for I/O operations — IN and OUT instructions transfer data between the Accumulator and I/O ports. In the register model, the Accumulator is part of the PSW (Program Status Word) register pair along with the Flags register.",
+                        "examples": [
+                          "In a digital wattmeter application for industrial power monitoring, the 8085 Accumulator holds the instantaneous current reading (8-bit ADC output). The program adds multiple successive samples in A to compute average power, storing intermediate sums via register pairs.",
+                          "In a stepper motor controller for CNC milling machines (used in small-scale manufacturing), the Accumulator holds the direction byte that is sent to the motor driver IC via the OUT instruction to a specific I/O port address.",
+                          "In a battery voltage monitoring system for a telecom tower UPS, the 8085 reads 8-bit ADC values into A using the IN instruction, applies a scaling factor via successive ADD/SUB instructions, and triggers an alarm relay output through the OUT instruction."
+                        ],
+                        "images": [
+                          "https://static.righto.com/images/8085/register_a_act-s600.png",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://static.righto.com/images/8085/alu_arch-s400.png"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L2T1S2",
+                        "title": "The Flags Register (Status Register)",
+                        "content": "The Flags register is an 8-bit register where only 5 bits are used as condition flags, each reflecting the status of the last ALU operation. The five flags are: (1) Sign Flag (S) — set to 1 if the result's MSB is 1 (negative in two's complement). (2) Zero Flag (Z) — set to 1 if the result is 00H. (3) Auxiliary Carry Flag (AC) — set if carry generated from bit 3 to bit 4, used in BCD arithmetic. (4) Parity Flag (P) — set if the result has even number of 1s. (5) Carry Flag (CY) — set if the operation produces a carry out of the MSB. Bits D1, D3, D5 are undefined/unused. The Flags register is critical for conditional branching using instructions like JZ (Jump if Zero), JC (Jump if Carry), JM (Jump if Minus), etc.",
+                        "examples": [
+                          "In a fault detection algorithm for a transformer protection relay, the 8085 computes the difference between sampled current and a threshold value. If the result sets the Sign Flag (negative difference), the program branches to an alarm routine — this is a real conditional branch using the S flag.",
+                          "In a BCD-based digital clock application (common in power substation time synchronization units), the AC flag is used with the DAA (Decimal Adjust Accumulator) instruction to correct BCD addition results after seconds/minutes counting.",
+                          "In an overflow detection routine for industrial weighing machines (load cell ADC interface), the Carry Flag is monitored after addition to detect if the weight reading exceeds the 8-bit range, triggering an overload warning via an output port."
+                        ],
+                        "images": [
+                          "https://static.righto.com/images/8085/alu_details-s700.png",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://static.righto.com/images/8085/alu8bit-s800.png"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "M1C1L2T2",
+                    "title": "General Purpose Registers (B, C, D, E, H, L)",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L2T2S1",
+                        "title": "Individual 8-bit Register Functions",
+                        "content": "The 8085 has six general-purpose 8-bit registers: B, C, D, E, H, and L. These registers can be used individually for 8-bit data storage and manipulation, or in pairs (BC, DE, HL) for 16-bit operations such as memory addressing. Register H and L (HL pair) are the most frequently used — they act as a memory pointer (indirect addressing register), where the 16-bit value in HL points to a memory location. The 'M' operand in instructions like 'MOV A, M' refers to the memory location addressed by the HL register pair. The DE pair is commonly used as a source pointer in data transfer operations (like LDAX D), and the BC pair is often used as a counter or secondary pointer. All six registers are visible to the programmer and can be freely loaded, exchanged, or manipulated.",
+                        "examples": [
+                          "In a data logger for an industrial temperature monitoring system (PT100 sensor + ADC), the HL pair is used as a pointer to a RAM buffer starting at address 2000H. Successive temperature readings are stored at 2000H, 2001H, etc., by incrementing HL (using INX H) after each store operation.",
+                          "In a 3-phase power quality analyzer using 8085, the BC, DE, and HL register pairs are simultaneously used to hold pointers to three separate ADC data buffers — one per phase — enabling efficient parallel data collection in a single loop.",
+                          "In a research-level implementation of a moving average filter for vibration monitoring on rotating machinery, the HL register pair holds the base address of the sample array, and the B register holds the loop count. Each iteration reads M (memory at HL) and accumulates in A."
+                        ],
+                        "images": [
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://static.righto.com/images/8085/alu_details-s700.png",
+                          "https://static.righto.com/images/8085/register_a_act-s600.png"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L2T2S2",
+                        "title": "Temporary Registers W and Z (Internal Hidden Registers)",
+                        "content": "The 8085 contains two internal 8-bit temporary registers, W and Z, that are not accessible to the programmer but are used internally by the CPU during multi-byte instruction execution. For example, when the 8085 fetches a 3-byte instruction like 'JMP 3050H', the 16-bit address (30H and 50H) is temporarily held in the W and Z registers before being loaded into the Program Counter. These registers prevent the need for the CPU to pause instruction decoding while waiting for address bytes to be available. Understanding W and Z helps engineers trace exactly what happens on the address/data bus during multi-cycle instructions — critical for debugging timing issues in hardware designs.",
+                        "examples": [
+                          "When designing a custom 8085-based embedded controller for a protection relay, the hardware engineer uses a logic analyzer to observe the multiplexed AD0–AD7 bus. The W/Z registers explain why a 3-byte JMP instruction produces exactly 3 memory read cycles — the hidden registers buffer each fetched byte.",
+                          "In academic research comparing single-cycle vs multi-cycle microprocessor design, the W/Z temporary registers in 8085 serve as a key example of how sequential instruction decoding is implemented in CISC-style processors.",
+                          "In timing-critical ISR (Interrupt Service Routine) design for a grid-tie inverter controller, knowing that W/Z are used during CALL instruction execution (to save PC) helps the engineer calculate the exact interrupt latency in clock cycles."
+                        ],
+                        "images": [
+                          "https://static.righto.com/images/8085/alu_arch-s400.png",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://static.righto.com/images/8085/alu_details-s700.png"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "M1C1L2T3",
+                    "title": "Program Counter (PC) and Stack Pointer (SP)",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L2T3S1",
+                        "title": "Program Counter — The Instruction Pointer",
+                        "content": "The Program Counter (PC) is a 16-bit register that always holds the memory address of the next instruction to be fetched. After each instruction fetch, the PC is automatically incremented by 1, 2, or 3 depending on the instruction length (1-byte, 2-byte, or 3-byte). The PC is initialized to 0000H at reset, which is why the 8085 always begins execution from memory address 0000H — the start of the ROM in a typical system. The programmer can indirectly modify the PC using jump (JMP, JZ, JC...), call (CALL), and return (RET) instructions, which load a new 16-bit address into the PC, redirecting execution flow.",
+                        "examples": [
+                          "In an 8085-based automatic voltage regulator (AVR) for a distribution transformer, the program starts at ROM address 0000H with initialization code. After setup, a JMP instruction redirects the PC to the main sensing loop at address 1000H — demonstrating explicit PC manipulation.",
+                          "In a multi-mode industrial motor controller (start/stop/speed control), different operating modes are implemented as subroutines at fixed addresses. The CALL instruction pushes the current PC onto the stack and loads a new address — the PC becomes the target routine address.",
+                          "In fault-tolerant embedded systems for nuclear plant instrumentation, a watchdog timer forces a reset (PC → 0000H) if the main loop does not respond within a timeout. This is a hardware exploitation of the PC reset behavior."
+                        ],
+                        "images": [
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Anschlussbelegung_8085.svg",
+                          "https://static.righto.com/images/8085/alu_details-s700.png"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L2T3S2",
+                        "title": "Stack Pointer — Managing the LIFO Stack",
+                        "content": "The Stack Pointer (SP) is a 16-bit register that points to the current top of the stack in RAM. The 8085 stack grows downward — when data is pushed (PUSH instruction), the SP is first decremented by 2 (since push always stores 16-bit register pair values), then the data is written. When data is popped (POP instruction), data is read first, then SP is incremented by 2. The stack is used to: (1) save and restore register pairs during subroutine calls, (2) automatically save the PC during CALL instructions, and (3) pass parameters between routines. The SP must be initialized early in the program (e.g., LXI SP, 27FFH) to point to the top of RAM before any PUSH, CALL, or interrupt can safely occur.",
+                        "examples": [
+                          "In an embedded PID controller for a DC motor drive (used in paper mill speed control), the CALL instruction pushes the return address onto the stack. The SP is pre-initialized to 2FFFH (top of external RAM) to ensure the stack grows into available RAM space without corrupting the data buffer area.",
+                          "In a multi-interrupt power system protection relay using 8085, when a high-priority RST 7.5 interrupt fires during a lower-priority ISR, the CPU automatically pushes the current PC to the stack, saving the interrupted routine's address — demonstrating automatic stack usage during nested interrupts.",
+                          "In a data acquisition system for a 3-phase energy meter, the PUSH PSW and PUSH B instructions save the Accumulator, Flags, and BC registers at the start of every ISR. After ADC data collection, POP B and POP PSW restore them — a standard stack-based context save/restore pattern."
+                        ],
+                        "images": [
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://static.righto.com/images/8085/alu_details-s700.png",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Anschlussbelegung_8085.svg"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "M1C1L2T4",
+                    "title": "Arithmetic and Logic Unit (ALU)",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L2T4S1",
+                        "title": "ALU Structure and Operations",
+                        "content": "The 8085 ALU is an 8-bit combinational logic circuit that performs all arithmetic operations (ADD, SUB, INR, DCR, DAD), logical operations (AND, OR, XOR, CMP, NOT via CMA), and rotate/shift operations (RLC, RRC, RAL, RAR). The ALU receives two 8-bit operands — one always from the Accumulator, the other from a register, memory (M), or an immediate value. The result is stored back in the Accumulator (for most operations), and the Flags register is updated automatically. The DAD instruction is special — it adds a 16-bit register pair to the HL pair using a 16-bit adder within the ALU datapath. The ALU does NOT have a hardware multiplier or divider; multiplication and division must be implemented in software using repeated ADD or SUB loops.",
+                        "examples": [
+                          "In an energy billing microcontroller design for TNEB (Tamil Nadu Electricity Board), the 8085 ALU computes the difference between current and previous kWh readings using SUB instructions. Since there's no hardware divider, the division by a scaling constant (e.g., 100 for unit conversion) is done via a software loop of repeated subtractions counting how many times it fits.",
+                          "In a digital filter implementation for vibration analysis of industrial rotating machines, the 8085 ALU's AND instruction is used to mask the lower 4 bits of an ADC reading, effectively implementing a bit-level low-pass filter on the raw sensor data.",
+                          "In a research implementation of Reed-Solomon error correction for industrial serial communication, the XOR instruction of the 8085 ALU is the core operation for GF(2^8) field arithmetic — demonstrating advanced ALU usage beyond basic arithmetic."
+                        ],
+                        "images": [
+                          "https://static.righto.com/images/8085/alu8bit-s800.png",
+                          "https://static.righto.com/images/8085/alu_arch-s400.png",
+                          "https://static.righto.com/images/8085/alu1bit-s300.png"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L2T4S2",
+                        "title": "BCD Arithmetic and the DAA Instruction",
+                        "content": "Binary Coded Decimal (BCD) arithmetic is critical in applications like digital clocks, meters, and measurement instruments where decimal display accuracy is required. The 8085 ALU performs binary addition/subtraction, but for BCD operations, the result must be corrected to valid BCD format. The DAA (Decimal Adjust Accumulator) instruction corrects the Accumulator value after a BCD addition by checking the Auxiliary Carry flag (AC) and Carry flag (CY) and adding 06H or 60H as needed. For example, 39H (BCD for 39) + 48H (BCD for 48) = 81H in binary, but the correct BCD result is 87H. The DAA instruction checks AC and CY flags and adds 06H (if lower nibble > 9 or AC=1) and/or 60H (if upper nibble > 9 or CY=1) to produce the correct BCD result.",
+                        "examples": [
+                          "In a digital energy meter display system (0–999 kWh range), the 8085 uses packed BCD format to store the meter reading in 2 bytes. After each unit increment, the ADD and DAA sequence ensures the BCD digits stay valid (0–9 per nibble), allowing direct 7-segment display output without a binary-to-BCD conversion routine.",
+                          "In a real-time clock module for a protection relay (IDMT relay with time logging), hours, minutes, and seconds are stored in BCD format. The 8085 uses DAA after each second increment to maintain valid BCD, and the value is directly sent to the BCD-to-7-segment decoder IC (7447) without software conversion.",
+                          "In a blood pressure monitor prototype (early embedded medical devices used 8085), BCD arithmetic with DAA ensures that systolic/diastolic readings (e.g., 120/80) are stored in valid BCD and can be directly compared with BCD threshold values without conversion overhead."
+                        ],
+                        "images": [
+                          "https://static.righto.com/images/8085/act_register-s700.png",
+                          "https://static.righto.com/images/8085/register_a_act-s600.png",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "M1C1L2T5",
+                    "title": "Instruction Register and Instruction Decoder",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L2T5S1",
+                        "title": "Instruction Register (IR) and Opcode Fetch",
+                        "content": "The Instruction Register (IR) is an 8-bit register that holds the opcode byte of the currently executing instruction. During the first machine cycle (Opcode Fetch cycle, M1), the 8085 places the PC value on the address bus, performs a memory read, and loads the fetched byte into the IR. The IR is not programmer-accessible — it is internal to the CPU. Once the opcode is in the IR, it is decoded by the Instruction Decoder to determine: (a) how many additional bytes need to be fetched (operand bytes), (b) what ALU operation or data transfer is required, (c) how many clock cycles (T-states) are needed, and (d) what control signals to generate. The IR and decoder together form the control path of the 8085 pipeline.",
+                        "examples": [
+                          "In a hardware design verification lab at an engineering college, students use a logic analyzer on the 8085 ALE pin and AD0–AD7 bus to observe the opcode fetch cycle in real time. The IR loading from the bus is visible as the first read cycle in every instruction's timing waveform.",
+                          "In debugging an 8085-based motor controller where a spurious reset was occurring, an engineer identifies that a glitch on the data bus during opcode fetch was loading a corrupt opcode into the IR, causing the decoder to generate incorrect control signals and execute an unintended HLT instruction.",
+                          "Understanding the IR is critical when designing emulators for 8085-based legacy industrial systems. Software emulators replicate the IR register's behavior byte-by-byte to correctly simulate instruction execution for firmware analysis and reverse engineering."
+                        ],
+                        "images": [
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://static.righto.com/images/8085/alu_details-s700.png",
+                          "https://static.righto.com/images/8085/alu_arch-s400.png"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L2T5S2",
+                        "title": "Instruction Decoder and Machine Cycle Encoder",
+                        "content": "The Instruction Decoder is a combinational logic block that takes the 8-bit opcode from the IR and generates the internal microoperation control signals. It determines the type of machine cycles needed (memory read, memory write, I/O read, I/O write, interrupt acknowledge). The Machine Cycle Encoder works alongside the decoder to generate the status signals IO/M̄, S1, S0 on the control bus, which tell the external memory and I/O chips whether a read or write is occurring and whether the address refers to memory or I/O space. The combination of S1 and S0: (00 = HALT, 01 = Write, 10 = Read, 11 = Opcode Fetch) tells the system the precise nature of each bus cycle. This is fundamental to designing the chip select logic for memory and I/O ICs in a complete 8085-based system.",
+                        "examples": [
+                          "When designing an 8085 system with 8KB ROM and 8KB RAM, the IO/M̄ signal from the 8085 is used in the address decoding logic (using 74LS138 decoder and NAND gates) to select between ROM (IO/M̄=0, lower addresses) and RAM (IO/M̄=0, upper addresses), while IN/OUT instructions with IO/M̄=1 select peripheral ICs.",
+                          "In an industrial SCADA terminal interface board, the hardware designer uses the S1, S0 status signals combined with the RD̄ and WR̄ signals to generate chip select signals for the 8255 PPI, 8254 timer, and 8251 USART peripherals on the same bus without address conflicts.",
+                          "In a research paper on 8085 bus analysis for retrofitting legacy industrial controllers with modern microcontrollers, the IO/M̄ and S1/S0 signal behavior is characterized to create a bus translation layer that allows ARM Cortex-M peripherals to replace the original 8085 peripheral ICs."
+                        ],
+                        "images": [
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Anschlussbelegung_8085.svg",
+                          "https://static.righto.com/images/8085/alu_details-s700.png"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C1L3",
+                "title": "Address Bus, Data Bus and Control Bus",
+                "description": "Detailed analysis of the three-bus architecture of 8085 — address, data, and control buses.",
+                "topics": [
+                  {
+                    "id": "M1C1L3T1",
+                    "title": "Multiplexed Address/Data Bus (AD0–AD7)",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L3T1S1",
+                        "title": "Concept of Bus Multiplexing in 8085",
+                        "content": "To reduce pin count on the 40-pin DIP package, the 8085 uses a multiplexed bus on pins AD0–AD7. During the first clock cycle (T1) of any machine cycle, these 8 pins carry the lower 8 bits of the 16-bit address (A7–A0). From T2 onwards, the same pins switch to carry 8-bit data (D7–D0) for reading or writing. This time-sharing is called multiplexing. The 8085 generates an ALE (Address Latch Enable) pulse at T1 to signal external circuitry that the current bus content is an address, not data. An external latch IC (such as the 74LS373 octal transparent latch or Intel 8212) captures and holds the lower address byte (A7–A0) when ALE goes low, making it available for the full machine cycle. The upper address byte (A15–A8) is always available on dedicated non-multiplexed pins.",
+                        "examples": [
+                          "In a complete 8085 microcomputer design for a laboratory power supply controller, the 74LS373 latch is connected to AD0–AD7 with its OE pin grounded and LE (Latch Enable) connected to the 8085 ALE pin. When ALE pulses high during T1, the lower address byte is transparently passed to Q0–Q7; when ALE goes low at T2, the latch holds the address, freeing AD0–AD7 for data transfer.",
+                          "In an industrial data acquisition board based on 8085 (used in early SCADA installations in Indian refineries), the demultiplexing circuit using 74LS373 is a standard design block. The PCB layout must ensure minimum propagation delay between ALE and the latch clock input to prevent address glitches.",
+                          "Modern SoCs like the STM32 FSMC (Flexible Static Memory Controller) use a similar multiplexed address/data bus concept for interfacing with external NOR Flash and SRAM, showing that the 8085 multiplexing principle remains relevant in 32-bit embedded design."
+                        ],
+                        "images": [
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Anschlussbelegung_8085.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://static.righto.com/images/8085/alu_details-s700.png"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L3T1S2",
+                        "title": "Full 16-bit Address Bus Reconstruction",
+                        "content": "After demultiplexing, the complete 16-bit address bus is formed by combining: Lower byte A7–A0 (from 74LS373 latch output, originally on AD0–AD7) and Upper byte A15–A8 (from dedicated 8085 pins A8–A15, always valid). This 16-bit address allows the 8085 to address 2^16 = 65,536 (64K) unique memory locations. The address space is typically divided: 0000H–3FFFH for ROM/EPROM (program memory), 4000H–7FFFH for RAM (data memory), and 8000H–FFFFH for I/O-mapped peripherals in memory-mapped I/O schemes. The actual memory map depends on the hardware chip select logic implemented using the upper address lines.",
+                        "examples": [
+                          "A standard Anna University 8085 trainer kit uses a memory map of 0000H–07FFH (2KB ROM with 8755A), 2000H–27FFH (2KB RAM with 8155H), and 00H–FFH (I/O ports via 8155 and 8755). Students can trace this map from the chip select logic on the board schematic.",
+                          "In an 8085-based protection relay for a 11kV distribution feeder, the ROM containing the protection algorithm is mapped to 0000H–1FFFH (8KB EPROM 2764), the SRAM event log buffer occupies 4000H–5FFFH (8KB HM6264), and the communication interface IC (8251) is mapped to I/O address 20H.",
+                          "In a power electronics research setup using 8085 to generate PWM sequences for an inverter, the 64KB address space is partitioned with the lookup table for sine wave PWM values stored in EPROM at 1000H–1FFFH, and the current control loop variables in RAM at 3000H–3FFFH."
+                        ],
+                        "images": [
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Anschlussbelegung_8085.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Memory_address.svg"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "M1C1L3T2",
+                    "title": "Control Bus Signals",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L3T2S1",
+                        "title": "RD̄, WR̄ and IO/M̄ Signals",
+                        "content": "The 8085 control bus consists of key signals that synchronize data transfers between the CPU and memory/peripherals. RD̄ (active LOW) indicates that the CPU is performing a read operation — when asserted (LOW), external memory or I/O chips must place their data on the bus. WR̄ (active LOW) indicates that the CPU is performing a write — external chips must latch the data bus value on the falling or rising edge of WR̄. IO/M̄ (active LOW for memory, active HIGH for I/O) distinguishes between memory access (IO/M̄ = 0) and I/O port access (IO/M̄ = 1). These three signals, when combined with the address bus, form the complete bus protocol. Hardware designers AND-gate IO/M̄ with RD̄ to generate IOR̄ (I/O Read), and IO/M̄ with WR̄ to generate IOW̄ (I/O Write) for peripheral chip selects.",
+                        "examples": [
+                          "In interfacing an 8085 with an 8-bit ADC0804 (used in analog data acquisition for current measurement in a power distribution panel), the RD̄ signal from the 8085 is connected to the ADC's RD pin. After the conversion is complete (INTR goes LOW), the 8085 asserts RD̄ to fetch the 8-bit digital result from the ADC into the Accumulator.",
+                          "In a multi-chip 8085 system with both ROM and RAM, the IO/M̄ signal is the primary selector: IO/M̄=0 enables the memory chip select logic (ROM and RAM), while IO/M̄=1 enables the I/O chip select logic (8255 PPI, 8251 USART). Without this signal, the CPU cannot distinguish between a memory address and an I/O port address.",
+                          "In a real-time oscilloscope design thesis based on 8085, the WR̄ signal is used to write digitized waveform samples (from ADC) into external SRAM. The write cycle timing must match the SRAM's write pulse width specification (typically 70–120ns for HM6264), which directly constrains the maximum 8085 clock frequency."
+                        ],
+                        "images": [
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Anschlussbelegung_8085.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Bus_(computing).svg"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L3T2S2",
+                        "title": "ALE, READY, HOLD and HLDA Signals",
+                        "content": "Beyond RD̄, WR̄, and IO/M̄, the 8085 control bus includes several additional signals. ALE (Address Latch Enable) — pulses HIGH during T1 of every machine cycle to indicate valid address on AD0–AD7; used to clock external address latches. READY — input from slow memory/peripherals; if LOW, the 8085 inserts WAIT states (additional T-states) to extend the bus cycle, allowing slow devices to respond. This is critical when interfacing the 3MHz 8085 with slow EPROM (e.g., 2716 with 450ns access time). HOLD — input from external bus masters (like DMA controllers); when asserted, the 8085 completes its current bus cycle, then floats the address, data, and control buses (tri-state), and asserts HLDA (Hold Acknowledge) to allow the external device to control the bus. This enables Direct Memory Access (DMA) for high-speed data transfers in industrial systems.",
+                        "examples": [
+                          "In an 8085-based industrial data logger that stores sensor readings to a slow 2716 EPROM (450ns access time), the EPROM's READY output is connected to the 8085 READY pin. During write operations, the EPROM asserts READY LOW, causing the 8085 to insert 1–2 WAIT states, extending the write cycle to match the EPROM timing specification.",
+                          "In an 8085 system with an 8237 DMA controller (used in an industrial waveform capture system for power quality analysis), the 8237 asserts HOLD when it needs to transfer ADC samples directly to RAM. The 8085 grants bus access via HLDA, and the 8237 performs burst DMA transfers at full bus speed without CPU intervention — achieving data rates impossible with programmed I/O.",
+                          "In a research implementation of an 8085-based logic analyzer for embedded system debugging, the ALE signal is used as a trigger to synchronize the capture of address and data bus values. Every ALE pulse marks the start of a new machine cycle, allowing the analyzer to correctly demultiplex the captured bus data."
+                        ],
+                        "images": [
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Anschlussbelegung_8085.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://static.righto.com/images/8085/alu_details-s700.png"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C1L4",
+                "title": "Pin Configuration of 8085",
+                "description": "Detailed pin-by-pin analysis of all 40 pins of the Intel 8085 IC.",
+                "topics": [
+                  {
+                    "id": "M1C1L4T1",
+                    "title": "Power, Clock and Reset Pins",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L4T1S1",
+                        "title": "VCC, VSS, X1, X2, CLK OUT, and RESET IN/OUT",
+                        "content": "Pin 40 (VCC) is the +5V power supply input; Pin 20 (VSS) is the ground reference. Pins X1 (Pin 1) and X2 (Pin 2) connect to a crystal oscillator or RC circuit to provide the clock input — the internal oscillator divides the crystal frequency by 2 to produce the internal CPU clock. For example, a 6.144 MHz crystal produces a 3.072 MHz CPU clock. Pin 37 (CLK OUT) provides the divided clock signal (CPU clock) as an output — this can be used to synchronize peripheral ICs (like 8255, 8253) on the same board, eliminating the need for separate oscillators. RESET IN (Pin 36, active LOW) — when held LOW for at least 3 clock cycles, the CPU resets: PC → 0000H, all buses tri-stated, interrupt systems disabled. RESET OUT (Pin 3, active HIGH) — outputs a HIGH pulse during reset, which can be used to reset peripheral ICs simultaneously with the CPU.",
+                        "examples": [
+                          "In a complete 8085 system design for a motor protection relay, the RESET IN pin is connected to a power-on reset circuit (RC network: 10kΩ + 10µF) and a manual reset push button. The RESET OUT pin drives the active-HIGH reset inputs of the 8255 PPI and 8251 USART, ensuring all peripherals initialize in sync with the CPU on power-up.",
+                          "In a multi-node industrial monitoring network where several 8085 boards share a backplane bus, the CLK OUT of the master 8085 is distributed as the common clock to all 8253 timer ICs on slave boards, maintaining synchronization across the network and preventing inter-board timing skew.",
+                          "In a UPS (Uninterruptible Power Supply) controller design based on 8085, the RESET IN circuit uses a Maxim DS1813 voltage supervisor IC instead of a simple RC network. The supervisor holds RESET IN LOW until VCC stabilizes above 4.65V after power-on, preventing the 8085 from executing from an undefined state during power ramp-up."
+                        ],
+                        "images": [
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Anschlussbelegung_8085.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Crystal_oscillator.jpg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "M1C1L4T2",
+                    "title": "Serial I/O Pins: SID and SOD",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L4T2S1",
+                        "title": "SID (Serial Input Data) and SOD (Serial Output Data)",
+                        "content": "The 8085 has two dedicated pins for simple bit-banged serial communication: SID (Pin 5, Serial Input Data) and SOD (Pin 4, Serial Output Data). SID is an input pin — the logic state of SID is loaded into the MSB (bit 7) of the Accumulator when the RIM (Read Interrupt Mask) instruction is executed. SOD is an output pin — its state is set to the MSB of the Accumulator when the SIM (Set Interrupt Mask) instruction is executed with the SOE (Serial Output Enable) bit set. By toggling SOD under software timing control and reading SID with software-timed loops, the 8085 can implement a software UART (Universal Asynchronous Receiver-Transmitter) at low baud rates (typically 300–2400 baud). This is the simplest form of serial communication without requiring an external USART IC like the 8251.",
+                        "examples": [
+                          "In a low-cost temperature telemetry system for a rural solar power plant monitoring application, the 8085 uses SID and SOD pins with RIM/SIM instructions to implement a 1200 baud software UART. Temperature sensor data is transmitted to a remote display terminal over a 2-wire RS-232 link, eliminating the need for an 8251 USART chip.",
+                          "In an industrial sensor network prototype (predecessor to modern IoT nodes), the SOD pin of the 8085 drives a 4N25 optocoupler which in turn drives an RS-485 transceiver (SN75176). This optical isolation prevents ground loops in noisy industrial environments while enabling reliable serial data transmission over long distances.",
+                          "In a research project on legacy protocol emulation, the 8085 SID and SOD pins are used to bit-bang the MODBUS RTU protocol for reading data from legacy industrial sensors. Timing accuracy is achieved by counting T-states in the bit-delay software loops, with each bit period calculated as: bit_period = 1 / baud_rate, converted to T-states at the known CPU frequency."
+                        ],
+                        "images": [
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Anschlussbelegung_8085.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/UART_timing_diagram.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "M1C1L4T3",
+                    "title": "Interrupt Pins Overview",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L4T3S1",
+                        "title": "INTR, RST 5.5, RST 6.5, RST 7.5, TRAP and INTA̅",
+                        "content": "The 8085 has 5 hardware interrupt input pins and one interrupt acknowledge output. TRAP (Pin 9) — Non-maskable, highest priority, edge-and-level triggered; cannot be disabled by software. Vectors to address 0024H. Used for catastrophic fault detection. RST 7.5 (Pin 7) — Maskable, edge-triggered (positive edge), second highest priority. Vectors to 003CH. RST 6.5 (Pin 6) — Maskable, level-triggered (active HIGH). Vectors to 0034H. RST 5.5 (Pin 5.5, actually Pin 5) — Maskable, level-triggered. Vectors to 002CH. INTR (Pin 10) — Maskable, level-triggered, lowest priority; requires an external data bus vector (RST instruction byte) supplied by external circuitry on INTĀ acknowledge cycle. INTA̅ (Pin 11, active LOW output) — Generated by the CPU to acknowledge an INTR request; the external interrupt controller must place a CALL or RST opcode on the data bus during INTĀ.",
+                        "examples": [
+                          "In an 8085-based overcurrent protection relay for a 415V industrial motor feeder, the TRAP interrupt is connected to a hardware comparator that monitors the motor current via a current transformer and ADC. If current exceeds 200% of rated value, the comparator immediately asserts TRAP, which cannot be masked — the CPU unconditionally jumps to the TRAP ISR at 0024H to open the circuit breaker contactor.",
+                          "In a multi-axis CNC machine controller based on 8085, RST 7.5 is used for the highest-priority axis limit switch interrupt (emergency stop), RST 6.5 handles the real-time step pulse timing interrupt, and RST 5.5 handles the spindle speed feedback interrupt. This three-level interrupt structure provides deterministic response to critical events.",
+                          "In a power quality analyzer using 8085 for harmonic distortion measurement, the INTR pin is connected to an 8259 Priority Interrupt Controller (PIC) that manages 8 external interrupts from different signal processing ICs. The INTĀ signal from the 8085 enables the 8259 to place the appropriate RST opcode on the data bus for vectored interrupt handling."
+                        ],
+                        "images": [
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Anschlussbelegung_8085.svg",
+                          "https://en.wikipedia.org/wiki/Special:FilePath/Intel_8085_arch.svg",
+                          "https://static.righto.com/images/8085/alu_details-s700.png"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M1C2",
+            "title": "Memory Interfacing with 8085",
+            "description": "Covers ROM, RAM interfacing techniques, address decoding, and memory expansion strategies.",
+            "lessons": [
+              {
+                "id": "M1C2L1",
+                "title": "Memory Organization and Address Decoding",
+                "topics": [
+                  {
+                    "id": "M1C2L1T1",
+                    "title": "Linear and Full Address Decoding",
+                    "subtopics": []
+                  },
+                  {
+                    "id": "M1C2L1T2",
+                    "title": "Using 74LS138 Decoder for Chip Select",
+                    "subtopics": []
+                  }
+                ]
+              },
+              {
+                "id": "M1C2L2",
+                "title": "ROM and EPROM Interfacing",
+                "topics": [
+                  {
+                    "id": "M1C2L2T1",
+                    "title": "Interfacing 2716/2732 EPROM with 8085",
+                    "subtopics": []
+                  },
+                  {
+                    "id": "M1C2L2T2",
+                    "title": "EEPROM and Flash Memory Interface",
+                    "subtopics": []
+                  }
+                ]
+              },
+              {
+                "id": "M1C2L3",
+                "title": "RAM Interfacing",
+                "topics": [
+                  {
+                    "id": "M1C2L3T1",
+                    "title": "Interfacing 6116/6264 SRAM with 8085",
+                    "subtopics": []
+                  },
+                  {
+                    "id": "M1C2L3T2",
+                    "title": "Dynamic RAM (DRAM) and Refresh Cycles",
+                    "subtopics": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M1C3",
+            "title": "I/O Ports and Data Transfer Concepts",
+            "description": "Covers memory-mapped I/O, I/O-mapped I/O, and direct/indirect port access methods.",
+            "lessons": [
+              {
+                "id": "M1C3L1",
+                "title": "I/O Mapped vs Memory Mapped I/O",
+                "topics": [
+                  {
+                    "id": "M1C3L1T1",
+                    "title": "I/O Mapped I/O (Isolated I/O)",
+                    "subtopics": []
+                  },
+                  {
+                    "id": "M1C3L1T2",
+                    "title": "Memory Mapped I/O",
+                    "subtopics": []
+                  }
+                ]
+              },
+              {
+                "id": "M1C3L2",
+                "title": "Data Transfer Methods",
+                "topics": [
+                  {
+                    "id": "M1C3L2T1",
+                    "title": "Programmed I/O (Synchronous and Asynchronous)",
+                    "subtopics": []
+                  },
+                  {
+                    "id": "M1C3L2T2",
+                    "title": "Interrupt-Driven I/O",
+                    "subtopics": []
+                  },
+                  {
+                    "id": "M1C3L2T3",
+                    "title": "Direct Memory Access (DMA)",
+                    "subtopics": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M1C4",
+            "title": "Timing Diagrams of 8085",
+            "description": "Detailed analysis of machine cycles, T-states, and bus timing for read/write operations.",
+            "lessons": [
+              {
+                "id": "M1C4L1",
+                "title": "Machine Cycles and T-States",
+                "topics": [
+                  {
+                    "id": "M1C4L1T1",
+                    "title": "Types of Machine Cycles (M1 to M5)",
+                    "subtopics": []
+                  },
+                  {
+                    "id": "M1C4L1T2",
+                    "title": "T-State Breakdown per Instruction",
+                    "subtopics": []
+                  }
+                ]
+              },
+              {
+                "id": "M1C4L2",
+                "title": "Memory Read and Write Timing Diagrams",
+                "topics": [
+                  {
+                    "id": "M1C4L2T1",
+                    "title": "Opcode Fetch Timing (M1 Cycle)",
+                    "subtopics": []
+                  },
+                  {
+                    "id": "M1C4L2T2",
+                    "title": "Memory Read Timing",
+                    "subtopics": []
+                  },
+                  {
+                    "id": "M1C4L2T3",
+                    "title": "Memory Write Timing",
+                    "subtopics": []
+                  }
+                ]
+              },
+              {
+                "id": "M1C4L3",
+                "title": "I/O Read and Write Timing",
+                "topics": [
+                  {
+                    "id": "M1C4L3T1",
+                    "title": "I/O Read Timing Diagram (IN Instruction)",
+                    "subtopics": []
+                  },
+                  {
+                    "id": "M1C4L3T2",
+                    "title": "I/O Write Timing Diagram (OUT Instruction)",
+                    "subtopics": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M1C5",
+            "title": "Interrupt Structure of 8085",
+            "description": "In-depth coverage of all 8085 interrupts, masking, priority, ISR design, and real applications.",
+            "lessons": [
+              {
+                "id": "M1C5L1",
+                "title": "Types of Interrupts in 8085",
+                "topics": [
+                  {
+                    "id": "M1C5L1T1",
+                    "title": "TRAP — Non-Maskable Interrupt",
+                    "subtopics": []
+                  },
+                  {
+                    "id": "M1C5L1T2",
+                    "title": "RST 7.5 — Edge Triggered Maskable Interrupt",
+                    "subtopics": []
+                  },
+                  {
+                    "id": "M1C5L1T3",
+                    "title": "RST 6.5 and RST 5.5 — Level Triggered Interrupts",
+                    "subtopics": []
+                  },
+                  {
+                    "id": "M1C5L1T4",
+                    "title": "INTR and INTA̅ — Vectored External Interrupt",
+                    "subtopics": []
+                  }
+                ]
+              },
+              {
+                "id": "M1C5L2",
+                "title": "Interrupt Masking using SIM and RIM",
+                "topics": [
+                  {
+                    "id": "M1C5L2T1",
+                    "title": "SIM Instruction — Set Interrupt Mask",
+                    "subtopics": []
+                  },
+                  {
+                    "id": "M1C5L2T2",
+                    "title": "RIM Instruction — Read Interrupt Mask",
+                    "subtopics": []
+                  }
+                ]
+              },
+              {
+                "id": "M1C5L3",
+                "title": "Interrupt Service Routine (ISR) Design",
+                "topics": [
+                  {
+                    "id": "M1C5L3T1",
+                    "title": "ISR Structure and Context Save/Restore",
+                    "subtopics": []
+                  },
+                  {
+                    "id": "M1C5L3T2",
+                    "title": "Nested Interrupts and Priority Handling",
+                    "subtopics": []
+                  },
+                  {
+                    "id": "M1C5L3T3",
+                    "title": "Real-World ISR: Power Fault Detection",
+                    "subtopics": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "M2",
+        "title": "8085 Instruction Set and Programming",
+        "description": "Covers instruction formats, addressing modes, assembly language, data transfer, manipulation, control instructions, and programming constructs.",
+        "chapters": [
+          {
+            "id": "M2C1",
+            "title": "Instruction Format and Addressing Modes",
+            "lessons": [
+              {
+                "id": "M2C1L1",
+                "title": "Instruction Format: 1, 2, and 3 Byte Instructions",
+                "topics": []
+              },
+              {
+                "id": "M2C1L2",
+                "title": "Immediate Addressing Mode",
+                "topics": []
+              },
+              {
+                "id": "M2C1L3",
+                "title": "Register Addressing Mode",
+                "topics": []
+              },
+              {
+                "id": "M2C1L4",
+                "title": "Direct Addressing Mode",
+                "topics": []
+              },
+              {
+                "id": "M2C1L5",
+                "title": "Register Indirect Addressing Mode",
+                "topics": []
+              },
+              {
+                "id": "M2C1L6",
+                "title": "Implicit (Inherent) Addressing Mode",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M2C2",
+            "title": "Assembly Language Format",
+            "lessons": [
+              {
+                "id": "M2C2L1",
+                "title": "Structure of an Assembly Language Statement",
+                "topics": []
+              },
+              {
+                "id": "M2C2L2",
+                "title": "Assembler Directives and Pseudo-opcodes",
+                "topics": []
+              },
+              {
+                "id": "M2C2L3",
+                "title": "Labels, Comments, and Program Structure",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M2C3",
+            "title": "Data Transfer Instructions",
+            "lessons": [
+              {
+                "id": "M2C3L1",
+                "title": "MOV, MVI, LXI Instructions",
+                "topics": []
+              },
+              {
+                "id": "M2C3L2",
+                "title": "LDA, STA, LDAX, STAX Instructions",
+                "topics": []
+              },
+              {
+                "id": "M2C3L3",
+                "title": "LHLD, SHLD, XCHG Instructions",
+                "topics": []
+              },
+              {
+                "id": "M2C3L4",
+                "title": "IN and OUT I/O Instructions",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M2C4",
+            "title": "Data Manipulation Instructions",
+            "lessons": [
+              {
+                "id": "M2C4L1",
+                "title": "Arithmetic Instructions: ADD, SUB, INR, DCR, DAD",
+                "topics": []
+              },
+              {
+                "id": "M2C4L2",
+                "title": "Logical Instructions: AND, OR, XOR, CMP",
+                "topics": []
+              },
+              {
+                "id": "M2C4L3",
+                "title": "Rotate Instructions: RLC, RRC, RAL, RAR",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M2C5",
+            "title": "Control Instructions and Programming Constructs",
+            "lessons": [
+              {
+                "id": "M2C5L1",
+                "title": "Unconditional and Conditional Jump Instructions",
+                "topics": []
+              },
+              {
+                "id": "M2C5L2",
+                "title": "CALL and RET — Subroutine Instructions",
+                "topics": []
+              },
+              {
+                "id": "M2C5L3",
+                "title": "Stack Instructions: PUSH, POP, XTHL",
+                "topics": []
+              },
+              {
+                "id": "M2C5L4",
+                "title": "Loop Structures with Counting and Indexing",
+                "topics": []
+              },
+              {
+                "id": "M2C5L5",
+                "title": "Look-Up Tables in Assembly",
+                "topics": []
+              },
+              {
+                "id": "M2C5L6",
+                "title": "HLT, NOP, and Special Control Instructions",
+                "topics": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "M3",
+        "title": "Interfacing Basics and ICs",
+        "description": "Study of peripheral ICs — 8255 PPI, 8259 PIC, 8251 USART, 8279 Keyboard/Display, 8254 Timer — and A/D, D/A converter interfacing with 8085.",
+        "chapters": [
+          {
+            "id": "M3C1",
+            "title": "8255 Programmable Peripheral Interface (PPI)",
+            "lessons": [
+              {
+                "id": "M3C1L1",
+                "title": "8255 Internal Architecture and Pin Configuration",
+                "topics": []
+              },
+              {
+                "id": "M3C1L2",
+                "title": "8255 Operating Modes: Mode 0, Mode 1, Mode 2",
+                "topics": []
+              },
+              {
+                "id": "M3C1L3",
+                "title": "Control Word Register and Port Configuration",
+                "topics": []
+              },
+              {
+                "id": "M3C1L4",
+                "title": "Interfacing 8255 with 8085 — Circuit and Programming",
+                "topics": []
+              },
+              {
+                "id": "M3C1L5",
+                "title": "Real-World Application: I/O Expansion for Industrial Control",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M3C2",
+            "title": "8259 Programmable Interrupt Controller (PIC)",
+            "lessons": [
+              {
+                "id": "M3C2L1",
+                "title": "8259 Architecture and Interrupt Priority Management",
+                "topics": []
+              },
+              {
+                "id": "M3C2L2",
+                "title": "Initialization Command Words (ICW1–ICW4)",
+                "topics": []
+              },
+              {
+                "id": "M3C2L3",
+                "title": "Operation Command Words (OCW1–OCW3)",
+                "topics": []
+              },
+              {
+                "id": "M3C2L4",
+                "title": "Cascading 8259 for 64-Level Interrupts",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M3C3",
+            "title": "8251 USART — Serial Communication IC",
+            "lessons": [
+              {
+                "id": "M3C3L1",
+                "title": "8251 Architecture and Operating Modes",
+                "topics": []
+              },
+              {
+                "id": "M3C3L2",
+                "title": "Synchronous vs Asynchronous Communication",
+                "topics": []
+              },
+              {
+                "id": "M3C3L3",
+                "title": "8251 Initialization and Data Transfer Programming",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M3C4",
+            "title": "8279 Keyboard and Display Controller",
+            "lessons": [
+              {
+                "id": "M3C4L1",
+                "title": "8279 Architecture and Operating Modes",
+                "topics": []
+              },
+              {
+                "id": "M3C4L2",
+                "title": "Keyboard Scanning and Debouncing",
+                "topics": []
+              },
+              {
+                "id": "M3C4L3",
+                "title": "7-Segment Display Multiplexing with 8279",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M3C5",
+            "title": "8254 Programmable Timer/Counter",
+            "lessons": [
+              {
+                "id": "M3C5L1",
+                "title": "8254 Architecture and Counter Modes (0–5)",
+                "topics": []
+              },
+              {
+                "id": "M3C5L2",
+                "title": "Interfacing 8254 with 8085 for PWM and Timing",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M3C6",
+            "title": "A/D and D/A Converter Interfacing",
+            "lessons": [
+              {
+                "id": "M3C6L1",
+                "title": "ADC0804 Interfacing with 8085",
+                "topics": []
+              },
+              {
+                "id": "M3C6L2",
+                "title": "DAC0808 Interfacing for Analog Output",
+                "topics": []
+              },
+              {
+                "id": "M3C6L3",
+                "title": "Application: Data Acquisition System for Power Monitoring",
+                "topics": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "M4",
+        "title": "Introduction to 8051 Microcontroller",
+        "description": "Covers 8051 architecture, instruction set, interrupts, timers, I/O, serial communication, and typical applications including motor control and temperature systems.",
+        "chapters": [
+          {
+            "id": "M4C1",
+            "title": "8051 Functional Block Diagram and Architecture",
+            "lessons": [
+              {
+                "id": "M4C1L1",
+                "title": "8051 vs 8085: Microcontroller vs Microprocessor",
+                "topics": []
+              },
+              {
+                "id": "M4C1L2",
+                "title": "Internal RAM, SFR, and Program Memory Organization",
+                "topics": []
+              },
+              {
+                "id": "M4C1L3",
+                "title": "I/O Ports P0, P1, P2, P3 — Structure and Alternate Functions",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M4C2",
+            "title": "Instruction Format and Addressing Modes of 8051",
+            "lessons": [
+              {
+                "id": "M4C2L1",
+                "title": "8051 Addressing Modes: Immediate, Direct, Indirect, Indexed",
+                "topics": []
+              },
+              {
+                "id": "M4C2L2",
+                "title": "Bit Manipulation Instructions",
+                "topics": []
+              },
+              {
+                "id": "M4C2L3",
+                "title": "Data Transfer, Arithmetic, and Logic Instructions",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M4C3",
+            "title": "Timers and Counters in 8051",
+            "lessons": [
+              {
+                "id": "M4C3L1",
+                "title": "Timer 0 and Timer 1 — Modes 0 to 3",
+                "topics": []
+              },
+              {
+                "id": "M4C3L2",
+                "title": "Timer Initialization and Delay Generation",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M4C4",
+            "title": "Interrupt Structure of 8051",
+            "lessons": [
+              {
+                "id": "M4C4L1",
+                "title": "5 Interrupts of 8051 and IE/IP Registers",
+                "topics": []
+              },
+              {
+                "id": "M4C4L2",
+                "title": "External Interrupts INT0 and INT1",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M4C5",
+            "title": "Serial Communication in 8051",
+            "lessons": [
+              {
+                "id": "M4C5L1",
+                "title": "SBUF, SCON Registers and Serial Modes",
+                "topics": []
+              },
+              {
+                "id": "M4C5L2",
+                "title": "Baud Rate Calculation and UART Programming",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M4C6",
+            "title": "Real-World Applications of 8051",
+            "lessons": [
+              {
+                "id": "M4C6L1",
+                "title": "Stepper Motor Control using 8051",
+                "topics": []
+              },
+              {
+                "id": "M4C6L2",
+                "title": "Temperature Measurement and Control (LM35 + ADC)",
+                "topics": []
+              },
+              {
+                "id": "M4C6L3",
+                "title": "Keyboard and 7-Segment Display Interface",
+                "topics": []
+              },
+              {
+                "id": "M4C6L4",
+                "title": "IDE and Assembly Programming Environment Setup",
+                "topics": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "M5",
+        "title": "Introduction to RISC-Based Architecture (PIC16/18)",
+        "description": "Covers PIC16/18 architecture, memory organization, addressing modes, instruction set, timers, I/O, and interrupt programming with industry applications.",
+        "chapters": [
+          {
+            "id": "M5C1",
+            "title": "PIC16/18 Architecture Overview",
+            "lessons": [
+              {
+                "id": "M5C1L1",
+                "title": "RISC vs CISC: Architectural Philosophy",
+                "topics": []
+              },
+              {
+                "id": "M5C1L2",
+                "title": "PIC16F877A vs PIC18F4550: Feature Comparison",
+                "topics": []
+              },
+              {
+                "id": "M5C1L3",
+                "title": "Harvard Architecture and Pipelining in PIC",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M5C2",
+            "title": "Memory Organization in PIC16/18",
+            "lessons": [
+              {
+                "id": "M5C2L1",
+                "title": "Program Memory (Flash), Data Memory (RAM), and EEPROM",
+                "topics": []
+              },
+              {
+                "id": "M5C2L2",
+                "title": "Special Function Registers (SFR) and Bank Switching",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M5C3",
+            "title": "Addressing Modes and Instruction Set",
+            "lessons": [
+              {
+                "id": "M5C3L1",
+                "title": "PIC Addressing Modes: Literal, Direct, Indirect, Relative",
+                "topics": []
+              },
+              {
+                "id": "M5C3L2",
+                "title": "Single-Cycle Instructions and WREG Operations",
+                "topics": []
+              },
+              {
+                "id": "M5C3L3",
+                "title": "Bit Manipulation and Skip Instructions",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M5C4",
+            "title": "Timers in PIC16/18",
+            "lessons": [
+              {
+                "id": "M5C4L1",
+                "title": "Timer0, Timer1, Timer2 Configuration and Usage",
+                "topics": []
+              },
+              {
+                "id": "M5C4L2",
+                "title": "PWM Generation using CCP Module",
+                "topics": []
+              }
+            ]
+          },
+          {
+            "id": "M5C5",
+            "title": "I/O Ports and Interrupt Programming",
+            "lessons": [
+              {
+                "id": "M5C5L1",
+                "title": "TRIS, PORT, and LAT Registers for I/O Control",
+                "topics": []
+              },
+              {
+                "id": "M5C5L2",
+                "title": "PIC Interrupt System: GIE, PEIE, and Priority Levels",
+                "topics": []
+              },
+              {
+                "id": "M5C5L3",
+                "title": "Real-World Application: PIC-Based Power Meter and IoT Node",
+                "topics": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

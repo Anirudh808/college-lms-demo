@@ -1,43 +1,64 @@
 [
   {
-    "id": "c1",
-    "title": "Data Structures and Algorithms",
-    "code": "CS201",
-    "departmentId": "d1",
-    "facultyId": "u6",
+    "id": "p1",
+    "title": "Heat and Mass Transfer",
+    "program": "B.E. Mechanical Engineering",
+    "year": 3,
+    "semester": 5,
+    "university": "Anna University",
+    "departmentId": ["d2"],
+    "description": "A rigorous, industry-oriented course on heat and mass transfer. Students begin with real engineering problems — cooling a gas turbine blade, insulating a refinery pipe, quenching a steel billet — and work backward to the theory needed to solve them. Applicable to thermal system design, process industries, energy systems, electronics cooling, and manufacturing.",
+		"syllabus": "./heat_and_mass_transfer_course.json",
+		"enrollment": ["u1"],
+		"faculty": "f2"
+  },
+	{
+		"id": "p2",
+    "title": "Control Systems",
+    "program": "B.E. Computer Science and Engineering",
+    "year": 2,
     "semester": 3,
-    "syllabus": "Arrays, Linked Lists, Stacks, Queues, Trees, Graphs, Sorting, Searching",
-    "modules": [
-      { "id": "m1", "title": "Foundation", "order": 1, "lessonIds": ["l1", "l2"] },
-      { "id": "m2", "title": "Recursion & Trees", "order": 2, "lessonIds": ["l3"] }
-    ],
-    "enrollmentIds": ["u1", "u2", "u3", "u5"]
-  },
+		"departmentId": ["d1"],
+    "description": "This course introduces the fundamental concepts of control systems, covering mathematical modeling, time and frequency domain analysis, stability analysis, and state variable methods. Students will gain both theoretical foundations and practical industry-relevant skills in designing and analyzing control systems.",
+		"syllabus": "./control_systems_course.json",
+		"enrollment": ["u2"],
+		"faculty": "f1"
+	},
+		{
+		"id": "p3",
+    "title": "Data Structures",
+    "program": "B.E. Computer Science and Engineering",
+    "year": 2,
+    "semester": 3,
+		"departmentId": ["d1"],
+    "language": "Python",
+    "description": "This course covers fundamental and advanced data structures with real-world applications. Students will learn to design, analyze, and implement efficient data structures for solving complex computational problems relevant to modern software engineering.",
+		"syllabus": "./data_structures_course.json",
+		"enrollment": ["u1"],
+		"faculty": "f1"
+	},
   {
-    "id": "c2",
-    "title": "Database Management Systems",
-    "code": "CS202",
-    "departmentId": "d1",
-    "facultyId": "u7",
-    "semester": 4,
-    "syllabus": "ER Modeling, SQL, Normalization, Transactions, Indexing",
-    "modules": [
-      { "id": "m3", "title": "ER and Relational Model", "order": 1, "lessonIds": ["l4", "l5"] },
-      { "id": "m4", "title": "SQL and Queries", "order": 2, "lessonIds": ["l6"] }
-    ],
-    "enrollmentIds": ["u1", "u2", "u3", "u5"]
-  },
+		"id": "p4",
+    "title": "Microprocessor and Microcontroller",
+    "program": "BE EEE - 3rd Year",
+		"year": 3,
+    "semester": 6,
+		"departmentId": ["d2"],
+    "description": "A comprehensive industry-relevant course covering 8085 microprocessor architecture, assembly language programming, peripheral interfacing ICs, 8051 microcontroller, and RISC-based PIC architecture with real-world applications in industrial automation, power systems, and embedded IoT systems.",
+		"syllabus": "./microprocessor_and_microcontroller_course.json",
+		"enrollment": ["u2"],
+		"faculty": "f2"
+	},
   {
-    "id": "c3",
-    "title": "Digital Logic Design",
-    "code": "EC201",
-    "departmentId": "d2",
-    "facultyId": "u8",
-    "semester": 2,
-    "syllabus": "Logic Gates, Combinational Circuits, Sequential Circuits",
-    "modules": [
-      { "id": "m5", "title": "Boolean Algebra", "order": 1, "lessonIds": ["l7", "l8"] }
-    ],
-    "enrollmentIds": ["u4"]
-  }
+		"id": "p5",
+    "title": "Analytical Geometry",
+    "program": "B.Sc. Mathematics",
+    "year": "First Year",
+    "semester": 1,
+		"departmentId": ["d1", "d2"],
+    "description": "Emphasize and enhance student knowledge in three-dimensional analytical geometry. Develop understanding of geometrical aspects of three-dimensional figures such as sphere, cone and cylinder.",
+		"syllabus": "./analytical_geometry_course.json",
+		"enrollment": ["u2"],
+		"faculty": "f1"
+	}
 ]

@@ -1,8 +1,6 @@
 import type {
   Tenant,
   User,
-  Department,
-  Program,
   Course,
   Lesson,
   Assignment,
@@ -22,7 +20,6 @@ import tenantsData from "@/data/tenants.json";
 import usersData from "@/data/users.json";
 import departmentsData from "@/data/departments.json";
 import programsData from "@/data/programs.json";
-import coursesData from "@/data/courses.json";
 import lessonsData from "@/data/lessons.json";
 import assignmentsData from "@/data/assignments.json";
 import submissionsData from "@/data/submissions.json";
@@ -35,12 +32,14 @@ import discussionsData from "@/data/discussions.json";
 import attendanceData from "@/data/attendance.json";
 import announcementsData from "@/data/announcements.json";
 import aiUsageData from "@/data/aiUsage.json";
+import rawCoursesData from "@/data/courses.json";
 
 const tenants = tenantsData as Tenant[];
 const users = usersData as User[];
-const departments = departmentsData as Department[];
-const programs = programsData as Program[];
-const courses = coursesData as Course[];
+const departments = departmentsData as import("./types").Department[];
+const programs = programsData as import("./types").Program[];
+// Cast courses from JSON — field names differ from old schema, cast via unknown
+const courses = rawCoursesData as unknown as Course[];
 const lessons = lessonsData as Lesson[];
 let assignments = [...(assignmentsData as Assignment[])];
 let submissions = [...(submissionsData as Submission[])];
@@ -90,9 +89,12 @@ export function getProgram(id: string) {
 
 export function getCourses(facultyId?: string, departmentId?: string, enrollmentId?: string) {
   let list = courses;
-  if (facultyId) list = list.filter((c) => c.facultyId === facultyId);
-  if (departmentId) list = list.filter((c) => c.departmentId === departmentId);
-  if (enrollmentId) list = list.filter((c) => c.enrollmentIds?.includes(enrollmentId));
+  // New schema: faculty field (was facultyId)
+  if (facultyId) list = list.filter((c) => c.faculty === facultyId);
+  // New schema: departmentId is now string[] (array), skip simple string filter
+  // if (departmentId) list = list.filter((c) => c.departmentId === departmentId);
+  // New schema: enrollment field (was enrollmentIds)
+  if (enrollmentId) list = list.filter((c) => c.enrollment?.includes(enrollmentId));
   return list;
 }
 

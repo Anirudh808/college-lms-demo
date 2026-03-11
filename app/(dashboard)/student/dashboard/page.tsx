@@ -321,7 +321,7 @@ export default function StudentDashboardPage() {
                   return (
                     <div key={a.id} className="border-l-2 border-orange-500 pl-3">
                       <p className="font-semibold text-sm line-clamp-1" title={a.title}>{a.title}</p>
-                      <p className="text-xs font-medium">{course?.code}</p>
+                      <p className="text-xs font-medium line-clamp-1">{course?.title}</p>
                       <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
                         <Clock className="h-3 w-3" /> Due {format(new Date(a.dueDate), "MMM d")}
                       </p>

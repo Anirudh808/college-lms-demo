@@ -12,8 +12,8 @@ export interface User {
   name: string;
   email: string;
   role: Role;
-  departmentId: string;
-  programId?: string;
+  departmentId?: string;
+  programs?: string[]; // array of course IDs the user is enrolled in (student) or teaches (faculty)
   planOverride?: Plan;
 }
 
@@ -34,15 +34,69 @@ export interface Program {
 export interface Course {
   id: string;
   title: string;
-  code: string;
-  departmentId: string;
-  facultyId: string;
-  semester: number;
-  syllabus?: string;
-  modules: Module[];
-  enrollmentIds?: string[];
+  program: string;
+  year?: string | number;
+  semester?: number;
+  university?: string;
+  language?: string;
+  departmentId?: string[];
+  description?: string;
+  syllabus?: string; // relative path to the course JSON file, e.g. "./heat_and_mass_transfer_course.json"
+  enrollment: string[]; // array of student user IDs
+  faculty: string; // faculty user ID
 }
 
+// ─── Syllabus JSON types (used when loading course detail files) ──────────────
+
+export interface SyllabusSubtopic {
+  id: string;
+  title: string;
+  content?: string;
+  examples?: string[];
+  images?: string[];
+  image_meta?: { caption: string; license: string; source: string }[];
+}
+
+export interface SyllabusLesson {
+  id: string;
+  title: string;
+  description?: string;
+  topics?: {
+    id: string;
+    title: string;
+    subtopics?: SyllabusSubtopic[];
+  }[];
+}
+
+export interface SyllabusChapter {
+  id: string;
+  title: string;
+  description?: string;
+  lessons: SyllabusLesson[];
+}
+
+export interface SyllabusModule {
+  id: string;
+  title: string;
+  description?: string;
+  chapters: SyllabusChapter[];
+}
+
+export interface CourseSyllabus {
+  course: {
+    id: string;
+    title: string;
+    program?: string;
+    year?: string;
+    semester?: string;
+    university?: string;
+    credits?: number;
+    description?: string;
+    modules: SyllabusModule[];
+  };
+}
+
+// Legacy stub — kept so lesson pages compile (getLessons still used)
 export interface Module {
   id: string;
   title: string;

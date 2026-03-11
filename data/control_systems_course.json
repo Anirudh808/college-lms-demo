@@ -1,0 +1,912 @@
+{
+  "course": {
+    "id": "EC3351",
+    "title": "Control Systems",
+    "regulation": "2021",
+    "university": "Anna University",
+    "program": "B.E. Computer Science and Engineering",
+    "year": 2,
+    "semester": 3,
+    "description": "This course introduces the fundamental concepts of control systems, covering mathematical modeling, time and frequency domain analysis, stability analysis, and state variable methods. Students will gain both theoretical foundations and practical industry-relevant skills in designing and analyzing control systems.",
+    "modules": [
+      {
+        "id": "M1",
+        "title": "Systems Components and Their Representation",
+        "description": "Covers the terminology, structure, and mathematical models used to represent control systems including transfer functions, block diagrams, signal flow graphs, and practical servo systems.",
+        "chapters": [
+          {
+            "id": "M1C1",
+            "title": "Foundations of Control Systems",
+            "description": "Introduces the core terminology, classification, and structural concepts of control systems, including feedforward and feedback control.",
+            "lessons": [
+              {
+                "id": "M1C1L1",
+                "title": "Introduction to Control Systems",
+                "topics": [
+                  {
+                    "id": "M1C1L1T1",
+                    "title": "What is a Control System?",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L1T1S1",
+                        "title": "Definition and Purpose",
+                        "content": "A control system is an interconnection of physical components that commands, directs, or regulates the behavior of other devices or systems to achieve a desired output. The primary purpose of a control system is to maintain a desired output (called the controlled variable) at a specified value or within a specified range, despite the presence of disturbances or uncertainty in the system. Control systems are fundamental to modern engineering and are found in virtually every automated process — from household thermostats to complex aerospace autopilots.\n\nAt its core, a control system takes an input (called the reference or set-point), processes it through a controller and plant (the physical system being controlled), and produces an output. The sophistication of the control system determines how accurately and how quickly the output tracks the desired input.",
+                        "examples": [
+                          "A home air conditioning thermostat: the desired temperature is the set-point; the thermostat measures room temperature and switches the compressor ON/OFF to maintain it.",
+                          "A car's cruise control: the driver sets a desired speed; the system adjusts engine throttle to maintain that speed regardless of road inclines.",
+                          "An industrial robotic arm: the desired joint angle is the set-point; the controller drives motors to move the arm to the precise position."
+                        ],
+                        "images": [
+                          "https://example.com/images/control-system-basic-block.png",
+                          "https://example.com/images/thermostat-control-example.png"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L1T1S2",
+                        "title": "Open-Loop vs Closed-Loop Systems",
+                        "content": "Control systems are broadly classified into open-loop and closed-loop (feedback) systems. In an open-loop system, the controller acts on the input alone and does not measure the actual output — it simply executes a predefined action. This makes open-loop systems simple and inexpensive, but they are sensitive to disturbances and parameter changes. In contrast, a closed-loop system continuously measures the actual output, compares it to the desired reference, and uses the difference (the error signal) to correct the system's behavior. This self-correcting property makes closed-loop systems far more accurate and robust.\n\nThe ability of a closed-loop system to correct itself using feedback is what makes it the preferred architecture in most modern engineering applications. However, closed-loop systems introduce complexity and can become unstable if not designed carefully — making stability analysis a central concern in control system design.",
+                        "examples": [
+                          "Open-loop: A washing machine timer that runs for a fixed duration regardless of how dirty the clothes are.",
+                          "Closed-loop: An automatic washing machine that uses sensors to detect cleanliness level and adjusts wash time accordingly.",
+                          "Open-loop: A toaster with a fixed timer. Closed-loop: A smart toaster with a sensor that monitors toast color and ejects when golden-brown."
+                        ],
+                        "images": [
+                          "https://example.com/images/open-loop-block-diagram.png",
+                          "https://example.com/images/closed-loop-block-diagram.png",
+                          "https://example.com/images/open-vs-closed-loop-comparison.png"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "M1C1L1T2",
+                    "title": "Key Terminology in Control Systems",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L1T2S1",
+                        "title": "Plant, Process, and System",
+                        "content": "The term 'plant' refers to the physical object or hardware component of a system that is to be controlled. It can be a mechanical device, a chemical reactor, an aircraft, or any physical entity whose output variable needs to be regulated. The term 'process' is sometimes used interchangeably with 'plant' but more specifically refers to an ongoing operation or a sequence of operations that produce a desired result — it is commonly used in chemical and manufacturing industries. The broader term 'system' refers to the entire collection of components — plant, sensors, actuators, and controller — working together to achieve the control objective.\n\nUnderstanding the distinction between these terms is important when modeling real-world systems. In practice, the plant model is derived first through mathematical analysis or system identification experiments, and the controller is then designed around this model to achieve the desired performance.",
+                        "examples": [
+                          "Plant: The electric motor in a conveyor belt system whose speed needs to be controlled.",
+                          "Process: The chemical reaction in a pharmaceutical mixing tank where temperature must be regulated.",
+                          "System: The complete autopilot system of an aircraft, including sensors (gyroscopes), actuators (control surfaces), and the flight controller."
+                        ],
+                        "images": [
+                          "https://example.com/images/plant-process-system-diagram.png",
+                          "https://example.com/images/industrial-plant-example.png"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L1T2S2",
+                        "title": "Controller, Actuator, and Sensor",
+                        "content": "A controller is the 'brain' of the control system — it receives the error signal (difference between desired and actual output) and computes the appropriate control action. The actuator converts the controller's output (often a low-power electrical signal) into a physical action that affects the plant. Common actuators include electric motors, hydraulic cylinders, pneumatic valves, and heating elements. A sensor measures the actual output of the plant and converts it into a signal that the controller can process. Sensors provide the feedback path in a closed-loop system.\n\nThese three components — controller, actuator, and sensor — form the core of any feedback control system. Their selection and design are critical: a poorly chosen sensor with high noise can degrade performance, an imprecise actuator can cause oscillations, and an improperly tuned controller can lead to instability.",
+                        "examples": [
+                          "In a DC motor speed control system: Controller = PID algorithm running on a microcontroller, Actuator = power transistor driving the motor, Sensor = optical encoder measuring shaft RPM.",
+                          "In a building HVAC system: Controller = thermostat logic board, Actuator = compressor and fans, Sensor = thermistor measuring room temperature.",
+                          "In a self-driving car's lane-keeping system: Controller = embedded control algorithm, Actuator = electric power steering motor, Sensor = camera and LIDAR."
+                        ],
+                        "images": [
+                          "https://example.com/images/controller-actuator-sensor-loop.png",
+                          "https://example.com/images/pid-motor-control-hardware.png"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L1T2S3",
+                        "title": "Reference Input, Error Signal, and Output",
+                        "content": "The reference input (also called set-point or desired output) is the value we want the system's output to achieve. It represents the goal or target for the control system. The error signal is computed as the difference between the reference input and the actual output measured by the sensor: Error = Reference − Actual Output. This error is what the controller acts upon — when the error is zero, the system has achieved its goal. The output (also called the controlled variable) is the actual physical quantity being regulated, such as temperature, speed, position, or pressure.\n\nThe error signal is the fundamental driving force in feedback control. A positive error means the output is below the desired value, and the controller increases its effort to push the output up. A negative error means the output has overshot, and the controller reduces or reverses its effort. Designing the controller to drive this error to zero quickly and stably is the essence of control system design.",
+                        "examples": [
+                          "In a room temperature control system: Reference = 24°C, Actual temperature (from sensor) = 20°C, Error = +4°C → controller heats more aggressively.",
+                          "In a CNC milling machine: Reference = target X-axis position = 150mm, Actual position = 148mm, Error = +2mm → servo motor drives the table further.",
+                          "In a drone altitude hold system: Reference = 10 meters, Actual altitude = 10.5 meters, Error = -0.5m → controller reduces rotor thrust to descend."
+                        ],
+                        "images": [
+                          "https://example.com/images/error-signal-diagram.png",
+                          "https://example.com/images/reference-output-comparison-plot.png"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C1L2",
+                "title": "Feedforward and Feedback Control",
+                "topics": [
+                  {
+                    "id": "M1C1L2T1",
+                    "title": "Feedforward Control",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L2T1S1",
+                        "title": "Concept of Feedforward Control",
+                        "content": "Feedforward control is a control strategy in which the controller anticipates disturbances or changes in the reference input and takes corrective action before those disturbances affect the output. Unlike feedback control, feedforward control does not wait for an error to occur — it proactively adjusts the control signal based on a model or measurement of the disturbance. This makes feedforward control extremely fast and capable of achieving near-perfect disturbance rejection if the system model is accurate.\n\nThe main limitation of feedforward control is that it relies entirely on the accuracy of the system model. If the model has errors or the system changes over time (due to wear, temperature drift, etc.), feedforward control cannot compensate on its own. For this reason, feedforward control is almost always combined with feedback control in real-world applications — the feedforward component handles known, measurable disturbances, while feedback handles residual errors and model uncertainties.",
+                        "examples": [
+                          "A paper mill uses feedforward control: when sensors detect a change in raw pulp consistency entering the machine, the controller immediately adjusts the pressing force — before the paper quality is affected.",
+                          "In a heated furnace, a feedforward controller adjusts the fuel flow rate immediately when a cold batch of metal enters, based on the measured batch temperature, without waiting to measure furnace output temperature.",
+                          "Noise-cancelling headphones use feedforward: a microphone on the outside of the ear cup picks up ambient noise and the DSP generates an anti-noise signal in advance, before the noise reaches the ear."
+                        ],
+                        "images": [
+                          "https://example.com/images/feedforward-block-diagram.png",
+                          "https://example.com/images/feedforward-vs-feedback-comparison.png"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L2T1S2",
+                        "title": "Advantages and Limitations of Feedforward",
+                        "content": "Feedforward control offers the significant advantage of being able to eliminate disturbances before they affect the output, leading to faster response and zero steady-state error for measurable disturbances. Because feedforward acts proactively rather than reactively, it does not introduce the delay inherent in waiting for an error to develop. This makes it particularly valuable in high-speed manufacturing processes where even small transient errors can result in product defects.\n\nHowever, feedforward control requires an accurate mathematical model of the plant and the disturbance dynamics. It cannot correct for unmeasured disturbances or model uncertainties. It also cannot handle nonlinearities well unless an explicit nonlinear model is incorporated. These limitations mean that feedforward control alone is insufficient for most practical applications, and it must be complemented with a feedback loop to form a robust combined control strategy.",
+                        "examples": [
+                          "Advantage: In a temperature-controlled chemical reactor, feedforward control adjusts heating before the input reactant temperature changes propagate through the tank, maintaining product quality.",
+                          "Limitation: If the heating element's efficiency degrades over time (model mismatch), the feedforward controller cannot detect this and will produce under-heated output.",
+                          "Combined approach: Modern industrial boilers use feedforward (based on measured steam demand) combined with PID feedback to maintain precise steam pressure."
+                        ],
+                        "images": [
+                          "https://example.com/images/feedforward-advantages-chart.png",
+                          "https://example.com/images/combined-feedforward-feedback.png"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "M1C1L2T2",
+                    "title": "Feedback Control",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L2T2S1",
+                        "title": "Concept of Feedback Control",
+                        "content": "Feedback control is a strategy in which the actual output of the system is continuously measured, compared to the desired reference, and the resulting error is used to generate a corrective control action. The feedback loop 'closes' the system — the output influences the input, creating a self-regulating mechanism. Negative feedback (where the error = Reference − Output) is the most common type and is the basis of most control systems. It drives the system to minimize the error over time.\n\nFeedback control is inherently robust to model uncertainties and unmeasured disturbances because it continuously monitors the actual output and reacts to any deviation. This makes it the dominant control strategy in engineering. The tradeoff is that feedback introduces a delay (the system must first observe the error, then respond), which can cause instability if not managed properly through careful controller design.",
+                        "examples": [
+                          "A feedback-controlled water tank: a float valve rises with water level and physically closes the inlet valve when the desired level is reached — a purely mechanical feedback loop.",
+                          "Biological example: the human body maintains blood glucose levels through a feedback loop involving insulin and glucagon secreted by the pancreas.",
+                          "An op-amp amplifier circuit with resistor feedback sets gain precisely regardless of individual transistor variations — feedback makes it robust to component tolerances."
+                        ],
+                        "images": [
+                          "https://example.com/images/negative-feedback-block-diagram.png",
+                          "https://example.com/images/feedback-control-signal-flow.png"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L2T2S2",
+                        "title": "Negative vs Positive Feedback",
+                        "content": "Negative feedback subtracts the measured output from the reference to compute the error. This subtraction creates a stabilizing effect — if the output rises above the reference, the error becomes negative, causing the controller to reduce its effort and push the output back down. Negative feedback is the cornerstone of stable, self-regulating control systems and is universally used in control engineering.\n\nPositive feedback adds the measured output to the reference (or subtracts a negative error), creating a destabilizing effect where any deviation is amplified rather than corrected. Positive feedback is used deliberately in oscillators, flip-flops, and certain biological systems (like nerve signal propagation), but it is generally avoided in control systems because it can lead to runaway or unstable behavior. Understanding the distinction is critical because even a closed-loop system with negative feedback can become positively fed back at certain frequencies due to phase shift — a primary cause of instability.",
+                        "examples": [
+                          "Negative feedback: A speed governor in a steam engine — if speed increases above set-point, centrifugal weights rise, closing the steam valve, reducing speed back to target.",
+                          "Positive feedback (deliberate): A Schmitt trigger circuit uses positive feedback to create sharp switching transitions and hysteresis, avoiding noisy toggling near the threshold.",
+                          "Negative feedback gone unstable: Public address (PA) system feedback — the microphone picks up amplified speaker output, creating a positive feedback loop that causes the familiar loud screeching."
+                        ],
+                        "images": [
+                          "https://example.com/images/negative-positive-feedback-diagram.png",
+                          "https://example.com/images/pa-system-feedback-illustration.png"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M1C2",
+            "title": "Electrical and Mechanical Transfer Function Models",
+            "description": "Covers mathematical modeling of electrical circuits and mechanical systems, deriving transfer functions using Laplace transforms.",
+            "lessons": [
+              {
+                "id": "M1C2L1",
+                "title": "Laplace Transform Review for Control Systems",
+                "topics": [
+                  {
+                    "id": "M1C2L1T1",
+                    "title": "Laplace Transform Basics",
+                    "subtopics": [
+                      { "id": "M1C2L1T1S1", "title": "Definition of Laplace Transform", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C2L1T1S2", "title": "Common Laplace Transform Pairs", "content": "", "examples": [], "images": [] }
+                    ]
+                  },
+                  {
+                    "id": "M1C2L1T2",
+                    "title": "Transfer Function Concept",
+                    "subtopics": [
+                      { "id": "M1C2L1T2S1", "title": "Definition of Transfer Function", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C2L1T2S2", "title": "Poles and Zeros", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C2L2",
+                "title": "Electrical System Models",
+                "topics": [
+                  {
+                    "id": "M1C2L2T1",
+                    "title": "Modeling RC, RL, and RLC Circuits",
+                    "subtopics": [
+                      { "id": "M1C2L2T1S1", "title": "RC Circuit Transfer Function", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C2L2T1S2", "title": "RLC Circuit Transfer Function", "content": "", "examples": [], "images": [] }
+                    ]
+                  },
+                  {
+                    "id": "M1C2L2T2",
+                    "title": "Operational Amplifier Models",
+                    "subtopics": [
+                      { "id": "M1C2L2T2S1", "title": "Inverting and Non-Inverting Op-Amp Configurations", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C2L3",
+                "title": "Mechanical System Models",
+                "topics": [
+                  {
+                    "id": "M1C2L3T1",
+                    "title": "Translational Mechanical Systems",
+                    "subtopics": [
+                      { "id": "M1C2L3T1S1", "title": "Mass-Spring-Damper System", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C2L3T1S2", "title": "Deriving Transfer Function from Newton's Law", "content": "", "examples": [], "images": [] }
+                    ]
+                  },
+                  {
+                    "id": "M1C2L3T2",
+                    "title": "Rotational Mechanical Systems",
+                    "subtopics": [
+                      { "id": "M1C2L3T2S1", "title": "Moment of Inertia, Damping, and Torsional Spring", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C2L3T2S2", "title": "Gear Trains and Mechanical Advantage", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M1C3",
+            "title": "Block Diagram Models",
+            "description": "Covers representation of control systems using block diagrams and reduction techniques.",
+            "lessons": [
+              {
+                "id": "M1C3L1",
+                "title": "Block Diagram Fundamentals",
+                "topics": [
+                  {
+                    "id": "M1C3L1T1",
+                    "title": "Block Diagram Elements",
+                    "subtopics": [
+                      { "id": "M1C3L1T1S1", "title": "Blocks, Summing Junctions, and Takeoff Points", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C3L2",
+                "title": "Block Diagram Reduction",
+                "topics": [
+                  {
+                    "id": "M1C3L2T1",
+                    "title": "Reduction Rules and Techniques",
+                    "subtopics": [
+                      { "id": "M1C3L2T1S1", "title": "Series, Parallel, and Feedback Reduction", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C3L2T1S2", "title": "Moving Summing Junctions and Takeoff Points", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M1C4",
+            "title": "Signal Flow Graph Models",
+            "description": "Introduces signal flow graphs as an alternative representation of control systems and Mason's gain formula.",
+            "lessons": [
+              {
+                "id": "M1C4L1",
+                "title": "Signal Flow Graph Fundamentals",
+                "topics": [
+                  {
+                    "id": "M1C4L1T1",
+                    "title": "Nodes, Branches, and Paths",
+                    "subtopics": [
+                      { "id": "M1C4L1T1S1", "title": "Constructing Signal Flow Graphs", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C4L2",
+                "title": "Mason's Gain Formula",
+                "topics": [
+                  {
+                    "id": "M1C4L2T1",
+                    "title": "Applying Mason's Rule",
+                    "subtopics": [
+                      { "id": "M1C4L2T1S1", "title": "Forward Paths and Loop Gains", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C4L2T1S2", "title": "Step-by-step Application of Mason's Formula", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M1C5",
+            "title": "DC and AC Servo Systems",
+            "description": "Covers the operating principles and transfer function models of DC and AC servo motors used in control applications.",
+            "lessons": [
+              {
+                "id": "M1C5L1",
+                "title": "DC Servo Systems",
+                "topics": [
+                  {
+                    "id": "M1C5L1T1",
+                    "title": "DC Servo Motor Principles",
+                    "subtopics": [
+                      { "id": "M1C5L1T1S1", "title": "Construction and Working of DC Servo Motor", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C5L1T1S2", "title": "Transfer Function of DC Servo Motor", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C5L2",
+                "title": "AC Servo Systems",
+                "topics": [
+                  {
+                    "id": "M1C5L2T1",
+                    "title": "AC Servo Motor Principles",
+                    "subtopics": [
+                      { "id": "M1C5L2T1S1", "title": "Two-Phase AC Servo Motor", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C5L2T1S2", "title": "Transfer Function of AC Servo Motor", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M1C6",
+            "title": "Synchros and Multivariable Control Systems",
+            "description": "Covers synchros (synchronous devices) used in angular position measurement and an introduction to multivariable (MIMO) control systems.",
+            "lessons": [
+              {
+                "id": "M1C6L1",
+                "title": "Synchros",
+                "topics": [
+                  {
+                    "id": "M1C6L1T1",
+                    "title": "Synchro Transmitter and Receiver",
+                    "subtopics": [
+                      { "id": "M1C6L1T1S1", "title": "Construction and Working Principle", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C6L1T1S2", "title": "Error Detector Using Synchros", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C6L2",
+                "title": "Multivariable Control Systems",
+                "topics": [
+                  {
+                    "id": "M1C6L2T1",
+                    "title": "SISO vs MIMO Systems",
+                    "subtopics": [
+                      { "id": "M1C6L2T1S1", "title": "Introduction to MIMO Control", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C6L2T1S2", "title": "Transfer Matrix Representation", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "M2",
+        "title": "Time Response Analysis",
+        "description": "Analyzes the transient and steady-state behavior of control systems in the time domain, including PID control design.",
+        "chapters": [
+          {
+            "id": "M2C1",
+            "title": "Transient Response Analysis",
+            "lessons": [
+              {
+                "id": "M2C1L1",
+                "title": "Standard Test Signals",
+                "topics": [
+                  {
+                    "id": "M2C1L1T1",
+                    "title": "Step, Ramp, Parabolic, and Impulse Signals",
+                    "subtopics": [
+                      { "id": "M2C1L1T1S1", "title": "Unit Step Signal", "content": "", "examples": [], "images": [] },
+                      { "id": "M2C1L1T1S2", "title": "Unit Ramp and Impulse Signals", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M2C1L2",
+                "title": "First Order System Response",
+                "topics": [
+                  {
+                    "id": "M2C1L2T1",
+                    "title": "Time Constant and Performance Measures",
+                    "subtopics": [
+                      { "id": "M2C1L2T1S1", "title": "Step Response of First Order System", "content": "", "examples": [], "images": [] },
+                      { "id": "M2C1L2T1S2", "title": "Rise Time and Settling Time", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M2C1L3",
+                "title": "Second Order System Response",
+                "topics": [
+                  {
+                    "id": "M2C1L3T1",
+                    "title": "Damping Ratio and Natural Frequency",
+                    "subtopics": [
+                      { "id": "M2C1L3T1S1", "title": "Underdamped, Overdamped, and Critically Damped", "content": "", "examples": [], "images": [] },
+                      { "id": "M2C1L3T1S2", "title": "Peak Overshoot and Settling Time", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M2C2",
+            "title": "Effects of Additional Poles and Zeros",
+            "lessons": [
+              {
+                "id": "M2C2L1",
+                "title": "Effect of an Additional Zero",
+                "topics": [
+                  {
+                    "id": "M2C2L1T1",
+                    "title": "How Zeros Modify Transient Response",
+                    "subtopics": [
+                      { "id": "M2C2L1T1S1", "title": "Left Half Plane Zero Effect", "content": "", "examples": [], "images": [] },
+                      { "id": "M2C2L1T1S2", "title": "Right Half Plane (Non-Minimum Phase) Zero", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M2C2L2",
+                "title": "Effect of an Additional Pole",
+                "topics": [
+                  {
+                    "id": "M2C2L2T1",
+                    "title": "How Dominant Poles Simplify Analysis",
+                    "subtopics": [
+                      { "id": "M2C2L2T1S1", "title": "Dominant Pole Approximation", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M2C3",
+            "title": "Steady-State Error Analysis",
+            "lessons": [
+              {
+                "id": "M2C3L1",
+                "title": "Steady-State Error and System Type",
+                "topics": [
+                  {
+                    "id": "M2C3L1T1",
+                    "title": "Error Constants",
+                    "subtopics": [
+                      { "id": "M2C3L1T1S1", "title": "Position, Velocity, and Acceleration Error Constants", "content": "", "examples": [], "images": [] },
+                      { "id": "M2C3L1T1S2", "title": "System Type Number (Type 0, 1, 2)", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M2C4",
+            "title": "PID Control Design",
+            "lessons": [
+              {
+                "id": "M2C4L1",
+                "title": "PID Controller",
+                "topics": [
+                  {
+                    "id": "M2C4L1T1",
+                    "title": "Proportional, Integral, and Derivative Actions",
+                    "subtopics": [
+                      { "id": "M2C4L1T1S1", "title": "Effect of P, I, D Gains", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M2C4L2",
+                "title": "Analytical Design of PD, PI, PID Controllers",
+                "topics": [
+                  {
+                    "id": "M2C4L2T1",
+                    "title": "Design Procedure",
+                    "subtopics": [
+                      { "id": "M2C4L2T1S1", "title": "PD Controller Design", "content": "", "examples": [], "images": [] },
+                      { "id": "M2C4L2T1S2", "title": "PI Controller Design", "content": "", "examples": [], "images": [] },
+                      { "id": "M2C4L2T1S3", "title": "PID Controller Design and Tuning", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "M3",
+        "title": "Frequency Response and System Analysis",
+        "description": "Analyzes control systems in the frequency domain using Bode, Polar, and Nyquist plots, and covers compensator design.",
+        "chapters": [
+          {
+            "id": "M3C1",
+            "title": "Frequency Domain Concepts",
+            "lessons": [
+              {
+                "id": "M3C1L1",
+                "title": "Closed-Loop Frequency Response",
+                "topics": [
+                  {
+                    "id": "M3C1L1T1",
+                    "title": "Resonant Peak and Bandwidth",
+                    "subtopics": [
+                      { "id": "M3C1L1T1S1", "title": "Resonant Frequency and Peak Magnitude", "content": "", "examples": [], "images": [] },
+                      { "id": "M3C1L1T1S2", "title": "Bandwidth and Cutoff Frequency", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M3C2",
+            "title": "Bode Plots",
+            "lessons": [
+              {
+                "id": "M3C2L1",
+                "title": "Constructing Bode Plots",
+                "topics": [
+                  {
+                    "id": "M3C2L1T1",
+                    "title": "Magnitude and Phase Plots",
+                    "subtopics": [
+                      { "id": "M3C2L1T1S1", "title": "Bode Plot for Standard Transfer Functions", "content": "", "examples": [], "images": [] },
+                      { "id": "M3C2L1T1S2", "title": "Gain Margin and Phase Margin from Bode Plot", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M3C3",
+            "title": "Polar and Nyquist Plots",
+            "lessons": [
+              {
+                "id": "M3C3L1",
+                "title": "Polar Plots",
+                "topics": [
+                  {
+                    "id": "M3C3L1T1",
+                    "title": "Constructing and Interpreting Polar Plots",
+                    "subtopics": [
+                      { "id": "M3C3L1T1S1", "title": "Polar Plot for Type 0 and Type 1 Systems", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M3C3L2",
+                "title": "Nyquist Plots",
+                "topics": [
+                  {
+                    "id": "M3C3L2T1",
+                    "title": "Nyquist Contour and Encirclements",
+                    "subtopics": [
+                      { "id": "M3C3L2T1S1", "title": "Constructing Nyquist Plot", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M3C4",
+            "title": "Compensator Design Using Bode Plots",
+            "lessons": [
+              {
+                "id": "M3C4L1",
+                "title": "Lead Compensation",
+                "topics": [
+                  {
+                    "id": "M3C4L1T1",
+                    "title": "Cascade Lead Compensator Design",
+                    "subtopics": [
+                      { "id": "M3C4L1T1S1", "title": "Lead Compensator Transfer Function and Effect", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M3C4L2",
+                "title": "Lag Compensation",
+                "topics": [
+                  {
+                    "id": "M3C4L2T1",
+                    "title": "Cascade Lag Compensator Design",
+                    "subtopics": [
+                      { "id": "M3C4L2T1S1", "title": "Lag Compensator Transfer Function and Effect", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M3C4L3",
+                "title": "Lag-Lead Compensation",
+                "topics": [
+                  {
+                    "id": "M3C4L3T1",
+                    "title": "Cascade Lag-Lead Compensator Design",
+                    "subtopics": [
+                      { "id": "M3C4L3T1S1", "title": "Combined Lag-Lead Design Procedure", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "M4",
+        "title": "Concepts of Stability Analysis",
+        "description": "Covers stability definitions, Routh-Hurwitz criterion, root locus technique, and Nyquist stability criterion.",
+        "chapters": [
+          {
+            "id": "M4C1",
+            "title": "Concept of Stability",
+            "lessons": [
+              {
+                "id": "M4C1L1",
+                "title": "BIBO Stability",
+                "topics": [
+                  {
+                    "id": "M4C1L1T1",
+                    "title": "Bounded Input Bounded Output Stability",
+                    "subtopics": [
+                      { "id": "M4C1L1T1S1", "title": "Definition and Conditions for BIBO Stability", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M4C2",
+            "title": "Routh-Hurwitz Stability Criterion",
+            "lessons": [
+              {
+                "id": "M4C2L1",
+                "title": "Routh Array Construction",
+                "topics": [
+                  {
+                    "id": "M4C2L1T1",
+                    "title": "Building the Routh Table",
+                    "subtopics": [
+                      { "id": "M4C2L1T1S1", "title": "Routh Array Formation Rules", "content": "", "examples": [], "images": [] },
+                      { "id": "M4C2L1T1S2", "title": "Special Cases: Zero in First Column, All-Zero Row", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M4C2L2",
+                "title": "Relative Stability",
+                "topics": [
+                  {
+                    "id": "M4C2L2T1",
+                    "title": "Gain Margin and Stability Margin",
+                    "subtopics": [
+                      { "id": "M4C2L2T1S1", "title": "Determining Relative Stability Using Routh Criterion", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M4C3",
+            "title": "Root Locus Analysis",
+            "lessons": [
+              {
+                "id": "M4C3L1",
+                "title": "Root Locus Fundamentals",
+                "topics": [
+                  {
+                    "id": "M4C3L1T1",
+                    "title": "Concept of Root Locus",
+                    "subtopics": [
+                      { "id": "M4C3L1T1S1", "title": "How Poles Move with Gain Variation", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M4C3L2",
+                "title": "Root Locus Sketching Rules",
+                "topics": [
+                  {
+                    "id": "M4C3L2T1",
+                    "title": "Guidelines for Sketching Root Locus",
+                    "subtopics": [
+                      { "id": "M4C3L2T1S1", "title": "Rules 1-5: Starting Points, Asymptotes, Real Axis", "content": "", "examples": [], "images": [] },
+                      { "id": "M4C3L2T1S2", "title": "Rules 6-8: Breakaway Points, Angle of Departure", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M4C4",
+            "title": "Nyquist Stability Criterion",
+            "lessons": [
+              {
+                "id": "M4C4L1",
+                "title": "Applying Nyquist Criterion",
+                "topics": [
+                  {
+                    "id": "M4C4L1T1",
+                    "title": "Nyquist Stability Theorem",
+                    "subtopics": [
+                      { "id": "M4C4L1T1S1", "title": "N = P - Z Rule and Encirclements", "content": "", "examples": [], "images": [] },
+                      { "id": "M4C4L1T1S2", "title": "Stability Analysis Using Nyquist Plot", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "M5",
+        "title": "Control System Analysis Using State Variable Methods",
+        "description": "Introduces state space representation, controllability, observability, and state feedback design for control systems.",
+        "chapters": [
+          {
+            "id": "M5C1",
+            "title": "State Space Representation",
+            "lessons": [
+              {
+                "id": "M5C1L1",
+                "title": "State Variables and State Equations",
+                "topics": [
+                  {
+                    "id": "M5C1L1T1",
+                    "title": "State Variables, State Vector, State Space",
+                    "subtopics": [
+                      { "id": "M5C1L1T1S1", "title": "Definition of State and State Variables", "content": "", "examples": [], "images": [] },
+                      { "id": "M5C1L1T1S2", "title": "State Equations and Output Equations", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M5C1L2",
+                "title": "Matrix Representation",
+                "topics": [
+                  {
+                    "id": "M5C1L2T1",
+                    "title": "A, B, C, D Matrices",
+                    "subtopics": [
+                      { "id": "M5C1L2T1S1", "title": "System Matrix and Input Matrix", "content": "", "examples": [], "images": [] },
+                      { "id": "M5C1L2T1S2", "title": "Output Matrix and Feedthrough Matrix", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M5C2",
+            "title": "Solution of State Equations",
+            "lessons": [
+              {
+                "id": "M5C2L1",
+                "title": "State Transition Matrix",
+                "topics": [
+                  {
+                    "id": "M5C2L1T1",
+                    "title": "Computing the State Transition Matrix",
+                    "subtopics": [
+                      { "id": "M5C2L1T1S1", "title": "Matrix Exponential e^At", "content": "", "examples": [], "images": [] },
+                      { "id": "M5C2L1T1S2", "title": "Properties of State Transition Matrix", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M5C3",
+            "title": "Controllability and Observability",
+            "lessons": [
+              {
+                "id": "M5C3L1",
+                "title": "Controllability",
+                "topics": [
+                  {
+                    "id": "M5C3L1T1",
+                    "title": "Kalman's Controllability Condition",
+                    "subtopics": [
+                      { "id": "M5C3L1T1S1", "title": "Controllability Matrix and Rank Test", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M5C3L2",
+                "title": "Observability",
+                "topics": [
+                  {
+                    "id": "M5C3L2T1",
+                    "title": "Kalman's Observability Condition",
+                    "subtopics": [
+                      { "id": "M5C3L2T1S1", "title": "Observability Matrix and Rank Test", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M5C4",
+            "title": "Conversion Between Transfer Function and State Space",
+            "lessons": [
+              {
+                "id": "M5C4L1",
+                "title": "Transfer Function to State Space",
+                "topics": [
+                  {
+                    "id": "M5C4L1T1",
+                    "title": "Canonical Forms",
+                    "subtopics": [
+                      { "id": "M5C4L1T1S1", "title": "Controllable Canonical Form", "content": "", "examples": [], "images": [] },
+                      { "id": "M5C4L1T1S2", "title": "Observable Canonical Form", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M5C5",
+            "title": "State Feedback and Pole Placement",
+            "lessons": [
+              {
+                "id": "M5C5L1",
+                "title": "State Feedback Design",
+                "topics": [
+                  {
+                    "id": "M5C5L1T1",
+                    "title": "Pole Placement by State Feedback",
+                    "subtopics": [
+                      { "id": "M5C5L1T1S1", "title": "Ackermann's Formula", "content": "", "examples": [], "images": [] },
+                      { "id": "M5C5L1T1S2", "title": "Design of State Observer (Luenberger Observer)", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

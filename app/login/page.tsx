@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/store/session";
-import { getTenants, getUsers, getDepartments, getPrograms } from "@/lib/data";
+import { getTenants, getUsers, getDepartments } from "@/lib/data";
 import type { Tenant, User, Plan } from "@/lib/types";
 import { getPlanDisplayName } from "@/lib/plans";
 import { Button } from "@/components/ui/button";
@@ -28,7 +28,6 @@ export default function LoginPage() {
 
   const tenants = getTenants();
   const departments = getDepartments();
-  const programs = getPrograms();
   const usersByRole = getUsers(role);
 
   useEffect(() => {
@@ -116,8 +115,8 @@ export default function LoginPage() {
               <SelectContent>
                 {usersByRole.map((u) => (
                   <SelectItem key={u.id} value={u.id}>
-                    {u.name} {u.programId ? `(${programs.find((p) => p.id === u.programId)?.code ?? ""})` : ""}
-                    {u.departmentId ? ` - ${departments.find((d) => d.id === u.departmentId)?.name ?? ""}` : ""}
+                    {u.name}
+                    {u.departmentId ? ` — ${departments.find((d) => d.id === u.departmentId)?.name ?? ""}` : ""}
                   </SelectItem>
                 ))}
               </SelectContent>

@@ -1,219 +1,155 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useSession } from "@/store/session";
-import { getPlanLimits } from "@/lib/plans";
-import { getLesson } from "@/lib/data";
-import { simulateAI } from "@/lib/ai-simulator";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { getCourses } from "@/lib/data";
+import { AITutorChat } from "@/components/ai-tutor-chat";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Lock, Send, Lightbulb, ListOrdered, BookOpen } from "lucide-react";
+  Bot,
+  BookOpen,
+  ChevronRight,
+  ArrowLeft,
+  Search,
+  Sparkles,
+} from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 export default function AITutorPage() {
-  const searchParams = useSearchParams();
-  const lessonId = searchParams.get("lesson") ?? undefined;
-  const { user, plan } = useSession();
-  const limits = user ? getPlanLimits(user.role, plan) : {};
-  const [question, setQuestion] = useState("");
-  const [mode, setMode] = useState<"explain" | "hint" | "step_by_step">("explain");
-  const [messages, setMessages] = useState<{ role: "user" | "assistant"; content: string; citations?: { id: string; title: string; excerpt: string }[] }[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [limitModal, setLimitModal] = useState<{ type: "limit" | "locked"; upgradeTo?: string } | null>(null);
-  const [showCitations, setShowCitations] = useState(true);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const { user } = useSession();
+  const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
 
-  const tutorLimit = limits.tutor;
-  const stepLimit = limits.step_by_step;
-  const canStepByStep = stepLimit?.available ?? false;
-  const usageByFeature = useSession((s) => s.usageByFeature);
-  const currentDate = useSession((s) => s.currentDate);
-  const tutorUsed = usageByFeature.tutor?.day?.[currentDate] ?? 0;
-  const stepUsed = usageByFeature.step_by_step?.day?.[currentDate] ?? 0;
-  const tutorRemaining = tutorLimit?.limit && tutorLimit.limit !== "unlimited" ? Math.max(0, tutorLimit.limit - tutorUsed) : 999;
-  const stepRemaining = stepLimit?.limit && stepLimit.limit !== "unlimited" ? Math.max(0, stepLimit.limit - stepUsed) : 0;
+  // Fetch courses enrolled by this student
+  const allCourses = user ? getCourses(undefined, undefined, user.id) : [];
+  const courses = allCourses.filter(
+    (c) =>
+      query.trim() === "" ||
+      c.title.toLowerCase().includes(query.toLowerCase()) ||
+      c.code?.toLowerCase().includes(query.toLowerCase())
+  );
 
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  const selectedCourse = allCourses.find((c) => c.id === selectedCourseId);
 
-  const handleSend = () => {
-    if (!question.trim() || loading) return;
+  // ─── Chat view ───────────────────────────────────────────────────────────
+  if (selectedCourseId) {
+    return (
+      <div className="flex flex-col h-[calc(100vh-7rem)]">
+        {/* Top bar */}
+        <div className="flex items-center gap-3 pb-4 border-b mb-4 shrink-0">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setSelectedCourseId(null)}
+            title="Back to course selection"
+          >
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+              <Bot className="h-4 w-4 text-primary" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold leading-tight truncate">
+                AI Tutor
+              </p>
+              <p className="text-xs text-muted-foreground leading-tight truncate">
+                Knowledgebase: {selectedCourse?.title ?? selectedCourseId}
+              </p>
+            </div>
+          </div>
+          <Badge variant="secondary" className="ml-auto shrink-0 bg-primary/10 text-primary border-transparent text-xs">
+            <Sparkles className="h-3 w-3 mr-1" />
+            {selectedCourse?.code ?? "Course"}
+          </Badge>
+        </div>
 
-    if (mode === "step_by_step" && !canStepByStep) {
-      setLimitModal({ type: "locked", upgradeTo: "Premium" });
-      return;
-    }
+        {/* Chat */}
+        <div className="flex-1 min-h-0">
+          <AITutorChat courseId={selectedCourseId} className="h-full" />
+        </div>
+      </div>
+    );
+  }
 
-    if (mode === "step_by_step" && stepRemaining <= 0) {
-      setLimitModal({ type: "limit" });
-      return;
-    }
-
-    if (tutorRemaining <= 0 && mode !== "step_by_step") {
-      setLimitModal({ type: "limit" });
-      return;
-    }
-
-    setMessages((m) => [...m, { role: "user", content: question }]);
-    setQuestion("");
-    setLoading(true);
-
-    const featureKey = mode === "step_by_step" ? "step_by_step" : "tutor";
-    const result = simulateAI(mode, question, lessonId, featureKey);
-
-    setLoading(false);
-
-    if (!result.success) {
-      if (result.error === "feature_locked") setLimitModal({ type: "locked", upgradeTo: "Premium" });
-      else if (result.error === "limit_reached" || result.error === "credits_exceeded") setLimitModal({ type: "limit" });
-      setMessages((m) => m.slice(0, -1));
-      return;
-    }
-
-    setMessages((m) => [
-      ...m,
-      {
-        role: "assistant",
-        content: result.response ?? "",
-        citations: result.citations,
-      },
-    ]);
-  };
-
+  // ─── Course-selection landing ─────────────────────────────────────────────
   return (
-    <div className="max-w-4xl mx-auto space-y-4">
-      <div>
-        <h1 className="text-2xl font-bold">AI Tutor</h1>
-        <p className="text-muted-foreground">
-          Get help with your course material. Tutor: {tutorRemaining} left today.
-          {canStepByStep && ` Step-by-step: ${stepRemaining} left.`}
+    <div className="max-w-2xl mx-auto py-6 px-2 space-y-8">
+      {/* Hero */}
+      <div className="text-center space-y-3">
+        <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 mx-auto">
+          <Bot className="h-8 w-8 text-primary" />
+        </div>
+        <h1 className="text-2xl font-bold tracking-tight">AI Tutor</h1>
+        <p className="text-muted-foreground text-sm max-w-sm mx-auto">
+          Select a course to focus the AI Tutor's knowledgebase.
+          You'll get answers grounded in that course's material.
         </p>
       </div>
 
-      <div className="flex gap-2 items-center">
-        <Label className="text-sm">Mode:</Label>
-        <Button
-          variant={mode === "explain" ? "default" : "outline"}
-          size="sm"
-          onClick={() => setMode("explain")}
-        >
-          <BookOpen className="w-4 h-4 mr-1" /> Explain
-        </Button>
-        <Button variant={mode === "hint" ? "default" : "outline"} size="sm" onClick={() => setMode("hint")}>
-          <Lightbulb className="w-4 h-4 mr-1" /> Hint only
-        </Button>
-        {canStepByStep ? (
-          <Button
-            variant={mode === "step_by_step" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setMode("step_by_step")}
-          >
-            <ListOrdered className="w-4 h-4 mr-1" /> Step-by-step
-          </Button>
-        ) : (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setLimitModal({ type: "locked", upgradeTo: "Premium" })}
-          >
-            <Lock className="w-4 h-4 mr-1" /> Step-by-step
-          </Button>
-        )}
-      </div>
-
-      <div className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          id="citations"
-          checked={showCitations}
-          onChange={(e) => setShowCitations(e.target.checked)}
+      {/* Search */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+        <Input
+          placeholder="Search your courses…"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="pl-9 h-10"
+          autoFocus
         />
-        <Label htmlFor="citations">Show citations from course material</Label>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Chat</CardTitle>
-          <CardDescription>
-            Ask a question. Responses are simulated for demo—no real AI calls.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4 max-h-[400px] overflow-y-auto mb-4">
-            {messages.length === 0 && (
-              <p className="text-sm text-muted-foreground">Ask a question to get started.</p>
-            )}
-            {messages.map((msg, i) => (
-              <div
-                key={i}
-                className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-              >
-                <div
-                  className={`max-w-[85%] rounded-lg px-4 py-2 ${
-                    msg.role === "user"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted"
-                  }`}
-                >
-                  <p className="whitespace-pre-wrap text-sm">{msg.content}</p>
-                  {msg.role === "assistant" && showCitations && msg.citations && msg.citations.length > 0 && (
-                    <div className="mt-3 pt-3 border-t border-border/50">
-                      <p className="text-xs font-medium mb-1">References</p>
-                      <ul className="text-xs space-y-1">
-                        {msg.citations.map((c) => (
-                          <li key={c.id}>
-                            {c.title}: {c.excerpt}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+      {/* Course list */}
+      {courses.length === 0 ? (
+        <div className="text-center py-12 text-muted-foreground text-sm">
+          {query ? "No courses match your search." : "You are not enrolled in any courses."}
+        </div>
+      ) : (
+        <div className="space-y-2">
+          {courses.map((course) => (
+            <button
+              key={course.id}
+              onClick={() => setSelectedCourseId(course.id)}
+              className={cn(
+                "w-full flex items-center gap-4 px-4 py-3.5 rounded-xl border bg-card",
+                "hover:border-primary/50 hover:bg-primary/5 hover:shadow-sm",
+                "transition-all duration-150 text-left group"
+              )}
+            >
+              {/* Icon */}
+              <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors">
+                <BookOpen className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+              </div>
+
+              {/* Info */}
+              <div className="flex-1 min-w-0 space-y-0.5">
+                <p className="text-sm font-semibold leading-tight truncate">
+                  {course.title}
+                </p>
+                <div className="flex items-center gap-2">
+                  {course.code && (
+                    <span className="text-xs text-muted-foreground font-medium">
+                      {course.code}
+                    </span>
+                  )}
+                  {course.modules?.length > 0 && (
+                    <span className="text-xs text-muted-foreground">
+                      · {course.modules.length} module{course.modules.length !== 1 ? "s" : ""}
+                    </span>
                   )}
                 </div>
               </div>
-            ))}
-            <div ref={scrollRef} />
-          </div>
 
-          <div className="flex gap-2">
-            <Input
-              placeholder="Type your question..."
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            />
-            <Button onClick={handleSend} disabled={loading}>
-              <Send className="w-4 h-4" />
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Dialog open={!!limitModal} onOpenChange={() => setLimitModal(null)}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>
-              {limitModal?.type === "locked" ? "Feature locked" : "Limit reached"}
-            </DialogTitle>
-            <DialogDescription>
-              {limitModal?.type === "locked"
-                ? `This feature is available in ${limitModal.upgradeTo ?? "Premium"}.`
-                : "You've reached your daily limit. Try again tomorrow or upgrade your plan."}
-            </DialogDescription>
-          </DialogHeader>
-          <Button onClick={() => setLimitModal(null)}>OK</Button>
-        </DialogContent>
-      </Dialog>
+              {/* Arrow */}
+              <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all shrink-0" />
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

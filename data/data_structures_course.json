@@ -1,0 +1,678 @@
+{
+  "course": {
+    "id": "CS8391",
+    "title": "Data Structures",
+    "code": "CS8391",
+    "program": "B.E. Computer Science and Engineering",
+    "year": "2nd Year – Semester III",
+    "university": "Anna University",
+    "language": "Python",
+    "description": "This course covers fundamental and advanced data structures with real-world applications. Students will learn to design, analyze, and implement efficient data structures for solving complex computational problems relevant to modern software engineering.",
+    "modules": [
+      {
+        "id": "M1",
+        "title": "Lists",
+        "description": "Covers Abstract Data Types, List ADT, and various linked list implementations along with applications.",
+        "chapters": [
+          {
+            "id": "M1C1",
+            "title": "Abstract Data Types and List ADT",
+            "description": "Introduction to ADTs, their significance, and the List ADT with its operations and interface.",
+            "lessons": [
+              {
+                "id": "M1C1L1",
+                "title": "Introduction to Abstract Data Types (ADTs)",
+                "description": "Understanding what ADTs are, why they matter, and how they differ from data structures.",
+                "topics": [
+                  {
+                    "id": "M1C1L1T1",
+                    "title": "What is an Abstract Data Type?",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L1T1S1",
+                        "title": "Definition and Concept of ADT",
+                        "content": "An Abstract Data Type (ADT) is a theoretical concept in computer science that defines a data type purely by its behavior (semantics) from the user's perspective — specifically, the possible values it can hold and the operations that can be performed on it — without specifying the concrete implementation details. The word 'abstract' means we are concerned only with WHAT the data type does, not HOW it does it internally.\n\nThink of an ADT as a contract or an interface: it tells you what you can do with the data, but completely hides the internal mechanics. For example, a 'Stack' ADT may declare: you can push elements, pop elements, and peek at the top. But whether the stack is physically backed by a Python list, a linked list of nodes, or a fixed array — that is irrelevant to the user of the ADT.\n\nThis concept of abstraction is one of the core pillars of software engineering. It allows developers to reason about programs at a high level, separate design concerns from implementation concerns, and swap out implementations for better-performing ones without breaking any existing code that uses the ADT.\n\nFormally, an ADT is defined by three components: (1) A domain — the set of values the type can represent (e.g., a list of integers); (2) A set of operations — the functions applicable to those values (e.g., insert, delete, find); and (3) A set of axioms or contracts — rules describing how operations must behave (e.g., 'after push(x), peek() must return x'). This formal definition makes ADTs a powerful tool for both designing systems and proving their correctness mathematically.",
+                        "examples": [
+                          "# Stack ADT — user only sees the interface, not the implementation\nclass StackADT:\n    def push(self, item): pass    # Add to top\n    def pop(self): pass           # Remove from top\n    def peek(self): pass          # View top without removing\n    def is_empty(self): pass      # Check if empty\n\n# One implementation using Python list\nclass ArrayStack(StackADT):\n    def __init__(self):\n        self._data = []\n    def push(self, item):\n        self._data.append(item)\n    def pop(self):\n        return self._data.pop()\n    def peek(self):\n        return self._data[-1]\n    def is_empty(self):\n        return len(self._data) == 0",
+                          "# A BankAccount ADT — the user doesn't know if balance is in RAM, DB, or file\nclass BankAccountADT:\n    def deposit(self, amount): pass\n    def withdraw(self, amount): pass\n    def get_balance(self): pass\n    def get_statement(self): pass\n\n# Usage — completely independent of how data is stored\naccount = BankAccountADT()\naccount.deposit(5000)\naccount.withdraw(1500)\nprint(account.get_balance())  # 3500",
+                          "# Python's own built-in types are ADTs\n# list ADT operations: append, pop, insert, remove, index\nmy_list = []\nmy_list.append(10)     # insert at end\nmy_list.insert(0, 5)   # insert at position\nmy_list.pop()          # remove from end\nprint(my_list.index(5)) # find by value\n# You never worry about whether CPython uses a dynamic array internally!"
+                        ],
+                        "images": [
+                          "https://placehold.co/800x450?text=ADT+Concept:+Interface+vs+Implementation",
+                          "https://placehold.co/800x450?text=Two-Layer+Diagram:+User+sees+Operations+only,+Implementation+hidden+below"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L1T1S2",
+                        "title": "ADT vs Data Structure",
+                        "content": "Students often confuse ADTs with data structures, but these are two distinct concepts operating at fundamentally different levels of abstraction. An ADT is a logical description — it defines what a type is and what operations it supports. A Data Structure is the actual, concrete implementation of that ADT in memory — it defines how data is physically organized and how operations are executed in code.\n\nThe relationship between an ADT and a data structure is best understood through an analogy: an ADT is like an architectural blueprint that specifies 'the building will have 3 bedrooms and 2 bathrooms,' while the data structure is the actual constructed building with specific bricks, beams, wiring, and plumbing. The blueprint doesn't tell you what materials to use — that's the builder's job.\n\nFor example, the 'List ADT' defines operations like insert, delete, and access. This single ADT can be realized as an Array-based List (contiguous memory) or as a Linked List (nodes connected by pointers). Both are valid data structures implementing the same ADT contract, but they have vastly different performance profiles: array lists offer O(1) random access but O(n) insertion at the middle, while linked lists offer O(1) insertion at head but O(n) random access.\n\nThis distinction is foundational in software design because it enables polymorphism and substitutability. You can write code that depends only on the ADT interface, and later plug in a different data structure for better performance — without modifying any of the client code. This is exactly what Python's abstract base classes (ABC module) and Java's interfaces formalize.",
+                        "examples": [
+                          "# ADT: Queue (defines the interface)\nfrom abc import ABC, abstractmethod\n\nclass QueueADT(ABC):\n    @abstractmethod\n    def enqueue(self, item): pass\n    @abstractmethod\n    def dequeue(self): pass\n    @abstractmethod\n    def front(self): pass\n    @abstractmethod\n    def is_empty(self): pass\n\n# Data Structure 1: Array-based Queue\nclass ArrayQueue(QueueADT):\n    def __init__(self):\n        self._data = []\n    def enqueue(self, item):\n        self._data.append(item)\n    def dequeue(self):\n        return self._data.pop(0)\n    def front(self):\n        return self._data[0]\n    def is_empty(self):\n        return len(self._data) == 0\n\n# Data Structure 2: Linked List Queue\nclass LinkedQueue(QueueADT):\n    # Different internal structure, same interface!\n    pass",
+                          "# ADT: Map/Dictionary\n# Same interface, multiple data structure implementations:\n# 1. Python dict — hash table implementation\nhash_map = {}\nhash_map['name'] = 'Alice'\nprint(hash_map['name'])\n\n# 2. Sorted dict (tree-based) via sortedcontainers\n# from sortedcontainers import SortedDict\n# tree_map = SortedDict()\n# tree_map['name'] = 'Alice'\n# Same interface, different internal structure!",
+                          "# Comparison table in code comments:\n# | Operation  | Array List | Linked List |\n# |------------|------------|-------------|\n# | Access [i] |   O(1)     |    O(n)     |\n# | Insert mid |   O(n)     |    O(1)*    |\n# | Delete mid |   O(n)     |    O(1)*    |\n# | Search     |   O(n)     |    O(n)     |\n# (* given pointer to node)\n# Same ADT, drastically different performance!"
+                        ],
+                        "images": [
+                          "https://placehold.co/800x450?text=ADT+vs+Data+Structure:+Blueprint+vs+Building+Analogy",
+                          "https://placehold.co/800x450?text=List+ADT+Interface+pointing+to+ArrayList+and+LinkedList+implementations"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L1T1S3",
+                        "title": "Why ADTs Matter in Modern Software Engineering",
+                        "content": "ADTs are not just academic constructs — they are the invisible backbone of modern software engineering. Virtually every major system, library, and framework you use daily is built on ADT principles. Understanding ADTs deeply transforms how you design software: instead of thinking about memory layouts and pointer arithmetic, you think in terms of behaviors, contracts, and interfaces.\n\nOne of the most powerful benefits of ADTs is modular design and code reusability. A function written to operate on a 'List ADT' works correctly for any list implementation — array, linked, skip list, etc. This means you write the algorithm once and it works everywhere the contract is satisfied. Python's sort() method, for instance, works on any sequence that implements comparison operations — it doesn't know or care if it's sorting a Python list, a NumPy array, or a custom collection.\n\nADTs also dramatically improve software maintainability. When an internal implementation needs to change (perhaps for performance), only the implementation file changes — the rest of the codebase, which only depends on the ADT interface, remains completely unaffected. This is the principle behind the open/closed principle in SOLID design: open for extension, closed for modification.\n\nIn professional settings, ADTs form the basis of API design. Companies like Google, Amazon, and Meta publish stable APIs for their services — these APIs are ADTs: they define what operations are available and what they do, without revealing how the servers actually process requests. Engineers who understand ADTs write better APIs that last years without breaking, because they know to expose behavior, not implementation.",
+                        "examples": [
+                          "# Python's collections.abc module defines ADTs as abstract base classes\nfrom collections.abc import MutableSequence\n\n# MutableSequence is the ADT — defines insert, __getitem__, __setitem__, __delitem__, __len__\n# list, bytearray, and custom classes are data structures that implement it\n\nclass MyCustomList(MutableSequence):\n    # Implement the ADT contract\n    def __init__(self):\n        self._store = []\n    def __getitem__(self, i): return self._store[i]\n    def __setitem__(self, i, v): self._store[i] = v\n    def __delitem__(self, i): del self._store[i]\n    def __len__(self): return len(self._store)\n    def insert(self, i, v): self._store.insert(i, v)\n\n# Now built-in methods work on our custom list!\ncl = MyCustomList()\ncl.append(1); cl.append(2); cl.append(3)\nprint(list(reversed(cl)))  # Works! [3, 2, 1]",
+                          "# Real-world: Linux VFS (Virtual File System) as an ADT\n# Every filesystem (ext4, FAT32, NTFS) implements the same file ADT:\n# open(), read(), write(), close(), seek()\n# Python's file ADT works the same way:\nwith open('data.txt', 'r') as f:  # Doesn't matter if file is SSD or network\n    content = f.read()            # Same interface regardless of storage type",
+                          "# ADT enables algorithm reuse — binary search works on ANY sorted sequence ADT\ndef binary_search(sequence, target):\n    # Only uses ADT operations: len() and indexing []\n    low, high = 0, len(sequence) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if sequence[mid] == target: return mid\n        elif sequence[mid] < target: low = mid + 1\n        else: high = mid - 1\n    return -1\n\n# Works on list, tuple, array, any sequence ADT!\nprint(binary_search([1, 3, 5, 7, 9], 7))   # 3\nprint(binary_search((2, 4, 6, 8, 10), 6))  # 2"
+                        ],
+                        "images": [
+                          "https://placehold.co/800x450?text=Layered+Architecture:+App+Layer+to+ADT+Interface+to+Data+Structure+to+Memory",
+                          "https://placehold.co/800x450?text=Python+collections.abc+Hierarchy:+Container+Iterable+Sized+to+Sequence+MutableSequence"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "M1C1L1T2",
+                    "title": "Properties and Characteristics of ADTs",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L1T2S1",
+                        "title": "Encapsulation in ADTs",
+                        "content": "Encapsulation is the property of bundling the data and the operations on that data into a single cohesive unit, while restricting external access to the internal state. In the context of ADTs, encapsulation means users interact with data exclusively through the defined operations — they cannot directly read or mutate the internal variables of the data structure.\n\nIn Python, encapsulation is implemented through the convention of name mangling and private attributes. Attributes prefixed with a single underscore (_attr) signal 'intended for internal use,' while double-underscore (__attr) triggers Python's name mangling to make direct external access practically impossible. Combined with Python's property decorators, this creates clean, encapsulated ADT implementations where the internal state is fully controlled.\n\nThe deeper reason encapsulation matters is the maintenance of invariants — conditions that must always remain true about the internal state. For a List ADT backed by an array, the invariant might be: 'self._size always equals the actual number of valid elements stored.' If users could directly modify self._size, they could create corrupt states that crash the program unpredictably. By routing all modifications through defined methods, invariants are enforced at every operation.\n\nIn modern industry, encapsulation is what makes large software systems manageable. When a team of 50 engineers works on a single codebase, the ADT boundary acts as a 'firewall' — engineers on the user side cannot accidentally break the implementation side and vice versa. This is why professional code review standards explicitly check for encapsulation violations.",
+                        "examples": [
+                          "# Encapsulation in a Stack ADT using Python\nclass Stack:\n    def __init__(self):\n        self.__data = []      # Private: name-mangled to _Stack__data\n        self.__size = 0       # Users cannot access this directly\n\n    def push(self, item):\n        self.__data.append(item)\n        self.__size += 1\n\n    def pop(self):\n        if self.is_empty():\n            raise IndexError('Stack underflow')\n        self.__size -= 1\n        return self.__data.pop()\n\n    def peek(self):\n        if self.is_empty():\n            raise IndexError('Stack is empty')\n        return self.__data[-1]\n\n    def is_empty(self):\n        return self.__size == 0\n\n    def size(self):\n        return self.__size\n\ns = Stack()\ns.push(10)\ns.push(20)\nprint(s.peek())       # 20\n# print(s.__data)     # AttributeError! Encapsulation enforced",
+                          "# Property decorators for controlled access\nclass BoundedList:\n    def __init__(self, capacity):\n        self.__items = []\n        self.__capacity = capacity\n\n    @property\n    def capacity(self):\n        return self.__capacity   # Read-only access\n\n    @property\n    def count(self):\n        return len(self.__items) # Read-only computed property\n\n    def add(self, item):\n        if self.count >= self.__capacity:\n            raise OverflowError('List is full')\n        self.__items.append(item)\n\nbl = BoundedList(3)\nbl.add(1); bl.add(2)\nprint(bl.capacity)  # 3\nprint(bl.count)     # 2\n# bl.capacity = 10  # AttributeError — read-only property!",
+                          "# Real-world example: Python's heapq module encapsulates heap invariant\nimport heapq\nheap = []\nheapq.heappush(heap, 5)\nheapq.heappush(heap, 2)\nheapq.heappush(heap, 8)\nprint(heapq.heappop(heap))  # Always returns smallest: 2\n# The heap property (parent <= children) is maintained internally\n# You never manually rearrange the list — encapsulation enforces the invariant"
+                        ],
+                        "images": [
+                          "https://placehold.co/800x450?text=Capsule+Diagram:+Public+Methods+Shell+Surrounding+Private+Data+Core",
+                          "https://placehold.co/800x450?text=Python+Class+Diagram+Showing+Public+Methods+vs+Private+__data+Attributes"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L1T2S2",
+                        "title": "Information Hiding",
+                        "content": "Information hiding is a design principle formalized by David Parnas in 1972 that states: the implementation details most likely to change should be hidden behind a stable interface. While encapsulation is about bundling and access control, information hiding specifically focuses on shielding users from details they don't need and shouldn't depend on.\n\nThe practical consequence of information hiding is that the implementation can evolve freely — for performance improvements, bug fixes, or supporting new hardware — without affecting a single line of client code. If users could depend on implementation details (like knowing that a list is backed by a Python array), any change to that backing store would break all client code. By hiding those details, the implementer gains the freedom to optimize aggressively.\n\nIn Python, information hiding is achieved through a combination of conventions and language features: single underscore prefixes for internal-use attributes, double underscore for name-mangled private attributes, abstract base classes to define stable interfaces, and module-level __all__ lists to explicitly declare what is public. While Python doesn't enforce strict private access like Java or C++, the community strongly respects these conventions.\n\nInformation hiding is what makes large frameworks stable over years. Django's ORM, for example, hides whether it's using PostgreSQL, MySQL, or SQLite behind a uniform query interface. Applications written for Django work with any supported database without modification. This is the direct, practical result of information hiding at the framework level.",
+                        "examples": [
+                          "# Information hiding through abstract interface\nfrom abc import ABC, abstractmethod\n\nclass SortedContainer(ABC):\n    \"\"\"Stable interface — users depend only on this\"\"\"\n    @abstractmethod\n    def insert(self, value): pass\n    @abstractmethod\n    def remove(self, value): pass\n    @abstractmethod\n    def contains(self, value): pass\n    @abstractmethod\n    def minimum(self): pass\n\n# Implementation A: BST-based (hidden from user)\nclass BSTContainer(SortedContainer):\n    def __init__(self):\n        self._root = None  # User doesn't know this is a BST!\n    def insert(self, value): pass  # BST insert logic\n    def remove(self, value): pass\n    def contains(self, value): pass\n    def minimum(self): pass\n\n# Implementation B: Sorted list-based (swappable!)\nclass SortedListContainer(SortedContainer):\n    def __init__(self):\n        self._data = []   # User doesn't know this is a list!\n    def insert(self, value):\n        import bisect\n        bisect.insort(self._data, value)\n    def remove(self, value): self._data.remove(value)\n    def contains(self, value): return value in self._data\n    def minimum(self): return self._data[0]",
+                          "# Python's __all__ for module-level information hiding\n# In mylist.py:\n__all__ = ['List', 'create_list']  # Only these are public\n\nclass List:\n    pass\n\ndef create_list():\n    return List()\n\ndef _internal_helper():  # Hidden — not in __all__\n    pass\n\n# User imports:\n# from mylist import *  → only gets List and create_list\n# _internal_helper is hidden from the public interface",
+                          "# Django ORM — classic information hiding example\n# User code (depends only on stable interface):\n# from django.db import models\n# results = MyModel.objects.filter(age__gte=18).order_by('name')\n# Django hides whether it generates PostgreSQL, MySQL, or SQLite SQL\n# The same Python code works with any database backend!\n# Switching databases = change one line in settings.py\n# Zero changes to user code — that's information hiding in action"
+                        ],
+                        "images": [
+                          "https://placehold.co/800x450?text=Iceberg+Diagram:+Public+Interface+Above+Water,+Private+Implementation+Below",
+                          "https://placehold.co/800x450?text=Django+ORM+Hiding+PostgreSQL+MySQL+SQLite+Behind+Unified+Query+Interface"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L1T2S3",
+                        "title": "ADT Operations: Constructors, Accessors, and Mutators",
+                        "content": "Operations defined on an ADT are classified into three fundamental categories based on their role and effect on the state: Constructors (creators), Accessors (observers), and Mutators (transformers). Understanding this classification is critical for designing correct, predictable ADTs and for building thread-safe and functional-style programs.\n\nConstructors are operations that create and initialize a new instance of the ADT. In Python, this corresponds to the __init__ method or class-level factory functions like list(), dict(), or set(). Constructors establish the initial valid state of the ADT and ensure all internal invariants are satisfied from the very beginning. A well-designed constructor should never leave the object in an invalid or partially-initialized state.\n\nAccessors (also called observers or queries) are operations that retrieve information from the ADT without modifying its state. Examples include size(), is_empty(), peek(), and get(index). Accessors are idempotent — calling them multiple times in a row always returns the same result (assuming no mutation in between). This property makes accessors safe for concurrent reads in multi-threaded systems, and it's why functional programming prefers pure accessor-like functions.\n\nMutators (also called transformers or commands) are operations that modify the internal state of the ADT. Examples include insert(), delete(), update(), push(), pop(), and clear(). Mutators change the state, so the result of an accessor called before a mutator may differ from one called after. Designing mutators carefully — ensuring they maintain all invariants and behave atomically (either fully succeed or fully fail) — is the essence of robust ADT implementation.",
+                        "examples": [
+                          "# Classification of List ADT operations\nclass ListADT:\n    # === CONSTRUCTORS ===\n    def __init__(self):\n        \"\"\"Create a new empty list\"\"\"\n        self._data = []\n        self._size = 0\n\n    @classmethod\n    def from_iterable(cls, iterable):\n        \"\"\"Factory constructor from existing data\"\"\"\n        obj = cls()\n        for item in iterable:\n            obj.append(item)\n        return obj\n\n    # === ACCESSORS (read-only, no state change) ===\n    def size(self): return self._size\n    def is_empty(self): return self._size == 0\n    def get(self, index): return self._data[index]\n    def find(self, value): return self._data.index(value)\n    def contains(self, value): return value in self._data\n\n    # === MUTATORS (modify state) ===\n    def append(self, value):\n        self._data.append(value)\n        self._size += 1\n    def insert(self, index, value):\n        self._data.insert(index, value)\n        self._size += 1\n    def delete(self, index):\n        self._data.pop(index)\n        self._size -= 1\n    def clear(self):\n        self._data = []\n        self._size = 0",
+                          "# Why the distinction matters: thread safety\nimport threading\n\n# Accessors can safely run concurrently (read-only)\n# Mutators need locks to prevent race conditions\nclass ThreadSafeStack:\n    def __init__(self):\n        self.__data = []\n        self.__lock = threading.Lock()\n\n    def peek(self):         # Accessor — read lock sufficient\n        return self.__data[-1] if self.__data else None\n\n    def is_empty(self):     # Accessor — read lock sufficient\n        return len(self.__data) == 0\n\n    def push(self, item):   # Mutator — needs exclusive write lock!\n        with self.__lock:\n            self.__data.append(item)\n\n    def pop(self):          # Mutator — needs exclusive write lock!\n        with self.__lock:\n            return self.__data.pop()",
+                          "# Demonstration of state changes by mutators\nL = ListADT.from_iterable([10, 20, 30])\nprint(L.size())       # Accessor: 3\nprint(L.get(1))       # Accessor: 20\n\nL.insert(1, 15)       # Mutator: [10, 15, 20, 30]\nprint(L.size())       # Accessor: 4 — changed!\nprint(L.get(1))       # Accessor: 15 — changed!\n\nL.delete(0)           # Mutator: [15, 20, 30]\nprint(L.is_empty())   # Accessor: False\nL.clear()             # Mutator: []\nprint(L.is_empty())   # Accessor: True"
+                        ],
+                        "images": [
+                          "https://placehold.co/800x450?text=Three+Boxes:+Constructors+(Create)+Accessors+(Read)+Mutators+(Modify)",
+                          "https://placehold.co/800x450?text=State+Transition+Diagram:+Empty+State+to+NonEmpty+via+Mutators,+Accessors+as+Self-Loops"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C1L2",
+                "title": "The List ADT",
+                "description": "Deep dive into the List ADT — its definition, operations, and interface design.",
+                "topics": [
+                  {
+                    "id": "M1C1L2T1",
+                    "title": "Defining the List ADT",
+                    "subtopics": [
+                      {
+                        "id": "M1C1L2T1S1",
+                        "title": "What is a List?",
+                        "content": "A List is one of the most fundamental Abstract Data Types in computer science. Formally, a List is an ordered, finite sequence of zero or more elements of the same type, where elements are accessed by their position (index). The critical term here is 'ordered' — this does not mean the elements are sorted by value, but that they occupy a definite sequence: there is a first element, a second, a third, and so on up to the last.\n\nA list is classified as a linear data structure because its elements are logically arranged in a straight line. Each element (except the first) has exactly one predecessor, and each element (except the last) has exactly one successor. This strict linearity distinguishes lists from non-linear structures like trees (where one element can have many children) and graphs (where elements can have arbitrary connections).\n\nThe dynamic nature of a list is what makes it powerful: unlike a fixed-size array, a list can grow when elements are added and shrink when elements are removed. This dynamic behavior is a core part of the List ADT contract, even if the underlying implementation uses a fixed-capacity array with periodic resizing.\n\nLists are ubiquitous in every domain of computing. A music playlist, the history of visited URLs in a browser, the lines in a text file, the undo history in a document editor, the sequence of frames in a video — all of these are naturally modeled as List ADTs. Mastering the List ADT is the entry point into understanding how all sequential data in software is organized and manipulated.",
+                        "examples": [
+                          "# Python's built-in list is the most common List ADT implementation\nplaylist = ['Song A', 'Song B', 'Song C', 'Song D']\nprint(playlist[0])          # Access by position: 'Song A'\nplaylist.insert(2, 'Song X') # Insert at position 2\nprint(playlist)              # ['Song A', 'Song B', 'Song X', 'Song C', 'Song D']\nplaylist.remove('Song B')    # Delete by value\nprint(len(playlist))         # Size: 4",
+                          "# Browser history as a List ADT\nbrowser_history = []\nbrowser_history.append('google.com')    # Visit page\nbrowser_history.append('github.com')\nbrowser_history.append('docs.python.org')\n\ncurrent = browser_history[-1]           # Current page\nprevious = browser_history[-2]          # Previous page\nprint(f'Current: {current}')            # docs.python.org\nprint(f'Back to: {previous}')           # github.com\n\nbrowser_history.pop()                   # Press back button\nprint(browser_history[-1])              # Now at github.com",
+                          "# Text editor undo history as a List ADT\nundo_history = []\ntext = ''\n\ndef type_text(new_text):\n    global text\n    undo_history.append(text)  # Save current state\n    text = new_text\n\ndef undo():\n    global text\n    if undo_history:\n        text = undo_history.pop()  # Restore previous state\n\ntype_text('Hello')\ntype_text('Hello World')\ntype_text('Hello World!')\nprint(text)   # 'Hello World!'\nundo()\nprint(text)   # 'Hello World'\nundo()\nprint(text)   # 'Hello'"
+                        ],
+                        "images": [
+                          "https://placehold.co/800x450?text=List+as+Numbered+Boxes:+[0:A][1:B][2:C][3:D]+with+Index+Labels",
+                          "https://placehold.co/800x450?text=Real-World+Lists:+Playlist+BrowserHistory+TodoList+UndoStack"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L2T1S2",
+                        "title": "List ADT Operations",
+                        "content": "The List ADT is characterized by a well-defined, minimal yet complete set of operations that together allow users to do everything meaningful with a list. These operations form the entire public interface — nothing inside the list is accessible except through these operations.\n\nThe core operations of the List ADT are: (1) insert(position, element) — inserts an element at a specified index, shifting subsequent elements one position to the right; (2) delete(position) — removes the element at a specified index, shifting subsequent elements one position to the left; (3) get(position) — returns the element at a given index without modifying the list; (4) set(position, element) — replaces the element at a given index with a new value; (5) find(element) — searches for an element and returns its first index, or -1 if not found; (6) size() — returns the number of elements currently in the list; (7) is_empty() — returns True if the list contains zero elements; (8) clear() — removes all elements, resetting the list to empty; and (9) print_list() — displays all elements in sequence.\n\nAdditional convenience operations commonly included are: append(element) as a special case of insert at the last position; prepend(element) as insert at position 0; first() and last() to access boundary elements; and slice(start, end) to retrieve a sublist.\n\nEach operation has well-defined preconditions (conditions that must be true before calling) and postconditions (guaranteed state after the call). For instance, get(i) has the precondition: 0 <= i < size(). Violating preconditions typically results in an IndexError or equivalent exception.",
+                        "examples": [
+                          "# Demonstrating all core List ADT operations\nclass ListADT:\n    def __init__(self): self._d = []\n    def insert(self, pos, val): self._d.insert(pos, val)\n    def delete(self, pos): self._d.pop(pos)\n    def get(self, pos): return self._d[pos]\n    def set(self, pos, val): self._d[pos] = val\n    def find(self, val):\n        try: return self._d.index(val)\n        except ValueError: return -1\n    def size(self): return len(self._d)\n    def is_empty(self): return len(self._d) == 0\n    def clear(self): self._d.clear()\n    def print_list(self): print(self._d)\n\nL = ListADT()\nL.insert(0, 10)  # [10]\nL.insert(1, 30)  # [10, 30]\nL.insert(1, 20)  # [10, 20, 30]\nL.print_list()   # [10, 20, 30]\nprint(L.get(2))  # 30\nprint(L.find(20)) # 1\nL.set(0, 5)      # [5, 20, 30]\nL.delete(1)      # [5, 30]\nprint(L.size())  # 2",
+                          "# Preconditions and error handling\nclass SafeList:\n    def __init__(self): self._data = []\n\n    def get(self, index):\n        # Precondition: 0 <= index < size\n        if not (0 <= index < len(self._data)):\n            raise IndexError(f'Index {index} out of range [0, {len(self._data)-1}]')\n        return self._data[index]\n\n    def delete(self, index):\n        if self.is_empty():\n            raise IndexError('Cannot delete from empty list')\n        if not (0 <= index < len(self._data)):\n            raise IndexError(f'Index {index} out of range')\n        return self._data.pop(index)\n\n    def is_empty(self): return len(self._data) == 0\n\nsl = SafeList()\ntry:\n    sl.get(0)  # Raises IndexError — list is empty!\nexcept IndexError as e:\n    print(f'Error: {e}')",
+                          "# Operation complexity for a typical array-backed list\n# insert(0, val)     → O(n)  — shift all elements right\n# insert(n, val)     → O(1)  — add to end (amortized)\n# delete(0)          → O(n)  — shift all elements left\n# delete(n-1)        → O(1)  — remove from end\n# get(i)             → O(1)  — direct index access\n# find(val)          → O(n)  — must scan entire list\n# size() / is_empty()→ O(1)  — stored counter\n# clear()            → O(1)  — reset counter (or O(n) if freeing memory)"
+                        ],
+                        "images": [
+                          "https://placehold.co/800x450?text=List+Operations+Diagram:+Insert+Delete+Get+Find+on+[10,20,30,40]",
+                          "https://placehold.co/800x450?text=Operation+Complexity+Table:+Array+List+vs+Linked+List+Comparison"
+                        ]
+                      },
+                      {
+                        "id": "M1C1L2T1S3",
+                        "title": "List ADT Interface Design in Python",
+                        "content": "Designing a clean List ADT interface in Python means separating the 'what' (the interface/abstract class) from the 'how' (the concrete implementation). Python's abc (Abstract Base Classes) module provides the perfect tool for this: the ABC class and @abstractmethod decorator allow us to define a strict interface contract that any implementation must honor.\n\nA well-designed ADT interface in Python consists of: an abstract base class that declares all operations as abstract methods, clear docstrings that specify the preconditions, postconditions, and error behavior of each operation, and a consistent naming convention that reflects the domain. The interface should be minimal — only include operations that cannot be derived from others. Extra convenience methods can be provided as concrete methods in the abstract class itself, implemented in terms of the abstract operations.\n\nThe power of this design pattern becomes evident when you have multiple concrete implementations. A ListADT abstract class can be subclassed by ArrayBasedList (using Python's list internally), LinkedList (using nodes), and SkipList (using probabilistic structure) — all honoring the same contract. Any code written to work with ListADT will work with all three implementations transparently.\n\nThis pattern is heavily used in Python's standard library and popular frameworks. Python's io module defines abstract base classes for streams (IOBase, RawIOBase, BufferedIOBase), allowing the same code to work with file streams, network streams, in-memory streams, and compressed streams. Django's backend interfaces, SQLAlchemy's connection abstractions, and NumPy's array protocol all follow this same ADT interface design.",
+                        "examples": [
+                          "# Complete List ADT interface using Python ABC\nfrom abc import ABC, abstractmethod\nfrom typing import Any, Optional\n\nclass ListADT(ABC):\n    \"\"\"Abstract interface for the List ADT.\n    Any concrete implementation must fulfill all these contracts.\n    \"\"\"\n\n    @abstractmethod\n    def insert(self, position: int, element: Any) -> None:\n        \"\"\"Insert element at position. Shifts right.\n        Pre: 0 <= position <= size()\n        Post: size increases by 1; get(position) == element\n        \"\"\"\n        pass\n\n    @abstractmethod\n    def delete(self, position: int) -> Any:\n        \"\"\"Remove and return element at position.\n        Pre: 0 <= position < size()\n        Post: size decreases by 1\n        \"\"\"\n        pass\n\n    @abstractmethod\n    def get(self, position: int) -> Any:\n        \"\"\"Return element at position without removing.\n        Pre: 0 <= position < size()\n        \"\"\"\n        pass\n\n    @abstractmethod\n    def find(self, element: Any) -> int:\n        \"\"\"Return first index of element, or -1 if not found.\"\"\"\n        pass\n\n    @abstractmethod\n    def size(self) -> int:\n        \"\"\"Return number of elements. Always >= 0.\"\"\"\n        pass\n\n    # Concrete convenience method built on abstract operations\n    def is_empty(self) -> bool:\n        return self.size() == 0\n\n    def append(self, element: Any) -> None:\n        self.insert(self.size(), element)\n\n    def prepend(self, element: Any) -> None:\n        self.insert(0, element)",
+                          "# Concrete implementation 1: Array-based\nclass ArrayList(ListADT):\n    def __init__(self):\n        self._data = []\n\n    def insert(self, position, element):\n        if not (0 <= position <= len(self._data)):\n            raise IndexError('Invalid position')\n        self._data.insert(position, element)\n\n    def delete(self, position):\n        if not (0 <= position < len(self._data)):\n            raise IndexError('Invalid position')\n        return self._data.pop(position)\n\n    def get(self, position):\n        return self._data[position]\n\n    def find(self, element):\n        try: return self._data.index(element)\n        except ValueError: return -1\n\n    def size(self): return len(self._data)\n\n    def __repr__(self): return f'ArrayList({self._data})'",
+                          "# Polymorphism in action — same code works for any ListADT\ndef find_and_move_to_front(lst: ListADT, target):\n    \"\"\"Find target and move it to position 0 — works on any ListADT\"\"\"\n    idx = lst.find(target)\n    if idx == -1:\n        return False\n    element = lst.delete(idx)\n    lst.insert(0, element)\n    return True\n\n# Works on ArrayList or any other ListADT implementation\nmy_list = ArrayList()\nfor v in [10, 20, 30, 40]:\n    my_list.append(v)\nprint(my_list)                           # ArrayList([10, 20, 30, 40])\nfind_and_move_to_front(my_list, 30)\nprint(my_list)                           # ArrayList([30, 10, 20, 40])"
+                        ],
+                        "images": [
+                          "https://placehold.co/800x450?text=ABC+Hierarchy:+ListADT+(Abstract)+pointing+to+ArrayList+LinkedList+SkipList",
+                          "https://placehold.co/800x450?text=Code+Structure:+list_adt.py+Interface+and+array_list.py+Implementation+Separation"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M1C2",
+            "title": "Array-Based List Implementation",
+            "description": "Implementing the List ADT using arrays — static and dynamic, with operation analysis.",
+            "lessons": [
+              {
+                "id": "M1C2L1",
+                "title": "Static Array-Based List",
+                "topics": [
+                  {
+                    "id": "M1C2L1T1",
+                    "title": "Structure and Memory Layout",
+                    "subtopics": [
+                      { "id": "M1C2L1T1S1", "title": "Fixed-Size Array List Structure", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C2L1T1S2", "title": "Memory Layout and Index Arithmetic", "content": "", "examples": [], "images": [] }
+                    ]
+                  },
+                  {
+                    "id": "M1C2L1T2",
+                    "title": "Implementing List Operations on Arrays",
+                    "subtopics": [
+                      { "id": "M1C2L1T2S1", "title": "Insert Operation", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C2L1T2S2", "title": "Delete Operation", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C2L1T2S3", "title": "Search and Retrieve", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C2L2",
+                "title": "Dynamic Array-Based List",
+                "topics": [
+                  {
+                    "id": "M1C2L2T1",
+                    "title": "Dynamic Resizing Strategy",
+                    "subtopics": [
+                      { "id": "M1C2L2T1S1", "title": "Doubling Strategy for Growth", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C2L2T1S2", "title": "Amortized O(1) Append Analysis", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C2L3",
+                "title": "Time and Space Complexity Analysis",
+                "topics": [
+                  {
+                    "id": "M1C2L3T1",
+                    "title": "Big-O Analysis of Array List Operations",
+                    "subtopics": [
+                      { "id": "M1C2L3T1S1", "title": "Best, Average, Worst Case per Operation", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C2L3T1S2", "title": "Space Complexity and Memory Overhead", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M1C3",
+            "title": "Singly Linked Lists",
+            "description": "Node-based linked list — structure, pointer manipulation, and operation implementation.",
+            "lessons": [
+              {
+                "id": "M1C3L1",
+                "title": "Linked List Fundamentals",
+                "topics": [
+                  {
+                    "id": "M1C3L1T1",
+                    "title": "Nodes and Pointer Chains",
+                    "subtopics": [
+                      { "id": "M1C3L1T1S1", "title": "Defining a Node Class in Python", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C3L1T1S2", "title": "The Head Pointer and None Termination", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C3L1T1S3", "title": "Visualizing a Linked List in Memory", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C3L2",
+                "title": "Singly Linked List Operations",
+                "topics": [
+                  {
+                    "id": "M1C3L2T1",
+                    "title": "Insertion in Singly Linked List",
+                    "subtopics": [
+                      { "id": "M1C3L2T1S1", "title": "Insert at Beginning (Prepend)", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C3L2T1S2", "title": "Insert at End (Append)", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C3L2T1S3", "title": "Insert at a Given Position", "content": "", "examples": [], "images": [] }
+                    ]
+                  },
+                  {
+                    "id": "M1C3L2T2",
+                    "title": "Deletion in Singly Linked List",
+                    "subtopics": [
+                      { "id": "M1C3L2T2S1", "title": "Delete from Beginning", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C3L2T2S2", "title": "Delete from End", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C3L2T2S3", "title": "Delete by Value", "content": "", "examples": [], "images": [] }
+                    ]
+                  },
+                  {
+                    "id": "M1C3L2T3",
+                    "title": "Traversal and Search",
+                    "subtopics": [
+                      { "id": "M1C3L2T3S1", "title": "Traversing the Linked List", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C3L2T3S2", "title": "Searching for an Element", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C3L3",
+                "title": "Advanced Singly Linked List Techniques",
+                "topics": [
+                  {
+                    "id": "M1C3L3T1",
+                    "title": "Reversing a Singly Linked List",
+                    "subtopics": [
+                      { "id": "M1C3L3T1S1", "title": "Iterative Reversal Algorithm", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C3L3T1S2", "title": "Recursive Reversal Algorithm", "content": "", "examples": [], "images": [] }
+                    ]
+                  },
+                  {
+                    "id": "M1C3L3T2",
+                    "title": "Detecting Loops in Linked Lists",
+                    "subtopics": [
+                      { "id": "M1C3L3T2S1", "title": "Floyd's Cycle Detection Algorithm", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C3L3T2S2", "title": "Finding the Start of the Loop", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M1C4",
+            "title": "Circularly Linked Lists",
+            "description": "Circular singly and doubly linked lists — structure, operations, and use cases.",
+            "lessons": [
+              {
+                "id": "M1C4L1",
+                "title": "Circular Linked List Structure",
+                "topics": [
+                  {
+                    "id": "M1C4L1T1",
+                    "title": "Circular vs Linear Linked Lists",
+                    "subtopics": [
+                      { "id": "M1C4L1T1S1", "title": "How Last Node Points Back to Head", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C4L1T1S2", "title": "Advantages of Circular Structure", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C4L2",
+                "title": "Operations on Circular Linked List",
+                "topics": [
+                  {
+                    "id": "M1C4L2T1",
+                    "title": "Insert and Delete in Circular List",
+                    "subtopics": [
+                      { "id": "M1C4L2T1S1", "title": "Insertion at Beginning and End", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C4L2T1S2", "title": "Deletion and Safe Traversal", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C4L3",
+                "title": "Applications of Circular Linked Lists",
+                "topics": [
+                  {
+                    "id": "M1C4L3T1",
+                    "title": "Real-World Use Cases",
+                    "subtopics": [
+                      { "id": "M1C4L3T1S1", "title": "Round Robin Scheduling", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C4L3T1S2", "title": "Circular Buffer Implementation", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M1C5",
+            "title": "Doubly Linked Lists",
+            "description": "Two-pointer linked lists enabling bidirectional traversal and O(1) deletion.",
+            "lessons": [
+              {
+                "id": "M1C5L1",
+                "title": "Doubly Linked List Structure",
+                "topics": [
+                  {
+                    "id": "M1C5L1T1",
+                    "title": "Node Structure with prev and next",
+                    "subtopics": [
+                      { "id": "M1C5L1T1S1", "title": "Defining the DLL Node Class", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C5L1T1S2", "title": "Head and Tail Sentinel Nodes", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C5L2",
+                "title": "DLL Operations",
+                "topics": [
+                  {
+                    "id": "M1C5L2T1",
+                    "title": "Insertion in DLL",
+                    "subtopics": [
+                      { "id": "M1C5L2T1S1", "title": "Insert at Beginning, End, and Middle", "content": "", "examples": [], "images": [] }
+                    ]
+                  },
+                  {
+                    "id": "M1C5L2T2",
+                    "title": "Deletion in DLL",
+                    "subtopics": [
+                      { "id": "M1C5L2T2S1", "title": "Delete Given a Node Reference (O(1))", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C5L2T2S2", "title": "Delete by Value", "content": "", "examples": [], "images": [] }
+                    ]
+                  },
+                  {
+                    "id": "M1C5L2T3",
+                    "title": "Bidirectional Traversal",
+                    "subtopics": [
+                      { "id": "M1C5L2T3S1", "title": "Forward and Backward Traversal", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C5L3",
+                "title": "DLL vs SLL: When to Use What",
+                "topics": [
+                  {
+                    "id": "M1C5L3T1",
+                    "title": "Comparison and Trade-offs",
+                    "subtopics": [
+                      { "id": "M1C5L3T1S1", "title": "Memory Overhead of DLL", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C5L3T1S2", "title": "Python deque as a DLL Example", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "M1C6",
+            "title": "Applications of Lists",
+            "description": "Real-world applications: Polynomial ADT, Radix Sort, and Multilists.",
+            "lessons": [
+              {
+                "id": "M1C6L1",
+                "title": "Polynomial ADT",
+                "topics": [
+                  {
+                    "id": "M1C6L1T1",
+                    "title": "Representing Polynomials using Linked Lists",
+                    "subtopics": [
+                      { "id": "M1C6L1T1S1", "title": "Polynomial Node Structure", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C6L1T1S2", "title": "Polynomial Addition Algorithm", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C6L1T1S3", "title": "Polynomial Multiplication Algorithm", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C6L2",
+                "title": "Radix Sort",
+                "topics": [
+                  {
+                    "id": "M1C6L2T1",
+                    "title": "Radix Sort Algorithm",
+                    "subtopics": [
+                      { "id": "M1C6L2T1S1", "title": "LSD vs MSD Radix Sort", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C6L2T1S2", "title": "Using Lists as Buckets", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C6L2T1S3", "title": "Complexity Analysis of Radix Sort", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "M1C6L3",
+                "title": "Multilists",
+                "topics": [
+                  {
+                    "id": "M1C6L3T1",
+                    "title": "Multilist Structure and Applications",
+                    "subtopics": [
+                      { "id": "M1C6L3T1S1", "title": "What is a Multilist?", "content": "", "examples": [], "images": [] },
+                      { "id": "M1C6L3T1S2", "title": "Sparse Matrix Representation using Multilists", "content": "", "examples": [], "images": [] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "M2",
+        "title": "Stacks and Queues",
+        "description": "Covers Stack and Queue ADTs, their operations, implementations, and applications.",
+        "chapters": [
+          {
+            "id": "M2C1",
+            "title": "Stack ADT",
+            "lessons": [
+              { "id": "M2C1L1", "title": "Introduction to Stack ADT", "topics": [] },
+              { "id": "M2C1L2", "title": "Stack Operations and Implementation", "topics": [] },
+              { "id": "M2C1L3", "title": "Balancing Symbols using Stacks", "topics": [] }
+            ]
+          },
+          {
+            "id": "M2C2",
+            "title": "Arithmetic Expression Evaluation",
+            "lessons": [
+              { "id": "M2C2L1", "title": "Infix, Prefix, and Postfix Notations", "topics": [] },
+              { "id": "M2C2L2", "title": "Infix to Postfix Conversion", "topics": [] },
+              { "id": "M2C2L3", "title": "Evaluating Postfix Expressions", "topics": [] }
+            ]
+          },
+          {
+            "id": "M2C3",
+            "title": "Function Calls and Recursion",
+            "lessons": [
+              { "id": "M2C3L1", "title": "Call Stack and Activation Records", "topics": [] },
+              { "id": "M2C3L2", "title": "Stack Overflow and Tail Recursion", "topics": [] }
+            ]
+          },
+          {
+            "id": "M2C4",
+            "title": "Queue ADT",
+            "lessons": [
+              { "id": "M2C4L1", "title": "Introduction to Queue ADT", "topics": [] },
+              { "id": "M2C4L2", "title": "Circular Queue Implementation", "topics": [] },
+              { "id": "M2C4L3", "title": "Double-Ended Queue (DeQueue)", "topics": [] }
+            ]
+          },
+          {
+            "id": "M2C5",
+            "title": "Applications of Queues",
+            "lessons": [
+              { "id": "M2C5L1", "title": "CPU Scheduling and Round Robin", "topics": [] },
+              { "id": "M2C5L2", "title": "BFS using Queues", "topics": [] },
+              { "id": "M2C5L3", "title": "Printer Spooling and Message Buffers", "topics": [] }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "M3",
+        "title": "Trees",
+        "description": "Covers Tree ADT, Binary Trees, BST, AVL Trees, and Heaps.",
+        "chapters": [
+          {
+            "id": "M3C1",
+            "title": "Tree ADT and Traversals",
+            "lessons": [
+              { "id": "M3C1L1", "title": "Introduction to Trees", "topics": [] },
+              { "id": "M3C1L2", "title": "Tree Terminology", "topics": [] },
+              { "id": "M3C1L3", "title": "Tree Traversal Algorithms", "topics": [] }
+            ]
+          },
+          {
+            "id": "M3C2",
+            "title": "Binary Tree ADT",
+            "lessons": [
+              { "id": "M3C2L1", "title": "Binary Tree Structure and Properties", "topics": [] },
+              { "id": "M3C2L2", "title": "Expression Trees", "topics": [] },
+              { "id": "M3C2L3", "title": "Binary Tree Implementation in Python", "topics": [] }
+            ]
+          },
+          {
+            "id": "M3C3",
+            "title": "Binary Search Tree (BST)",
+            "lessons": [
+              { "id": "M3C3L1", "title": "BST Properties and Structure", "topics": [] },
+              { "id": "M3C3L2", "title": "BST Insert, Delete, Search", "topics": [] },
+              { "id": "M3C3L3", "title": "BST Complexity Analysis", "topics": [] }
+            ]
+          },
+          {
+            "id": "M3C4",
+            "title": "AVL Trees",
+            "lessons": [
+              { "id": "M3C4L1", "title": "Balanced BSTs and Balance Factor", "topics": [] },
+              { "id": "M3C4L2", "title": "AVL Rotations", "topics": [] },
+              { "id": "M3C4L3", "title": "Insert and Delete in AVL Trees", "topics": [] }
+            ]
+          },
+          {
+            "id": "M3C5",
+            "title": "Priority Queue and Binary Heap",
+            "lessons": [
+              { "id": "M3C5L1", "title": "Priority Queue ADT", "topics": [] },
+              { "id": "M3C5L2", "title": "Binary Heap Structure and Properties", "topics": [] },
+              { "id": "M3C5L3", "title": "Heap Insert and Delete (Heapify)", "topics": [] }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "M4",
+        "title": "Multiway Search Trees and Graphs",
+        "description": "B-Trees, B+ Trees, Graph representations, traversals, and classical graph algorithms.",
+        "chapters": [
+          {
+            "id": "M4C1",
+            "title": "B-Trees and B+ Trees",
+            "lessons": [
+              { "id": "M4C1L1", "title": "Introduction to B-Trees", "topics": [] },
+              { "id": "M4C1L2", "title": "B-Tree Insert and Delete", "topics": [] },
+              { "id": "M4C1L3", "title": "B+ Tree Structure and Advantages", "topics": [] }
+            ]
+          },
+          {
+            "id": "M4C2",
+            "title": "Graph Fundamentals",
+            "lessons": [
+              { "id": "M4C2L1", "title": "Graph Definition and Terminology", "topics": [] },
+              { "id": "M4C2L2", "title": "Graph Representation: Adjacency Matrix", "topics": [] },
+              { "id": "M4C2L3", "title": "Graph Representation: Adjacency List", "topics": [] }
+            ]
+          },
+          {
+            "id": "M4C3",
+            "title": "Graph Traversals",
+            "lessons": [
+              { "id": "M4C3L1", "title": "Breadth-First Search (BFS)", "topics": [] },
+              { "id": "M4C3L2", "title": "Depth-First Search (DFS)", "topics": [] },
+              { "id": "M4C3L3", "title": "Bi-connectivity and Euler Circuits", "topics": [] }
+            ]
+          },
+          {
+            "id": "M4C4",
+            "title": "Topological Sort and Shortest Paths",
+            "lessons": [
+              { "id": "M4C4L1", "title": "Topological Sort (DFS-based)", "topics": [] },
+              { "id": "M4C4L2", "title": "Dijkstra's Shortest Path Algorithm", "topics": [] }
+            ]
+          },
+          {
+            "id": "M4C5",
+            "title": "Minimum Spanning Trees",
+            "lessons": [
+              { "id": "M4C5L1", "title": "Prim's Algorithm", "topics": [] },
+              { "id": "M4C5L2", "title": "Kruskal's Algorithm", "topics": [] }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "M5",
+        "title": "Searching, Sorting and Hashing Techniques",
+        "description": "Classic searching and sorting algorithms, and hashing with collision resolution strategies.",
+        "chapters": [
+          {
+            "id": "M5C1",
+            "title": "Searching Algorithms",
+            "lessons": [
+              { "id": "M5C1L1", "title": "Linear Search", "topics": [] },
+              { "id": "M5C1L2", "title": "Binary Search", "topics": [] }
+            ]
+          },
+          {
+            "id": "M5C2",
+            "title": "Elementary Sorting Algorithms",
+            "lessons": [
+              { "id": "M5C2L1", "title": "Bubble Sort", "topics": [] },
+              { "id": "M5C2L2", "title": "Selection Sort", "topics": [] },
+              { "id": "M5C2L3", "title": "Insertion Sort", "topics": [] },
+              { "id": "M5C2L4", "title": "Shell Sort", "topics": [] }
+            ]
+          },
+          {
+            "id": "M5C3",
+            "title": "Advanced Sorting",
+            "lessons": [
+              { "id": "M5C3L1", "title": "Merge Sort", "topics": [] }
+            ]
+          },
+          {
+            "id": "M5C4",
+            "title": "Hashing",
+            "lessons": [
+              { "id": "M5C4L1", "title": "Hash Functions and Hash Tables", "topics": [] },
+              { "id": "M5C4L2", "title": "Separate Chaining", "topics": [] },
+              { "id": "M5C4L3", "title": "Open Addressing", "topics": [] },
+              { "id": "M5C4L4", "title": "Rehashing and Extendible Hashing", "topics": [] }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

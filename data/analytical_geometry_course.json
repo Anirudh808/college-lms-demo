@@ -1,0 +1,568 @@
+{
+  "course": {
+    "id": "BSC-MATH-AG-2023",
+    "code": "ANALYTICAL GEOMETRY",
+    "title": "Analytical Geometry",
+    "program": "B.Sc. Mathematics",
+    "year": "First Year",
+    "type": "Core – Paper III",
+    "credits": 4,
+    "hours": "60 Lecture Hours",
+    "version": "2023-2024",
+    "university": "Bharathiyar University",
+    "prerequisites": ["Basic Knowledge in Trigonometry", "Vector Algebra"],
+    "objectives": [
+      "Emphasize and enhance student knowledge in three-dimensional analytical geometry.",
+      "Develop understanding of geometrical aspects of three-dimensional figures such as sphere, cone and cylinder."
+    ],
+    "outcomes": [
+      { "co": "CO1", "description": "Gain knowledge about the regular geometrical figures and their properties.", "bloom_level": "K1 – Remember" },
+      { "co": "CO2", "description": "Describe the geometric concepts.", "bloom_level": "K2 – Understand" },
+      { "co": "CO3", "description": "Find equation to tangent, normal at a point on a conic.", "bloom_level": "K3 – Apply" },
+      { "co": "CO4", "description": "Analyze condition of tangency and find the tangent plane to the central conicoid.", "bloom_level": "K4 – Analyze" },
+      { "co": "CO5", "description": "Analyze conics to explain natural phenomenon.", "bloom_level": "K4 – Analyze" }
+    ],
+    "textbooks": [
+      "Analytical Geometry – P. Durai Pandian & others (Emerald Publishers, 1998)",
+      "Solid Geometry – N.P. Bali (Laxmi Publications (P) Ltd, 2015)"
+    ],
+    "reference_books": [
+      "Solid Geometry – M.L. Khanna (Jainath & Co Publishers, Meerut)"
+    ],
+    "online_resources": [
+      "http://www.brainkart.com/article/Three-Dimensional-Analytical-Geometry_6453/",
+      "http://egyankosh.ac.in/bitstream/123456789/11990/1/Unit-2.pdf"
+    ],
+    "modules": [
+
+      {
+        "id": "MOD-1",
+        "title": "Straight Lines in 3D Analytical Geometry",
+        "unit": 1,
+        "hours": 12,
+        "description": "This module introduces students to the fundamental concepts of three-dimensional analytical geometry with a focus on straight lines — their equations, coplanarity conditions, and the shortest distance between skew lines.",
+        "chapters": [
+          {
+            "id": "MOD1-CH1",
+            "title": "Introduction to 3D Analytical Geometry",
+            "description": "Establishes the foundational framework of three-dimensional space — coordinate systems, direction cosines, direction ratios, and the equations of a straight line — upon which the entire course is built.",
+            "lessons": [
+              {
+                "id": "MOD1-CH1-L1",
+                "title": "The Three-Dimensional Coordinate System",
+                "description": "Understanding the 3D Cartesian coordinate system, axes, planes, and how points are located in space.",
+                "topics": [
+                  {
+                    "id": "MOD1-CH1-L1-T1",
+                    "title": "From 2D to 3D: Extending the Coordinate System",
+                    "subtopics": [
+                      {
+                        "id": "MOD1-CH1-L1-T1-S1",
+                        "title": "Recap of 2D Cartesian Coordinates",
+                        "content": "In **two-dimensional geometry**, every point in a plane is uniquely identified by an ordered pair **(x, y)**, where `x` is the horizontal distance from the origin along the **X-axis** and `y` is the vertical distance along the **Y-axis**. The two axes are perpendicular to each other, and their intersection is called the **origin** `O(0, 0)`. This system, developed by **René Descartes** in the 17th century, forms the bridge between algebra and geometry.\n\nThe 2D plane is divided into **four quadrants** by the two axes. Any point P in this plane satisfies a specific algebraic relationship — for instance, a straight line is described by an equation like `ax + by + c = 0`. The concepts of **distance, slope, midpoint**, and **section formula** are all well-defined in 2D.\n\nUnderstanding the 2D system is crucial because the transition to **three dimensions** follows the same logical structure, simply by adding one more perpendicular axis. Every formula from 2D has a natural 3D counterpart, and students who are comfortable with 2D coordinates will find the generalisation to 3D intuitive and elegant.\n\nIn real-world terms, the 2D coordinate system helps us:\n- Locate positions on a **map** (latitude-longitude on a flat surface)\n- Design **floor plans** of buildings\n- **Plot data** on graphs\n\nIt is the mathematical language of flat, planar reality.",
+                        "latex": "\\text{Point in 2D: } P(x, y); \\quad \\text{Distance} = \\sqrt{x^2 + y^2}",
+                        "plain_formula": "Distance from origin in 2D = sqrt(x² + y²)",
+                        "examples": [
+                          "**Example 1: Distance from Origin**\n\nA point `P(3, 4)` in 2D is **3 units** along the X-axis and **4 units** along the Y-axis.\n\nDistance from origin:\n\n1. Apply the formula: `d = sqrt(x² + y²)`\n2. Substitute: `d = sqrt(3² + 4²)`\n3. Simplify: `d = sqrt(9 + 16) = sqrt(25)`\n4. **Result: d = 5 units** ✓",
+                          "**Example 2: Real-World Map Application**\n\nOn a city map, if the **Town Hall** is at the origin `(0, 0)`, and the **Railway Station** is at `(3, 4)` (3 km East, 4 km North), then:\n\n- The straight-line distance = `sqrt(3² + 4²)` = **5 km**\n\n> This is a classic **Pythagorean 3-4-5 right triangle** appearing in a real-world navigation scenario."
+                        ],
+                        "images": [
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Cartesian-coordinate-system.svg/500px-Cartesian-coordinate-system.svg.png",
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/24701-illustration-of-a-Cartesian-coordinate-system.svg/600px-24701-illustration-of-a-Cartesian-coordinate-system.svg.png"
+                        ]
+                      },
+                      {
+                        "id": "MOD1-CH1-L1-T1-S2",
+                        "title": "Introduction to the Third Dimension",
+                        "content": "The **three-dimensional coordinate system** is formed by adding a third axis, called the **Z-axis**, which is perpendicular to both the X-axis and the Y-axis. The three mutually perpendicular axes meet at a single point called the **origin**, denoted `O(0, 0, 0)`. Any point P in three-dimensional space is now uniquely represented by an **ordered triple (x, y, z)**, where x, y, and z are called the *coordinates* of the point.\n\n- The **x-coordinate** (abscissa): signed distance from the **YZ-plane**\n- The **y-coordinate** (ordinate): signed distance from the **XZ-plane**\n- The **z-coordinate** (applicate): signed distance from the **XY-plane**\n\nTogether, these three values pin down any location in space unambiguously.\n\nThe three axes define three **coordinate planes**: the `XY-plane` (where `z = 0`), the `YZ-plane` (where `x = 0`), and the `XZ-plane` (where `y = 0`). These three planes divide all of space into **eight regions** called *octants*, analogous to the four quadrants in 2D. The **first octant** is the region where `x > 0, y > 0, z > 0`.\n\nIn engineering and physics, the 3D coordinate system is indispensable. **Civil engineers** use it to describe structural positions. **GPS technology** uses a 3D coordinate system (longitude, latitude, altitude). **Computer graphics** rely on 3D coordinates to position vertices of objects in a virtual scene.",
+                        "latex": "\\text{Point in 3D: } P(x, y, z); \\quad OP = \\sqrt{x^2 + y^2 + z^2}",
+                        "plain_formula": "Distance from origin in 3D = sqrt(x² + y² + z²)",
+                        "examples": [
+                          "A point P(1, 2, 3): x = 1 means 1 unit from YZ-plane; y = 2 means 2 units from XZ-plane; z = 3 means 3 units from XY-plane. Distance from origin = sqrt(1 + 4 + 9) = sqrt(14) ≈ 3.74 units.",
+                          "In aviation, an aircraft at longitude 80°E, latitude 11°N, altitude 10,000 m can be described using a 3D coordinate system where the three values uniquely identify its position in space — a direct real-world analogy of the (x, y, z) system."
+                        ],
+                        "images": [
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Coord_system_CA_0.svg/600px-Coord_system_CA_0.svg.png",
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/3D_coordinate_system.svg/500px-3D_coordinate_system.svg.png"
+                        ]
+                      },
+                      {
+                        "id": "MOD1-CH1-L1-T1-S3",
+                        "title": "Octants of 3D Space",
+                        "content": "Just as the two coordinate axes divide the 2D plane into four quadrants, the three coordinate planes in 3D space divide all of space into eight distinct regions called octants. Each octant is characterised by a unique combination of positive and negative signs for the three coordinates (x, y, z).\n\nThe eight octants are enumerated based on the signs of coordinates: (1) (+,+,+), (2) (−,+,+), (3) (−,−,+), (4) (+,−,+), (5) (+,+,−), (6) (−,+,−), (7) (−,−,−), (8) (+,−,−). In standard convention, the first octant is where all three coordinates are positive — this is the most commonly used region in introductory problems.\n\nThe concept of octants is important in 3D geometry because many results and formulas are first derived and interpreted in the first octant, then generalised. For instance, when plotting a sphere centred at the origin, understanding octants helps visualise how portions of the sphere lie in each region of space.\n\nIn computer-aided design (CAD) software, octant classification is used in spatial partitioning algorithms (such as octrees) that efficiently organise 3D objects for rendering and collision detection — a direct industrial application of this purely mathematical concept.",
+                        "latex": "\\text{Octant I: } x > 0,\\ y > 0,\\ z > 0 \\quad \\text{(First Octant)}",
+                        "plain_formula": "First Octant: x > 0, y > 0, z > 0",
+                        "examples": [
+                          "Point A(2, 3, 5): All positive → lies in the First Octant. Point B(−1, 2, 4): x negative → lies in the Second Octant. Point C(−2, −3, 1): x, y negative → lies in the Third Octant.",
+                          "In a 3D video game engine (e.g., Unity or Unreal Engine), the game world is divided into spatial regions using octree data structures, where each cell corresponds to one octant. This allows the engine to quickly determine which objects are visible to the camera — a direct application of octant partitioning."
+                        ],
+                        "images": [
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/3D_Octants.svg/500px-3D_Octants.svg.png"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "MOD1-CH1-L1-T2",
+                    "title": "Distance Formula and Section Formula in 3D",
+                    "subtopics": [
+                      {
+                        "id": "MOD1-CH1-L1-T2-S1",
+                        "title": "Distance Between Two Points in 3D",
+                        "content": "The distance between two points in 3D space is a direct generalisation of the 2D distance formula, derived using the Pythagorean theorem applied twice. Given two points P(x₁, y₁, z₁) and Q(x₂, y₂, z₂) in space, the straight-line (Euclidean) distance PQ is computed by taking the square root of the sum of the squares of the differences in each coordinate.\n\nThe derivation proceeds as follows: first, construct a rectangular parallelepiped (box) with PQ as the space diagonal. The projection of PQ onto the XY-plane has length √[(x₂−x₁)² + (y₂−y₁)²] by the 2D distance formula. Then PQ is the hypotenuse of a right triangle with legs equal to this projection and (z₂−z₁), giving PQ = √[(x₂−x₁)² + (y₂−y₁)² + (z₂−z₁)²].\n\nThis formula is foundational to nearly every other result in 3D geometry. The equation of a sphere, for example, is simply the locus of all points equidistant from a fixed centre — a statement that directly uses this distance formula. Similarly, the condition for a point to lie on a line or plane can be verified using distance calculations.\n\nIn the real world, this formula is used in robotics to compute the Euclidean distance between a robot arm's current position and its target position in 3D workspace. In data science and machine learning, the distance formula generalised to n dimensions forms the basis of k-Nearest Neighbours (kNN) and clustering algorithms.",
+                        "latex": "PQ = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}",
+                        "plain_formula": "PQ = sqrt((x2 - x1)² + (y2 - y1)² + (z2 - z1)²)",
+                        "examples": [
+                          "Find the distance between P(1, 2, 3) and Q(4, 6, 3). Solution: PQ = sqrt((4−1)² + (6−2)² + (3−3)²) = sqrt(9 + 16 + 0) = sqrt(25) = 5 units.",
+                          "In robotics, a robotic arm at position (10, 5, 20) cm needs to reach a point (13, 9, 20) cm. The distance to travel = sqrt((13−10)² + (9−5)² + (20−20)²) = sqrt(9 + 16 + 0) = 5 cm. Engineers use this to plan motion paths efficiently.",
+                          "Show that the triangle with vertices A(0,1,2), B(2,−1,3), C(1,3,1) is isosceles. AB = sqrt(4+4+1)=3, BC = sqrt(1+16+4)=sqrt(21), AC = sqrt(1+4+1)=sqrt(6). No two are equal... let's recalculate: A(1,2,3), B(3,2,3), C(1,4,3) — AB=2, AC=2, BC=2√2 → isosceles with AB=AC."
+                        ],
+                        "images": [
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Distance_formula_3D.svg/500px-Distance_formula_3D.svg.png"
+                        ]
+                      },
+                      {
+                        "id": "MOD1-CH1-L1-T2-S2",
+                        "title": "Section Formula in 3D",
+                        "content": "The section formula gives the coordinates of a point that divides the line segment joining two given points in a given ratio. This is a natural extension of the 2D section formula. If a point R divides the segment joining P(x₁, y₁, z₁) and Q(x₂, y₂, z₂) in the ratio m:n internally, then the coordinates of R are given by the weighted average formula applied to each coordinate independently.\n\nFor internal division, the coordinates of R are: x = (mx₂ + nx₁)/(m+n), y = (my₂ + ny₁)/(m+n), z = (mz₂ + nz₁)/(m+n). For external division (where R lies on the extension of PQ beyond Q), the formula changes the sign of n: x = (mx₂ − nx₁)/(m−n), and similarly for y and z.\n\nA particularly important special case is the midpoint formula, obtained by setting m = n = 1 in the internal division formula. The midpoint M of segment PQ has coordinates: M = ((x₁+x₂)/2, (y₁+y₂)/2, (z₁+z₂)/2).\n\nThe section formula has direct applications in structural engineering (finding the centre of gravity of a beam loaded at two points), in computer graphics (linear interpolation between two 3D points to create smooth animations), and in geographic information systems (finding intermediate waypoints along a 3D flight path).",
+                        "latex": "R = \\left(\\frac{mx_2 + nx_1}{m+n},\\ \\frac{my_2 + ny_1}{m+n},\\ \\frac{mz_2 + nz_1}{m+n}\\right)",
+                        "plain_formula": "R = ((m*x2 + n*x1)/(m+n), (m*y2 + n*y1)/(m+n), (m*z2 + n*z1)/(m+n))",
+                        "examples": [
+                          "Find the point dividing PQ internally in ratio 2:1 where P(1,2,3) and Q(4,5,6). R = ((2×4 + 1×1)/3, (2×5 + 1×2)/3, (2×6 + 1×3)/3) = (9/3, 12/3, 15/3) = (3, 4, 5).",
+                          "Midpoint of A(2, 4, 6) and B(8, 10, 12): M = ((2+8)/2, (4+10)/2, (6+12)/2) = (5, 7, 9). In computer animation, this midpoint gives the intermediate frame position between keyframe A and keyframe B — used in 3D animation software like Blender."
+                        ],
+                        "images": [
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Section_formula.svg/500px-Section_formula.svg.png"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "MOD1-CH1-L2",
+                "title": "Direction Cosines and Direction Ratios",
+                "description": "Understanding how the orientation of a line in 3D space is described using angles with coordinate axes, direction cosines, and direction ratios.",
+                "topics": [
+                  {
+                    "id": "MOD1-CH1-L2-T1",
+                    "title": "Direction Cosines of a Line",
+                    "subtopics": [
+                      {
+                        "id": "MOD1-CH1-L2-T1-S1",
+                        "title": "Definition of Direction Cosines",
+                        "content": "The direction cosines of a line in 3D space are the cosines of the angles that the line makes with the positive directions of the three coordinate axes. If a line OP makes angles α (alpha), β (beta), and γ (gamma) with the positive X-axis, Y-axis, and Z-axis respectively, then the direction cosines are defined as l = cos α, m = cos β, n = cos γ.\n\nThese three angles α, β, γ are called the direction angles of the line. They completely characterise the orientation (but not the position) of the line in space. Note that α, β, γ ∈ [0°, 180°], since we measure angles from the positive axis direction, and lines extend in both directions.\n\nAn extremely important and fundamental identity is: l² + m² + n² = 1. This means that the direction cosines always lie on the unit sphere. Geometrically, this makes sense because the direction cosines are the components of a unit vector along the line — and a unit vector by definition has magnitude 1.\n\nDirection cosines are used extensively in structural analysis, where engineers need to describe the orientation of members (beams, columns) in 3D frameworks. In satellite attitude control, the orientation of a satellite's body axes relative to an inertial reference frame is described using direction cosines (the direction cosine matrix, or DCM, is fundamental to aerospace engineering).",
+                        "latex": "l = \\cos\\alpha,\\quad m = \\cos\\beta,\\quad n = \\cos\\gamma \\\\[6pt] l^2 + m^2 + n^2 = 1",
+                        "plain_formula": "l = cos(α), m = cos(β), n = cos(γ); l² + m² + n² = 1",
+                        "examples": [
+                          "A line makes angles α = 60°, β = 45°, γ = 60° with X, Y, Z axes. Direction cosines: l = cos60° = 1/2, m = cos45° = 1/√2, n = cos60° = 1/2. Check: l²+m²+n² = 1/4 + 1/2 + 1/4 = 1 ✓",
+                          "In aerospace engineering, the Direction Cosine Matrix (DCM) is a 3×3 matrix whose rows are the direction cosines of the aircraft's body axes relative to the Earth's axes. It is used by flight computers to convert between body-frame and world-frame coordinates in real time — a direct application of direction cosines.",
+                          "If a line makes equal angles with all three axes, find the direction cosines. Let l = m = n. Then l²+m²+n² = 1 → 3l² = 1 → l = 1/√3. So l = m = n = 1/√3 ≈ 0.577."
+                        ],
+                        "images": [
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Direction_cosines.svg/500px-Direction_cosines.svg.png"
+                        ]
+                      },
+                      {
+                        "id": "MOD1-CH1-L2-T1-S2",
+                        "title": "Direction Cosines of a Line Joining Two Points",
+                        "content": "Given two points P(x₁, y₁, z₁) and Q(x₂, y₂, z₂) in 3D space, the direction cosines of the line PQ can be derived systematically. The vector from P to Q is →PQ = (x₂−x₁, y₂−y₁, z₂−z₁). This vector has magnitude |PQ| = √[(x₂−x₁)² + (y₂−y₁)² + (z₂−z₁)²] = r (say).\n\nTo obtain the direction cosines, we divide each component of →PQ by its magnitude. This normalises the vector to unit length: l = (x₂−x₁)/r, m = (y₂−y₁)/r, n = (z₂−z₁)/r. The resulting vector (l, m, n) is the unit vector along PQ, and its components are exactly the direction cosines.\n\nNote that the direction cosines of QP (from Q to P) are the negatives of those of PQ: (−l, −m, −n). This is because reversing the direction of a line reverses the signs of the direction cosines, even though the line itself is the same. This sign ambiguity is resolved by choosing a specific direction of traversal (from P to Q).\n\nThis formula is crucial in robotics for computing the orientation of a link vector between two joint positions. In 3D computer graphics, the surface normal of a polygon is computed as a unit vector perpendicular to the surface, which is essentially finding direction cosines of the normal direction.",
+                        "latex": "l = \\frac{x_2 - x_1}{r},\\quad m = \\frac{y_2 - y_1}{r},\\quad n = \\frac{z_2 - z_1}{r} \\\\[4pt] \\text{where } r = \\sqrt{(x_2-x_1)^2+(y_2-y_1)^2+(z_2-z_1)^2}",
+                        "plain_formula": "l = (x2-x1)/r, m = (y2-y1)/r, n = (z2-z1)/r, where r = distance PQ",
+                        "examples": [
+                          "Find direction cosines of line joining P(1, 2, 3) and Q(3, 4, 5). Differences: (2, 2, 2). r = sqrt(4+4+4) = sqrt(12) = 2√3. l = 2/2√3 = 1/√3, m = 1/√3, n = 1/√3. Check: 3×(1/3) = 1 ✓",
+                          "In a robotic arm, joint A is at (10, 0, 0) cm and joint B is at (10, 5, 5) cm. The direction cosines of link AB: differences = (0, 5, 5), r = sqrt(0+25+25) = 5√2. l = 0, m = 5/5√2 = 1/√2, n = 1/√2. This tells the robot the link points purely in the YZ plane at 45°."
+                        ],
+                        "images": [
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Coord_system_CA_0.svg/600px-Coord_system_CA_0.svg.png"
+                        ]
+                      },
+                      {
+                        "id": "MOD1-CH1-L2-T1-S3",
+                        "title": "Fundamental Identity: l² + m² + n² = 1",
+                        "content": "The identity l² + m² + n² = 1 is not just an algebraic coincidence — it is a deep geometric truth. The direction cosines (l, m, n) are the components of the unit vector along the line. Any unit vector in 3D space has magnitude 1, which by the distance formula means that the sum of the squares of its components equals 1. This is essentially the 3D Pythagorean theorem applied to unit vectors.\n\nProof: Let the line make angles α, β, γ with the X, Y, Z axes. Consider a unit vector along the line from the origin. Its endpoint lies at (cos α, cos β, cos γ) = (l, m, n). Since this endpoint is on the unit sphere (radius = 1), its distance from the origin is 1. Therefore l² + m² + n² = 1²  = 1.\n\nThis identity has a beautiful consequence: the direction cosines always represent a point on the unit sphere S² in 3D space. Every possible line direction corresponds to exactly two antipodal points on this sphere (since a line has two directions). The study of directions in 3D thus reduces to the study of points on a sphere — a fundamental insight used in differential geometry and physics (e.g., the Bloch sphere in quantum mechanics).\n\nIn practice, this identity is used as a verification check: if you compute three numbers l, m, n for a given line and they don't satisfy l²+m²+n² = 1, you know you've made an error. It is also the starting point for deriving the formula for the angle between two lines in 3D.",
+                        "latex": "l^2 + m^2 + n^2 = \\cos^2\\alpha + \\cos^2\\beta + \\cos^2\\gamma = 1",
+                        "plain_formula": "cos²(α) + cos²(β) + cos²(γ) = 1",
+                        "examples": [
+                          "Verify: if l = 3/7, m = 2/7, n = 6/7, do these form valid direction cosines? l²+m²+n² = 9/49 + 4/49 + 36/49 = 49/49 = 1 ✓. Yes, these are valid direction cosines.",
+                          "Can l = 1/2, m = 1/2, n = 1/2 be direction cosines? l²+m²+n² = 1/4+1/4+1/4 = 3/4 ≠ 1. No, these cannot be direction cosines of any line. To make them valid, we'd need to normalise: actual DCs would be (1/2, 1/2, 1/2) ÷ (√3/2) = (1/√3, 1/√3, 1/√3)."
+                        ],
+                        "images": [
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Bloch_sphere.svg/400px-Bloch_sphere.svg.png"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "MOD1-CH1-L2-T2",
+                    "title": "Direction Ratios of a Line",
+                    "subtopics": [
+                      {
+                        "id": "MOD1-CH1-L2-T2-S1",
+                        "title": "Definition and Meaning of Direction Ratios",
+                        "content": "Direction ratios (also called direction numbers) of a line are any three numbers a, b, c that are proportional to the direction cosines l, m, n of the line. That is, a:b:c = l:m:n. Unlike direction cosines which are unique (up to sign), direction ratios are not unique — infinitely many sets of direction ratios describe the same line direction, all being scalar multiples of each other.\n\nIf (a, b, c) are direction ratios of a line, then the actual direction cosines are obtained by dividing by the magnitude √(a²+b²+c²): l = a/√(a²+b²+c²), m = b/√(a²+b²+c²), n = c/√(a²+b²+c²). The denominator normalises the direction ratio vector to unit length.\n\nDirection ratios are far more convenient to work with than direction cosines in most computations. For example, if a line passes through P(1, 2, 3) and Q(4, 7, 9), the direction ratios are simply (4−1, 7−2, 9−3) = (3, 5, 6) — no need to compute the actual distance. We can scale these by any non-zero constant and get another valid set of direction ratios: (6, 10, 12), (−3, −5, −6), etc.\n\nIn computer graphics and physics simulations, direction ratios (as un-normalised vectors) are used extensively because normalisation (computing the square root) is computationally expensive. Many algorithms work with direction ratios and only normalise when the final result is needed, saving significant computation time.",
+                        "latex": "\\text{DCs from DRs: } l = \\frac{a}{\\sqrt{a^2+b^2+c^2}},\\quad m = \\frac{b}{\\sqrt{a^2+b^2+c^2}},\\quad n = \\frac{c}{\\sqrt{a^2+b^2+c^2}}",
+                        "plain_formula": "l = a/sqrt(a²+b²+c²), m = b/sqrt(a²+b²+c²), n = c/sqrt(a²+b²+c²)",
+                        "examples": [
+                          "Direction ratios of a line are (2, 3, 6). Find direction cosines. √(4+9+36) = √49 = 7. l = 2/7, m = 3/7, n = 6/7. Check: 4/49 + 9/49 + 36/49 = 49/49 = 1 ✓",
+                          "Find direction ratios of line joining A(2, 1, 3) and B(5, 4, 7). DRs = (5−2, 4−1, 7−3) = (3, 3, 4). Any scalar multiple like (6, 6, 8) or (−3, −3, −4) also represents the same line direction.",
+                          "In game development, a ray from camera position C(1,1,5) toward a game object at O(4,3,5) has direction ratio (3, 2, 0). The game engine uses this to check which objects the ray intersects without normalising — direction ratios are sufficient for ray-object intersection tests."
+                        ],
+                        "images": []
+                      },
+                      {
+                        "id": "MOD1-CH1-L2-T2-S2",
+                        "title": "Relationship Between Direction Cosines and Direction Ratios",
+                        "content": "The relationship between direction cosines (l, m, n) and direction ratios (a, b, c) is one of proportionality: l/a = m/b = n/c = k (say), where k = 1/√(a²+b²+c²). This means direction ratios are a scaled version of direction cosines, scaled up by the factor 1/k = √(a²+b²+c²).\n\nConversely, if the direction cosines are known, then the direction ratios can be any proportional triple, and the simplest choice is often to take direction ratios equal to the direction cosines themselves (in which case a² + b² + c² = 1). Another convenient choice is to clear fractions or radicals: if l = 1/√3, m = 1/√3, n = 1/√3, the direction ratios can simply be taken as (1, 1, 1).\n\nA critical point: direction cosines must satisfy l²+m²+n² = 1 (strict), while direction ratios have no such constraint. Direction ratios merely need to be proportional to the direction cosines. This is why direction ratios are more flexible and commonly preferred in problem-solving — you work with them and convert to direction cosines only when required.\n\nIn coordinate geometry proofs and derivations, this relationship allows us to freely switch between the normalised (direction cosines) and un-normalised (direction ratios) representations of a line's direction, choosing whichever is more convenient for each step of the calculation.",
+                        "latex": "\\frac{l}{a} = \\frac{m}{b} = \\frac{n}{c} = \\frac{1}{\\sqrt{a^2+b^2+c^2}}",
+                        "plain_formula": "l/a = m/b = n/c = 1/sqrt(a²+b²+c²)",
+                        "examples": [
+                          "Line has DRs (1, 2, 2). DCs: √(1+4+4)=3. l=1/3, m=2/3, n=2/3. Conversely, given DCs l=3/13, m=4/13, n=12/13, the simplest DRs are (3, 4, 12) — just multiply DCs by denominator 13.",
+                          "A structural beam in a 3D truss has direction vector from node (0,0,0) to (3,4,0). DR = (3,4,0). DCs: √(9+16+0)=5, so l=3/5, m=4/5, n=0. This means the beam lies entirely in the XY-plane (n=0) at an angle whose cosine with X-axis is 3/5 = 0.6, i.e., about 53.1°."
+                        ],
+                        "images": []
+                      }
+                    ]
+                  },
+                  {
+                    "id": "MOD1-CH1-L2-T3",
+                    "title": "Angle Between Two Lines in 3D",
+                    "subtopics": [
+                      {
+                        "id": "MOD1-CH1-L2-T3-S1",
+                        "title": "Formula for Angle Between Two Lines Using Direction Cosines",
+                        "content": "The angle θ between two lines in 3D space is defined as the acute angle between the lines (or between their positive directions). If two lines have direction cosines (l₁, m₁, n₁) and (l₂, m₂, n₂) respectively, then the cosine of the angle θ between them is given by the dot product formula: cos θ = |l₁l₂ + m₁m₂ + n₁n₂|.\n\nThe derivation uses the dot product of unit vectors: since direction cosines are components of unit vectors, their dot product directly gives the cosine of the angle between them. The absolute value ensures we always get the acute angle (we define the angle between two lines — not rays — to be between 0° and 90°).\n\nTwo special cases are particularly important. First, if the two lines are perpendicular (θ = 90°), then cos θ = 0, which gives the condition: l₁l₂ + m₁m₂ + n₁n₂ = 0. Second, if the two lines are parallel (θ = 0°), then cos θ = 1, which gives: l₁/l₂ = m₁/m₂ = n₁/n₂ (direction cosines are proportional).\n\nThis formula is the 3D analogue of the 2D formula for the angle between two lines (using slopes). It is used in crystallography to find angles between crystal lattice directions, in structural engineering to verify that framework members are truly perpendicular, and in robotics to compute joint angles in kinematic chains.",
+                        "latex": "\\cos\\theta = |l_1 l_2 + m_1 m_2 + n_1 n_2| \\\\[6pt] \\text{Perpendicularity: } l_1 l_2 + m_1 m_2 + n_1 n_2 = 0 \\\\[4pt] \\text{Parallelism: } \\frac{l_1}{l_2} = \\frac{m_1}{m_2} = \\frac{n_1}{n_2}",
+                        "plain_formula": "cos(θ) = |l1*l2 + m1*m2 + n1*n2|; Perpendicular if l1l2+m1m2+n1n2=0; Parallel if l1/l2=m1/m2=n1/n2",
+                        "examples": [
+                          "Find angle between lines with DCs (1/√3, 1/√3, 1/√3) and (1/√2, 1/√2, 0). cos θ = |1/√6 + 1/√6 + 0| = 2/√6 = √(2/3) ≈ 0.816. θ = cos⁻¹(0.816) ≈ 35.26°.",
+                          "Are lines with DRs (1, 2, 3) and (2, −1, 0) perpendicular? First find DCs (not needed — use DR directly with the same dot product formula for direction ratios): a₁a₂+b₁b₂+c₁c₂ = 1×2 + 2×(−1) + 3×0 = 2−2+0 = 0. Yes, the lines are perpendicular.",
+                          "In structural analysis, two rods in a space frame have DRs (1, 0, 0) and (0, 1, 0). cos θ = 0, θ = 90° — they are perpendicular. This confirms the two rods are at right angles, which is required for the frame to be stable under certain load conditions."
+                        ],
+                        "images": []
+                      },
+                      {
+                        "id": "MOD1-CH1-L2-T3-S2",
+                        "title": "Angle Between Two Lines Using Direction Ratios",
+                        "content": "When direction ratios (a₁, b₁, c₁) and (a₂, b₂, c₂) of two lines are given (rather than direction cosines), we can still find the angle between them directly without first converting to direction cosines. The formula is derived by noting that direction cosines are direction ratios divided by their respective magnitudes.\n\nSubstituting into the direction cosines formula, we obtain: cos θ = |a₁a₂ + b₁b₂ + c₁c₂| / [√(a₁²+b₁²+c₁²) × √(a₂²+b₂²+c₂²)]. This is the generalised dot product formula for non-unit vectors, and is often more convenient than first computing direction cosines.\n\nThe condition for perpendicularity simplifies beautifully: a₁a₂ + b₁b₂ + c₁c₂ = 0. This is because when the denominator (product of magnitudes) is non-zero, the angle is 90° if and only if the numerator is 0. The condition for parallelism is a₁/a₂ = b₁/b₂ = c₁/c₂ (direction ratios proportional).\n\nThis formula is widely used in practice because direction ratios are usually what we compute directly from coordinate data (just subtract coordinates of two points on each line), and using this formula avoids the extra step of normalisation. It is the most efficient way to compute angles between lines in 3D coordinates.",
+                        "latex": "\\cos\\theta = \\frac{|a_1 a_2 + b_1 b_2 + c_1 c_2|}{\\sqrt{a_1^2+b_1^2+c_1^2}\\cdot\\sqrt{a_2^2+b_2^2+c_2^2}}",
+                        "plain_formula": "cos(θ) = |a1*a2 + b1*b2 + c1*c2| / (sqrt(a1²+b1²+c1²) * sqrt(a2²+b2²+c2²))",
+                        "examples": [
+                          "Find angle between lines with DRs (1, 2, 2) and (3, 4, 0). Numerator: 1×3+2×4+2×0 = 3+8 = 11. Denom: √(1+4+4)×√(9+16) = 3×5 = 15. cos θ = 11/15 ≈ 0.733. θ ≈ 42.8°.",
+                          "Two railway tracks merge at a station. Track 1 has direction (1, 2, 0) and Track 2 has direction (2, 1, 0). Angle: numerator = 2+2+0=4, denominator = √5×√5=5. cos θ = 4/5, θ = cos⁻¹(0.8) ≈ 36.87°. Rail engineers use such calculations to design safe curve radii at junctions."
+                        ],
+                        "images": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "MOD1-CH1-L3",
+                "title": "Equation of a Straight Line in 3D",
+                "description": "Deriving and understanding different forms of the equation of a straight line in three-dimensional space.",
+                "topics": [
+                  {
+                    "id": "MOD1-CH1-L3-T1",
+                    "title": "Symmetric Form of the Equation of a Line",
+                    "subtopics": [
+                      {
+                        "id": "MOD1-CH1-L3-T1-S1",
+                        "title": "Line Through a Given Point with Given Direction Ratios",
+                        "content": "A straight line in 3D space is uniquely determined by specifying a point through which it passes and its direction. Given a point P(x₁, y₁, z₁) on the line and direction ratios (a, b, c) of the line, the equation of the line can be expressed in symmetric form, also called the standard form or the canonical form.\n\nThe derivation is based on the parametric representation: any point Q(x, y, z) on the line can be reached from P by moving a parameter t along the direction (a, b, c). So x = x₁ + at, y = y₁ + bt, z = z₁ + ct for some real number t. Eliminating the parameter t from these three equations (by solving each for t and equating), we obtain the symmetric form: (x − x₁)/a = (y − y₁)/b = (z − z₁)/c = t.\n\nEach ratio (x−x₁)/a, (y−y₁)/b, (z−z₁)/c equals the same parameter t, which represents the 'how far along the line' the point Q is from P. When t = 0, Q coincides with P. When t = 1, Q is at (x₁+a, y₁+b, z₁+c). When t = −1, Q is at (x₁−a, y₁−b, z₁−c), in the opposite direction.\n\nIn robotics and computer graphics, the parametric form (x₁+at, y₁+bt, z₁+ct) is directly used to trace the path of a ray or moving object. Every point on the path corresponds to a specific value of the parameter t — this is how ray-tracing algorithms in computer graphics compute reflections and shadows.",
+                        "latex": "\\frac{x - x_1}{a} = \\frac{y - y_1}{b} = \\frac{z - z_1}{c} = t",
+                        "plain_formula": "(x - x1)/a = (y - y1)/b = (z - z1)/c = t",
+                        "examples": [
+                          "Equation of line through (1, 2, 3) with DRs (2, 3, 4): (x−1)/2 = (y−2)/3 = (z−3)/4. Parametrically: x = 1+2t, y = 2+3t, z = 3+4t. At t=1: point (3, 5, 7); at t=−1: point (−1, −1, −1).",
+                          "In a laser cutting machine, the laser beam starts at position (0, 0, 5) mm and moves in direction (1, 0, −1) (cutting diagonally through a panel). Equation of the laser path: (x−0)/1 = (y−0)/0 = (z−5)/(−1). Since y is unchanged (DR=0), the laser cuts in the XZ plane: x/1 = (z−5)/(−1), i.e., x = 5−z.",
+                          "Equation of line through origin (0,0,0) with DRs (l, m, n): x/l = y/m = z/n. This is the equation of a line through the origin — it passes through both (l, m, n) and (−l, −m, −n), going in both directions."
+                        ],
+                        "images": []
+                      },
+                      {
+                        "id": "MOD1-CH1-L3-T1-S2",
+                        "title": "Line Through Two Given Points",
+                        "content": "A straight line is also uniquely determined by any two distinct points P(x₁, y₁, z₁) and Q(x₂, y₂, z₂) through which it passes. In this case, the direction ratios of the line are simply (x₂−x₁, y₂−y₁, z₂−z₁) — the differences of the coordinates.\n\nSubstituting these direction ratios and using P as the fixed point, the equation of the line PQ in symmetric form becomes: (x−x₁)/(x₂−x₁) = (y−y₁)/(y₂−y₁) = (z−z₁)/(z₂−z₁). This is sometimes called the two-point form of the equation of a line in 3D.\n\nNote that when the parameter equals 0, we get the point P; when it equals 1, we get the point Q. For values between 0 and 1, we get points on the segment PQ; for values outside [0,1], we get points on the line beyond P or Q. This parametric interpretation is extremely useful for checking whether a given point lies between P and Q on the segment, or outside it.\n\nA practical application: in 3D surveying, if the positions of two survey points are known precisely (measured by GPS), the equation of the line connecting them can be written in this two-point form. Any intermediate point on the survey line can then be computed by choosing the appropriate value of the parameter t.",
+                        "latex": "\\frac{x - x_1}{x_2 - x_1} = \\frac{y - y_1}{y_2 - y_1} = \\frac{z - z_1}{z_2 - z_1}",
+                        "plain_formula": "(x-x1)/(x2-x1) = (y-y1)/(y2-y1) = (z-z1)/(z2-z1)",
+                        "examples": [
+                          "Find equation of line through A(1, −1, 0) and B(3, 5, 2). DRs = (2, 6, 2). Simplify: (1, 3, 1). Equation: (x−1)/1 = (y+1)/3 = (z−0)/1, i.e., (x−1) = (y+1)/3 = z.",
+                          "Two antenna towers are at positions A(100, 200, 30) m and B(400, 500, 80) m (measured from a reference point). The communication line of sight can be described by the 3D two-point line equation: (x−100)/300 = (y−200)/300 = (z−30)/50. Engineers use this to determine if any obstacle lies on this sight line by checking its (x, y, z) against the equation."
+                        ],
+                        "images": []
+                      }
+                    ]
+                  },
+                  {
+                    "id": "MOD1-CH1-L3-T2",
+                    "title": "Parametric Form and Vector Form of a Line",
+                    "subtopics": [
+                      {
+                        "id": "MOD1-CH1-L3-T2-S1",
+                        "title": "Parametric Equations of a Line",
+                        "content": "The parametric form expresses the coordinates of any point on a line as explicit functions of a single parameter t. Given a point P(x₁, y₁, z₁) on the line and direction ratios (a, b, c), the parametric equations are: x = x₁ + at, y = y₁ + bt, z = z₁ + ct, where t ∈ ℝ (all real numbers).\n\nAs t varies over all real numbers, the point (x, y, z) traces out the entire infinite line through P in the direction (a, b, c). For t > 0, we move in the direction of (a, b, c) from P; for t < 0, we move in the opposite direction. The parameter t can be thought of as 'time' in a physics context — if a particle starts at P at time t=0 and moves with velocity (a, b, c), then at time t it is at (x₁+at, y₁+bt, z₁+ct).\n\nThe parametric form is the most computationally useful representation of a line. Unlike the symmetric form, it does not require any denominators to be non-zero (a, b, or c can be zero — e.g., if a=0, the line is parallel to the YZ-plane, and x remains constant = x₁). This makes parametric form universal and applicable even in degenerate cases.\n\nIn computer graphics, parametric form is the standard way to represent rays for ray-tracing. In physics simulations, it describes the trajectory of a particle moving in a straight line. In animation, it enables linear interpolation ('lerp') between two positions over time.",
+                        "latex": "x = x_1 + at, \\quad y = y_1 + bt, \\quad z = z_1 + ct, \\quad t \\in \\mathbb{R}",
+                        "plain_formula": "x = x1 + a*t, y = y1 + b*t, z = z1 + c*t",
+                        "examples": [
+                          "Parametric equations of line through (2, 3, 1) with DRs (1, −2, 3): x = 2+t, y = 3−2t, z = 1+3t. At t=0: point (2,3,1); at t=2: point (4,−1,7); at t=−1: point (1,5,−2).",
+                          "A drone at position (0, 0, 100) m flies in direction (5, 3, −2) m/s. Its position at time t seconds is: x=5t, y=3t, z=100−2t. When does it reach ground (z=0)? 100−2t=0 → t=50 s. Ground position: (250, 150, 0) m. Aviation engineers use such parametric equations to plan flight paths and estimate landing points."
+                        ],
+                        "images": []
+                      },
+                      {
+                        "id": "MOD1-CH1-L3-T2-S2",
+                        "title": "Vector Form of the Equation of a Line",
+                        "content": "Using vector notation, the equation of a straight line becomes elegantly compact. Let →a be the position vector of a fixed point A on the line, and let →b be the direction vector of the line. Then the position vector →r of any point on the line is given by: →r = →a + t→b, where t is a real parameter.\n\nIn component form, if →a = (x₁, y₁, z₁) and →b = (a, b, c), then →r = (x₁+ta, y₁+tb, z₁+tc) — which is exactly the parametric form written as a single vector equation. The vector form is therefore just a concise, coordinate-free way to write the parametric equations.\n\nWhen the line passes through two points A and B with position vectors →a and →b, the direction vector is →b − →a, and the equation becomes: →r = →a + t(→b − →a) = (1−t)→a + t→b. At t=0 we get A; at t=1 we get B. This is also the formula for linear interpolation (lerp) between two points.\n\nThe vector form is particularly powerful in theoretical derivations and in higher mathematics. It generalises immediately to lines in n-dimensional space by simply changing the dimension of the vectors. In machine learning and data science, regression lines in high-dimensional space are conceptually 1D lines described by the same vector equation →r = →a + t→b.",
+                        "latex": "\\vec{r} = \\vec{a} + t\\vec{b}, \\quad t \\in \\mathbb{R}",
+                        "plain_formula": "r-vector = a-vector + t*(b-vector)",
+                        "examples": [
+                          "Line through A(1,2,3) with direction →b = 2î + 3ĵ − k̂. Vector form: →r = (î + 2ĵ + 3k̂) + t(2î + 3ĵ − k̂). Component form: (1+2t, 2+3t, 3−t).",
+                          "In 3D game engines, linear interpolation between two waypoints W₁(0,0,0) and W₂(10,5,3) uses: →r = (1−t)W₁ + tW₂ = t(10,5,3). At t=0.5 (halfway): position = (5, 2.5, 1.5). This is how smooth character movement along paths is implemented in games."
+                        ],
+                        "images": [
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/3d_line.svg/400px-3d_line.svg.png"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "MOD1-CH2",
+            "title": "Coplanarity of Straight Lines",
+            "description": "Conditions under which two straight lines in 3D space lie in the same plane, and the methods to test and establish coplanarity.",
+            "lessons": [
+              {
+                "id": "MOD1-CH2-L1",
+                "title": "Concept of Coplanar and Skew Lines"
+              },
+              {
+                "id": "MOD1-CH2-L2",
+                "title": "Condition for Coplanarity of Two Lines"
+              },
+              {
+                "id": "MOD1-CH2-L3",
+                "title": "Equation of the Plane Containing Two Coplanar Lines"
+              }
+            ]
+          },
+          {
+            "id": "MOD1-CH3",
+            "title": "Shortest Distance Between Two Lines",
+            "description": "Understanding skew lines and computing the shortest distance and its equation between two non-intersecting, non-parallel lines in 3D space.",
+            "lessons": [
+              {
+                "id": "MOD1-CH3-L1",
+                "title": "Skew Lines and the Concept of Shortest Distance"
+              },
+              {
+                "id": "MOD1-CH3-L2",
+                "title": "Formula for Shortest Distance Between Two Skew Lines"
+              },
+              {
+                "id": "MOD1-CH3-L3",
+                "title": "Equation of the Line of Shortest Distance"
+              },
+              {
+                "id": "MOD1-CH3-L4",
+                "title": "Problems on Shortest Distance"
+              }
+            ]
+          }
+        ]
+      },
+
+      {
+        "id": "MOD-2",
+        "title": "Sphere",
+        "unit": 2,
+        "hours": 12,
+        "description": "This module covers the standard equation of a sphere, properties of spheres, tangent planes, and the equation of circles formed by the intersection of a sphere with a plane.",
+        "chapters": [
+          {
+            "id": "MOD2-CH1",
+            "title": "Standard Equation of a Sphere",
+            "lessons": [
+              { "id": "MOD2-CH1-L1", "title": "Definition and Standard Form of a Sphere" },
+              { "id": "MOD2-CH1-L2", "title": "General Equation of a Sphere" },
+              { "id": "MOD2-CH1-L3", "title": "Finding Centre and Radius from the General Equation" }
+            ]
+          },
+          {
+            "id": "MOD2-CH2",
+            "title": "Properties of a Sphere",
+            "lessons": [
+              { "id": "MOD2-CH2-L1", "title": "Diameter Form of a Sphere" },
+              { "id": "MOD2-CH2-L2", "title": "Section of a Sphere by a Plane" },
+              { "id": "MOD2-CH2-L3", "title": "Intersection of Two Spheres" }
+            ]
+          },
+          {
+            "id": "MOD2-CH3",
+            "title": "Tangent Plane to a Sphere",
+            "lessons": [
+              { "id": "MOD2-CH3-L1", "title": "Condition for Tangency" },
+              { "id": "MOD2-CH3-L2", "title": "Equation of Tangent Plane at a Point" },
+              { "id": "MOD2-CH3-L3", "title": "Length of Tangent from an External Point" }
+            ]
+          },
+          {
+            "id": "MOD2-CH4",
+            "title": "Equation of a Circle in 3D",
+            "lessons": [
+              { "id": "MOD2-CH4-L1", "title": "Circle as Intersection of Sphere and Plane" },
+              { "id": "MOD2-CH4-L2", "title": "Great Circle and Small Circle" }
+            ]
+          }
+        ]
+      },
+
+      {
+        "id": "MOD-3",
+        "title": "System of Spheres",
+        "unit": 3,
+        "hours": 12,
+        "description": "This module explores the relationships between multiple spheres, including tangency, coaxial systems, radical planes, and orthogonal spheres.",
+        "chapters": [
+          {
+            "id": "MOD3-CH1",
+            "title": "Tangency of Spheres",
+            "lessons": [
+              { "id": "MOD3-CH1-L1", "title": "Internal and External Tangency of Two Spheres" },
+              { "id": "MOD3-CH1-L2", "title": "Conditions for Two Spheres to Touch" }
+            ]
+          },
+          {
+            "id": "MOD3-CH2",
+            "title": "Coaxial System of Spheres",
+            "lessons": [
+              { "id": "MOD3-CH2-L1", "title": "Definition of a Coaxial System" },
+              { "id": "MOD3-CH2-L2", "title": "Limiting Points of a Coaxial System" }
+            ]
+          },
+          {
+            "id": "MOD3-CH3",
+            "title": "Radical Planes",
+            "lessons": [
+              { "id": "MOD3-CH3-L1", "title": "Radical Plane of Two Spheres" },
+              { "id": "MOD3-CH3-L2", "title": "Radical Axis and Radical Centre" }
+            ]
+          },
+          {
+            "id": "MOD3-CH4",
+            "title": "Orthogonal Spheres",
+            "lessons": [
+              { "id": "MOD3-CH4-L1", "title": "Condition for Two Spheres to be Orthogonal" },
+              { "id": "MOD3-CH4-L2", "title": "Problems on Orthogonal Spheres" }
+            ]
+          }
+        ]
+      },
+
+      {
+        "id": "MOD-4",
+        "title": "Cone and Cylinder",
+        "unit": 4,
+        "hours": 12,
+        "description": "This module covers the equations of cones (with vertex at origin and enveloping cones) and cylinders (general and right circular), with their derivations and applications.",
+        "chapters": [
+          {
+            "id": "MOD4-CH1",
+            "title": "Cone with Vertex at the Origin",
+            "lessons": [
+              { "id": "MOD4-CH1-L1", "title": "Definition of a Cone and its Equation" },
+              { "id": "MOD4-CH1-L2", "title": "Homogeneous Equation of a Cone with Vertex at Origin" },
+              { "id": "MOD4-CH1-L3", "title": "Condition for a General Second Degree Equation to Represent a Cone" }
+            ]
+          },
+          {
+            "id": "MOD4-CH2",
+            "title": "Enveloping Cone of a Sphere",
+            "lessons": [
+              { "id": "MOD4-CH2-L1", "title": "Definition and Equation of Enveloping Cone" },
+              { "id": "MOD4-CH2-L2", "title": "Properties of the Enveloping Cone" }
+            ]
+          },
+          {
+            "id": "MOD4-CH3",
+            "title": "Right Circular Cone",
+            "lessons": [
+              { "id": "MOD4-CH3-L1", "title": "Definition and Equation of a Right Circular Cone" },
+              { "id": "MOD4-CH3-L2", "title": "Semi-Vertical Angle and Axis of a Cone" }
+            ]
+          },
+          {
+            "id": "MOD4-CH4",
+            "title": "Equation of a Cylinder",
+            "lessons": [
+              { "id": "MOD4-CH4-L1", "title": "Definition and Equation of a General Cylinder" },
+              { "id": "MOD4-CH4-L2", "title": "Enveloping Cylinder" }
+            ]
+          },
+          {
+            "id": "MOD4-CH5",
+            "title": "Right Circular Cylinder",
+            "lessons": [
+              { "id": "MOD4-CH5-L1", "title": "Definition and Equation of a Right Circular Cylinder" },
+              { "id": "MOD4-CH5-L2", "title": "Problems on Right Circular Cylinders" }
+            ]
+          }
+        ]
+      },
+
+      {
+        "id": "MOD-5",
+        "title": "Conicoid",
+        "unit": 5,
+        "hours": 12,
+        "description": "This module examines the nature and classification of conicoids, the standard equation of central conicoids, their enveloping cones, tangent planes, conditions of tangency, director spheres, and director planes.",
+        "chapters": [
+          {
+            "id": "MOD5-CH1",
+            "title": "Nature of a Conicoid",
+            "lessons": [
+              { "id": "MOD5-CH1-L1", "title": "Definition and Classification of Conicoids" },
+              { "id": "MOD5-CH1-L2", "title": "Ellipsoid, Hyperboloid, and Paraboloid" }
+            ]
+          },
+          {
+            "id": "MOD5-CH2",
+            "title": "Standard Equation of Central Conicoid",
+            "lessons": [
+              { "id": "MOD5-CH2-L1", "title": "Equation of Central Conicoid and its Forms" },
+              { "id": "MOD5-CH2-L2", "title": "Sections and Diametral Planes" }
+            ]
+          },
+          {
+            "id": "MOD5-CH3",
+            "title": "Enveloping Cone of a Conicoid",
+            "lessons": [
+              { "id": "MOD5-CH3-L1", "title": "Equation of Enveloping Cone of a Central Conicoid" },
+              { "id": "MOD5-CH3-L2", "title": "Chord of Contact" }
+            ]
+          },
+          {
+            "id": "MOD5-CH4",
+            "title": "Tangent Plane and Condition of Tangency",
+            "lessons": [
+              { "id": "MOD5-CH4-L1", "title": "Tangent Plane to a Central Conicoid" },
+              { "id": "MOD5-CH4-L2", "title": "Condition of Tangency for a Plane to Touch a Conicoid" },
+              { "id": "MOD5-CH4-L3", "title": "Normal to a Conicoid" }
+            ]
+          },
+          {
+            "id": "MOD5-CH5",
+            "title": "Director Sphere and Director Plane",
+            "lessons": [
+              { "id": "MOD5-CH5-L1", "title": "Director Sphere of a Conicoid" },
+              { "id": "MOD5-CH5-L2", "title": "Director Plane" }
+            ]
+          }
+        ]
+      }
+
+    ]
+  }
+}
