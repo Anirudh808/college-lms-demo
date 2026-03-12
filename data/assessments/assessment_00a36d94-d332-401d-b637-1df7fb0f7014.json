@@ -1,0 +1,95 @@
+{
+  "id": "00a36d94-d332-401d-b637-1df7fb0f7014",
+  "courseId": "p2",
+  "module": "M1",
+  "chapter": "M1C2",
+  "lesson": "M1C2L1",
+  "topic": "M1C2L1T1",
+  "subTopic": "M1C2L1T1S1",
+  "durationInSeconds": 1800,
+  "questionLimit": 5,
+  "questions": [
+    {
+      "question": "Hii",
+      "type": "MCQ",
+      "options": [
+        {
+          "key": "A",
+          "text": "hii"
+        },
+        {
+          "key": "B",
+          "text": "hhiii"
+        },
+        {
+          "key": "C",
+          "text": "hiih"
+        },
+        {
+          "key": "D",
+          "text": "iii"
+        }
+      ],
+      "correctAnswer": {
+        "option": "A",
+        "answer": true
+      }
+    },
+    {
+      "question": "Hello",
+      "type": "Fill in the blanks",
+      "options": [],
+      "correctAnswer": {
+        "option": "Hai",
+        "answer": true
+      }
+    },
+    {
+      "question": "qwhat that ?",
+      "type": "Short Answer",
+      "options": [],
+      "correctAnswer": {
+        "option": "yes",
+        "answer": true
+      }
+    },
+    {
+      "question": "how are you",
+      "type": "Multi Select",
+      "options": [
+        {
+          "key": "A",
+          "text": "fine"
+        },
+        {
+          "key": "B",
+          "text": "good"
+        },
+        {
+          "key": "C",
+          "text": "awsome"
+        },
+        {
+          "key": "D",
+          "text": "aws"
+        }
+      ],
+      "correctAnswer": {
+        "multiOptions": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    {
+      "question": "product",
+      "type": "True or False",
+      "options": [],
+      "correctAnswer": {
+        "option": "",
+        "answer": true
+      }
+    }
+  ]
+}

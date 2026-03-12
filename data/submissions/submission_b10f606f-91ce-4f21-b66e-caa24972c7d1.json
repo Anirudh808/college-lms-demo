@@ -1,0 +1,18 @@
+{
+  "assessmentId": "00a36d94-d332-401d-b637-1df7fb0f7014",
+  "courseId": "p2",
+  "studentId": "current-student",
+  "studentAnswers": [
+    "A",
+    "hai",
+    "hia",
+    [
+      "A",
+      "B",
+      "C"
+    ],
+    "True"
+  ],
+  "submittedAt": 1773314933864,
+  "id": "b10f606f-91ce-4f21-b66e-caa24972c7d1"
+}

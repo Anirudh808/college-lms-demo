@@ -8,21 +8,21 @@ import { Assessment } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
-export default function AssignmentAttemptPage() {
+export default function AssessmentAttemptPage() {
   const params = useParams();
   const router = useRouter();
   const courseId = params.id as string;
-  const assignmentId = params.aid as string;
+  const assessmentId = params.assessmentId as string;
 
-  const [assignment, setAssignment] = useState<Assessment | null>(null);
+  const [assessment, setAssessment] = useState<Assessment | null>(null);
 
   useEffect(() => {
-    LocalStorageService.getAssessmentById(assignmentId).then(data => {
-      if (data) setAssignment(data);
+    LocalStorageService.getAssessmentById(assessmentId).then(data => {
+      if (data) setAssessment(data);
     });
-  }, [assignmentId]);
-  console.log("assignment", assignment)
-  if (!assignment) {
+  }, [assessmentId]);
+
+  if (!assessment) {
     return (
       <div className="p-8 text-center space-y-4">
         <p className="text-muted-foreground">Assessment not found or loading...</p>
@@ -35,7 +35,7 @@ export default function AssignmentAttemptPage() {
 
   return (
     <div className="py-6">
-      <AssignmentAttemptLayout assessment={assignment} courseId={courseId} />
+      <AssignmentAttemptLayout assessment={assessment} courseId={courseId} />
     </div>
   );
 }
