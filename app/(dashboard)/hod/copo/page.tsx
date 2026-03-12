@@ -11,11 +11,11 @@ export default function HodCoPoPage() {
   const courses = getCourses(undefined, user?.departmentId);
   const coPoAttainment = (analyticsData as { coPoAttainment?: Record<string, Record<string, number>> }).coPoAttainment ?? {};
 
-  const data = courses.flatMap((c) => {
+  const data = courses.flatMap((c: any) => {
     const co = coPoAttainment[c.id];
     if (!co) return [];
     return Object.entries(co).map(([coName, val]) => ({
-      name: `${c.code} ${coName}`,
+      name: `${c.id} ${coName}`,
       value: val,
     }));
   });

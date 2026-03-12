@@ -14,7 +14,7 @@ export default function CourseAssignmentsPage() {
   const params = useParams();
   const courseId = params.id as string;
   const { user } = useSession();
-  const course = getCourse(courseId);
+  const course = getCourse(courseId) as any;
   const assignments = getAssignments(courseId);
 
   if (!course) return <p>Course not found</p>;
@@ -28,7 +28,7 @@ export default function CourseAssignmentsPage() {
       </Link>
 
       <div>
-        <h1 className="text-2xl font-bold">Assignments - {course.code}</h1>
+        <h1 className="text-2xl font-bold">Assignments - {course.program}</h1>
         <p className="text-muted-foreground">{course.title}</p>
       </div>
 

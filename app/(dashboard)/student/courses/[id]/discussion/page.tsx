@@ -11,7 +11,7 @@ import { format } from "date-fns";
 export default function CourseDiscussionPage() {
   const params = useParams();
   const courseId = params.id as string;
-  const course = getCourse(courseId);
+  const course = getCourse(courseId) as any;
   const discussions = getDiscussions(courseId);
 
   if (!course) return <p>Course not found</p>;
@@ -25,7 +25,7 @@ export default function CourseDiscussionPage() {
       </Link>
 
       <div>
-        <h1 className="text-2xl font-bold">Discussion - {course.code}</h1>
+        <h1 className="text-2xl font-bold">Discussion - {course.program}</h1>
         <p className="text-muted-foreground">{course.title}</p>
       </div>
 

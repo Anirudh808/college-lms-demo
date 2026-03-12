@@ -13,7 +13,7 @@ export default function CourseQuizzesPage() {
   const params = useParams();
   const courseId = params.id as string;
   const { user } = useSession();
-  const course = getCourse(courseId);
+  const course = getCourse(courseId) as any;
   const quizzes = getQuizzes(courseId);
 
   if (!course) return <p>Course not found</p>;
@@ -27,7 +27,7 @@ export default function CourseQuizzesPage() {
       </Link>
 
       <div>
-        <h1 className="text-2xl font-bold">Quizzes - {course.code}</h1>
+        <h1 className="text-2xl font-bold">Quizzes - {course.program}</h1>
         <p className="text-muted-foreground">{course.title}</p>
       </div>
 

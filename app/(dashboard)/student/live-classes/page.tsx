@@ -23,14 +23,14 @@ export default function StudentLiveClassesPage() {
       </div>
 
       <div className="space-y-4">
-        {liveClasses.map((lc) => {
-          const course = myCourses.find((c) => c.id === lc.courseId);
+        {liveClasses.map((lc: any) => {
+          const course = myCourses.find((c: any) => c.id === lc.courseId) as any;
           return (
             <Card key={lc.id}>
               <CardHeader className="flex flex-row items-center justify-between">
                 <div>
                   <h3 className="font-semibold">{lc.title}</h3>
-                  <p className="text-sm text-muted-foreground">{course?.code}</p>
+                  <p className="text-sm text-muted-foreground">{course?.program}</p>
                 </div>
                 <Badge variant={lc.status === "live" ? "default" : "secondary"}>{lc.status}</Badge>
               </CardHeader>

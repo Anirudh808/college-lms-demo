@@ -16,11 +16,31 @@
       "Develop understanding of geometrical aspects of three-dimensional figures such as sphere, cone and cylinder."
     ],
     "outcomes": [
-      { "co": "CO1", "description": "Gain knowledge about the regular geometrical figures and their properties.", "bloom_level": "K1 – Remember" },
-      { "co": "CO2", "description": "Describe the geometric concepts.", "bloom_level": "K2 – Understand" },
-      { "co": "CO3", "description": "Find equation to tangent, normal at a point on a conic.", "bloom_level": "K3 – Apply" },
-      { "co": "CO4", "description": "Analyze condition of tangency and find the tangent plane to the central conicoid.", "bloom_level": "K4 – Analyze" },
-      { "co": "CO5", "description": "Analyze conics to explain natural phenomenon.", "bloom_level": "K4 – Analyze" }
+      {
+        "co": "CO1",
+        "description": "Gain knowledge about the regular geometrical figures and their properties.",
+        "bloom_level": "K1 – Remember"
+      },
+      {
+        "co": "CO2",
+        "description": "Describe the geometric concepts.",
+        "bloom_level": "K2 – Understand"
+      },
+      {
+        "co": "CO3",
+        "description": "Find equation to tangent, normal at a point on a conic.",
+        "bloom_level": "K3 – Apply"
+      },
+      {
+        "co": "CO4",
+        "description": "Analyze condition of tangency and find the tangent plane to the central conicoid.",
+        "bloom_level": "K4 – Analyze"
+      },
+      {
+        "co": "CO5",
+        "description": "Analyze conics to explain natural phenomenon.",
+        "bloom_level": "K4 – Analyze"
+      }
     ],
     "textbooks": [
       "Analytical Geometry – P. Durai Pandian & others (Emerald Publishers, 1998)",
@@ -34,7 +54,6 @@
       "http://egyankosh.ac.in/bitstream/123456789/11990/1/Unit-2.pdf"
     ],
     "modules": [
-
       {
         "id": "MOD-1",
         "title": "Straight Lines in 3D Analytical Geometry",
@@ -385,9 +404,15 @@
             "id": "MOD2-CH1",
             "title": "Standard Equation of a Sphere",
             "lessons": [
-              { "id": "MOD2-CH1-L1", "title": "Definition and Standard Form of a Sphere" },
+              {
+                "id": "MOD2-CH1-L1",
+                "title": "Definition and Standard Form of a Sphere"
+              },
               { "id": "MOD2-CH1-L2", "title": "General Equation of a Sphere" },
-              { "id": "MOD2-CH1-L3", "title": "Finding Centre and Radius from the General Equation" }
+              {
+                "id": "MOD2-CH1-L3",
+                "title": "Finding Centre and Radius from the General Equation"
+              }
             ]
           },
           {
@@ -395,7 +420,10 @@
             "title": "Properties of a Sphere",
             "lessons": [
               { "id": "MOD2-CH2-L1", "title": "Diameter Form of a Sphere" },
-              { "id": "MOD2-CH2-L2", "title": "Section of a Sphere by a Plane" },
+              {
+                "id": "MOD2-CH2-L2",
+                "title": "Section of a Sphere by a Plane"
+              },
               { "id": "MOD2-CH2-L3", "title": "Intersection of Two Spheres" }
             ]
           },
@@ -404,15 +432,24 @@
             "title": "Tangent Plane to a Sphere",
             "lessons": [
               { "id": "MOD2-CH3-L1", "title": "Condition for Tangency" },
-              { "id": "MOD2-CH3-L2", "title": "Equation of Tangent Plane at a Point" },
-              { "id": "MOD2-CH3-L3", "title": "Length of Tangent from an External Point" }
+              {
+                "id": "MOD2-CH3-L2",
+                "title": "Equation of Tangent Plane at a Point"
+              },
+              {
+                "id": "MOD2-CH3-L3",
+                "title": "Length of Tangent from an External Point"
+              }
             ]
           },
           {
             "id": "MOD2-CH4",
             "title": "Equation of a Circle in 3D",
             "lessons": [
-              { "id": "MOD2-CH4-L1", "title": "Circle as Intersection of Sphere and Plane" },
+              {
+                "id": "MOD2-CH4-L1",
+                "title": "Circle as Intersection of Sphere and Plane"
+              },
               { "id": "MOD2-CH4-L2", "title": "Great Circle and Small Circle" }
             ]
           }
@@ -430,16 +467,28 @@
             "id": "MOD3-CH1",
             "title": "Tangency of Spheres",
             "lessons": [
-              { "id": "MOD3-CH1-L1", "title": "Internal and External Tangency of Two Spheres" },
-              { "id": "MOD3-CH1-L2", "title": "Conditions for Two Spheres to Touch" }
+              {
+                "id": "MOD3-CH1-L1",
+                "title": "Internal and External Tangency of Two Spheres"
+              },
+              {
+                "id": "MOD3-CH1-L2",
+                "title": "Conditions for Two Spheres to Touch"
+              }
             ]
           },
           {
             "id": "MOD3-CH2",
             "title": "Coaxial System of Spheres",
             "lessons": [
-              { "id": "MOD3-CH2-L1", "title": "Definition of a Coaxial System" },
-              { "id": "MOD3-CH2-L2", "title": "Limiting Points of a Coaxial System" }
+              {
+                "id": "MOD3-CH2-L1",
+                "title": "Definition of a Coaxial System"
+              },
+              {
+                "id": "MOD3-CH2-L2",
+                "title": "Limiting Points of a Coaxial System"
+              }
             ]
           },
           {
@@ -447,14 +496,20 @@
             "title": "Radical Planes",
             "lessons": [
               { "id": "MOD3-CH3-L1", "title": "Radical Plane of Two Spheres" },
-              { "id": "MOD3-CH3-L2", "title": "Radical Axis and Radical Centre" }
+              {
+                "id": "MOD3-CH3-L2",
+                "title": "Radical Axis and Radical Centre"
+              }
             ]
           },
           {
             "id": "MOD3-CH4",
             "title": "Orthogonal Spheres",
             "lessons": [
-              { "id": "MOD3-CH4-L1", "title": "Condition for Two Spheres to be Orthogonal" },
+              {
+                "id": "MOD3-CH4-L1",
+                "title": "Condition for Two Spheres to be Orthogonal"
+              },
               { "id": "MOD3-CH4-L2", "title": "Problems on Orthogonal Spheres" }
             ]
           }
@@ -472,32 +527,56 @@
             "id": "MOD4-CH1",
             "title": "Cone with Vertex at the Origin",
             "lessons": [
-              { "id": "MOD4-CH1-L1", "title": "Definition of a Cone and its Equation" },
-              { "id": "MOD4-CH1-L2", "title": "Homogeneous Equation of a Cone with Vertex at Origin" },
-              { "id": "MOD4-CH1-L3", "title": "Condition for a General Second Degree Equation to Represent a Cone" }
+              {
+                "id": "MOD4-CH1-L1",
+                "title": "Definition of a Cone and its Equation"
+              },
+              {
+                "id": "MOD4-CH1-L2",
+                "title": "Homogeneous Equation of a Cone with Vertex at Origin"
+              },
+              {
+                "id": "MOD4-CH1-L3",
+                "title": "Condition for a General Second Degree Equation to Represent a Cone"
+              }
             ]
           },
           {
             "id": "MOD4-CH2",
             "title": "Enveloping Cone of a Sphere",
             "lessons": [
-              { "id": "MOD4-CH2-L1", "title": "Definition and Equation of Enveloping Cone" },
-              { "id": "MOD4-CH2-L2", "title": "Properties of the Enveloping Cone" }
+              {
+                "id": "MOD4-CH2-L1",
+                "title": "Definition and Equation of Enveloping Cone"
+              },
+              {
+                "id": "MOD4-CH2-L2",
+                "title": "Properties of the Enveloping Cone"
+              }
             ]
           },
           {
             "id": "MOD4-CH3",
             "title": "Right Circular Cone",
             "lessons": [
-              { "id": "MOD4-CH3-L1", "title": "Definition and Equation of a Right Circular Cone" },
-              { "id": "MOD4-CH3-L2", "title": "Semi-Vertical Angle and Axis of a Cone" }
+              {
+                "id": "MOD4-CH3-L1",
+                "title": "Definition and Equation of a Right Circular Cone"
+              },
+              {
+                "id": "MOD4-CH3-L2",
+                "title": "Semi-Vertical Angle and Axis of a Cone"
+              }
             ]
           },
           {
             "id": "MOD4-CH4",
             "title": "Equation of a Cylinder",
             "lessons": [
-              { "id": "MOD4-CH4-L1", "title": "Definition and Equation of a General Cylinder" },
+              {
+                "id": "MOD4-CH4-L1",
+                "title": "Definition and Equation of a General Cylinder"
+              },
               { "id": "MOD4-CH4-L2", "title": "Enveloping Cylinder" }
             ]
           },
@@ -505,8 +584,14 @@
             "id": "MOD4-CH5",
             "title": "Right Circular Cylinder",
             "lessons": [
-              { "id": "MOD4-CH5-L1", "title": "Definition and Equation of a Right Circular Cylinder" },
-              { "id": "MOD4-CH5-L2", "title": "Problems on Right Circular Cylinders" }
+              {
+                "id": "MOD4-CH5-L1",
+                "title": "Definition and Equation of a Right Circular Cylinder"
+              },
+              {
+                "id": "MOD4-CH5-L2",
+                "title": "Problems on Right Circular Cylinders"
+              }
             ]
           }
         ]
@@ -523,15 +608,24 @@
             "id": "MOD5-CH1",
             "title": "Nature of a Conicoid",
             "lessons": [
-              { "id": "MOD5-CH1-L1", "title": "Definition and Classification of Conicoids" },
-              { "id": "MOD5-CH1-L2", "title": "Ellipsoid, Hyperboloid, and Paraboloid" }
+              {
+                "id": "MOD5-CH1-L1",
+                "title": "Definition and Classification of Conicoids"
+              },
+              {
+                "id": "MOD5-CH1-L2",
+                "title": "Ellipsoid, Hyperboloid, and Paraboloid"
+              }
             ]
           },
           {
             "id": "MOD5-CH2",
             "title": "Standard Equation of Central Conicoid",
             "lessons": [
-              { "id": "MOD5-CH2-L1", "title": "Equation of Central Conicoid and its Forms" },
+              {
+                "id": "MOD5-CH2-L1",
+                "title": "Equation of Central Conicoid and its Forms"
+              },
               { "id": "MOD5-CH2-L2", "title": "Sections and Diametral Planes" }
             ]
           },
@@ -539,7 +633,10 @@
             "id": "MOD5-CH3",
             "title": "Enveloping Cone of a Conicoid",
             "lessons": [
-              { "id": "MOD5-CH3-L1", "title": "Equation of Enveloping Cone of a Central Conicoid" },
+              {
+                "id": "MOD5-CH3-L1",
+                "title": "Equation of Enveloping Cone of a Central Conicoid"
+              },
               { "id": "MOD5-CH3-L2", "title": "Chord of Contact" }
             ]
           },
@@ -547,8 +644,14 @@
             "id": "MOD5-CH4",
             "title": "Tangent Plane and Condition of Tangency",
             "lessons": [
-              { "id": "MOD5-CH4-L1", "title": "Tangent Plane to a Central Conicoid" },
-              { "id": "MOD5-CH4-L2", "title": "Condition of Tangency for a Plane to Touch a Conicoid" },
+              {
+                "id": "MOD5-CH4-L1",
+                "title": "Tangent Plane to a Central Conicoid"
+              },
+              {
+                "id": "MOD5-CH4-L2",
+                "title": "Condition of Tangency for a Plane to Touch a Conicoid"
+              },
               { "id": "MOD5-CH4-L3", "title": "Normal to a Conicoid" }
             ]
           },
@@ -562,7 +665,6 @@
           }
         ]
       }
-
     ]
   }
 }

@@ -27,14 +27,16 @@ export default function FacultyLiveClassesPage() {
 
       <div className="space-y-4">
         {liveClasses.map((lc) => {
-          const course = courses.find((c) => c.id === lc.courseId);
+          const course = courses.find((c) => c.id === lc.courseId) as any;
           return (
             <Card key={lc.id}>
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="font-semibold">{lc.title}</h3>
-                    <p className="text-sm text-muted-foreground">{course?.title}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {course?.title} • {course?.program}
+                    </p>
                     <p className="text-xs text-muted-foreground mt-1">
                       {format(new Date(lc.scheduledAt), "MMM d, yyyy HH:mm")} • {lc.duration} min
                     </p>
