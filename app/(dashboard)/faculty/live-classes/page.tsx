@@ -42,7 +42,7 @@ export default function FacultyLiveClassesPage() {
                   <div className="flex items-center gap-2">
                     <Badge>{lc.status}</Badge>
                     <Button asChild>
-                      <Link href={`/student/live-classes/${lc.id}`}>Host / Join</Link>
+                      <Link href={`/faculty/live-classes/${lc.id}`}>Host / Join</Link>
                     </Button>
                   </div>
                 </div>
