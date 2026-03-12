@@ -34,7 +34,7 @@ export default function FacultyLiveClassesPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="font-semibold">{lc.title}</h3>
-                    <p className="text-sm text-muted-foreground">{course?.code}</p>
+                    <p className="text-sm text-muted-foreground">{course?.title}</p>
                     <p className="text-xs text-muted-foreground mt-1">
                       {format(new Date(lc.scheduledAt), "MMM d, yyyy HH:mm")} • {lc.duration} min
                     </p>

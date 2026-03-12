@@ -7,7 +7,9 @@ import {
   useCallback,
 } from "react";
 import { useParams } from "next/navigation";
+import { io, Socket } from "socket.io-client";
 import { getLiveClass, getCourse, getLessons } from "@/lib/data";
+import { getCourseSyllabus } from "@/lib/syllabusMap";
 import { useSession } from "@/store/session";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -37,6 +39,9 @@ import {
   FileText,
   CheckCircle2,
   Circle,
+  Maximize2,
+  Minimize2,
+  Radio,
 } from "lucide-react";
 
 // ─── Static mock data ────────────────────────────────────────────────────────
@@ -88,7 +93,7 @@ type DrawTool = "pen" | "eraser";
 
 // ─── Whiteboard Component ─────────────────────────────────────────────────────
 
-function Whiteboard({ isTeacher }: { isTeacher: boolean }) {
+function Whiteboard({ isTeacher, socket, roomId }: { isTeacher: boolean; socket: Socket | null; roomId: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawing = useRef(false);
   const lastPos = useRef<{ x: number; y: number } | null>(null);
@@ -134,6 +139,19 @@ function Whiteboard({ isTeacher }: { isTeacher: boolean }) {
     ctx.moveTo(lastPos.current!.x, lastPos.current!.y);
     ctx.lineTo(pos.x, pos.y);
     ctx.stroke();
+
+    if (socket && isTeacher) {
+      socket.emit("draw-stroke", roomId, {
+        x0: lastPos.current!.x,
+        y0: lastPos.current!.y,
+        x1: pos.x,
+        y1: pos.y,
+        color,
+        size,
+        tool,
+      });
+    }
+
     lastPos.current = pos;
   };
 
@@ -144,6 +162,9 @@ function Whiteboard({ isTeacher }: { isTeacher: boolean }) {
     const ctx = canvas.getContext("2d")!;
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (socket && isTeacher) {
+      socket.emit("clear-board", roomId);
+    }
   };
 
   useEffect(() => {
@@ -153,10 +174,44 @@ function Whiteboard({ isTeacher }: { isTeacher: boolean }) {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }, []);
 
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleStroke = (s: any) => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d")!;
+      ctx.strokeStyle = s.tool === "eraser" ? "#ffffff" : s.color;
+      ctx.lineWidth = s.tool === "eraser" ? s.size * 6 : s.size;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.beginPath();
+      ctx.moveTo(s.x0, s.y0);
+      ctx.lineTo(s.x1, s.y1);
+      ctx.stroke();
+    };
+
+    const handleClear = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d")!;
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    };
+
+    socket.on("new-stroke", handleStroke);
+    socket.on("board-cleared", handleClear);
+
+    return () => {
+      socket.off("new-stroke", handleStroke);
+      socket.off("board-cleared", handleClear);
+    };
+  }, [socket]);
+
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-white dark:bg-zinc-950">
       {isTeacher && (
-        <div className="flex items-center gap-3 px-4 py-2 border-b bg-muted/30 shrink-0 flex-wrap">
+        <div className="flex items-center gap-3 px-4 py-2.5 border-b bg-gradient-to-r from-muted/40 to-muted/10 shrink-0 flex-wrap">
           {/* Tool toggle */}
           <div className="flex rounded-lg overflow-hidden border">
             <button
@@ -310,17 +365,23 @@ export default function LiveClassPage() {
   const liveClass = getLiveClass(id);
   const course = liveClass ? getCourse(liveClass.courseId) : null;
   const isTeacher = user?.role === "faculty";
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const pageRef = useRef<HTMLDivElement>(null);
 
   // Sidebar tab
   const [tab, setTab] = useState<Tab>("lessons");
   // Current main view: "content" or "board"
   const [mainView, setMainView] = useState<"content" | "board">("content");
-  // Lesson selection (from course modules)
-  const allModules = course?.modules ?? [];
+  // Lesson selection (from course syllabus)
+  const syllabusData = course ? getCourseSyllabus(course.id) : null;
+  const allModules = syllabusData?.course?.modules ?? [];
   const allLessons = allModules.flatMap((m) => {
-    const ls = getLessons(m.id);
-    return ls.map((l) => ({ ...l, moduleName: m.title }));
-  }).sort((a, b) => a.order - b.order);
+    const chapters = m.chapters ?? [];
+    const lessons = chapters.flatMap((ch) => ch.lessons ?? []);
+    return lessons.map((l) => ({ ...l, moduleName: m.title }));
+  });
 
   const [lessonIndex, setLessonIndex] = useState(0);
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set());
@@ -381,6 +442,60 @@ export default function LiveClassPage() {
     });
   }, [polls.length]);
 
+  // Elapsed session timer
+  useEffect(() => {
+    const t = setInterval(() => setElapsedSeconds((s) => s + 1), 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  // Fullscreen change listener
+  useEffect(() => {
+    const handler = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", handler);
+    return () => document.removeEventListener("fullscreenchange", handler);
+  }, []);
+
+  const toggleFullscreen = useCallback(() => {
+    if (!pageRef.current) return;
+    if (!document.fullscreenElement) {
+      pageRef.current.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }, []);
+
+  const formatTime = (s: number) => {
+    const m = Math.floor(s / 60).toString().padStart(2, "0");
+    const sec = (s % 60).toString().padStart(2, "0");
+    return `${m}:${sec}`;
+  };
+
+  // Socket init
+  useEffect(() => {
+    const s = io();
+    setSocket(s);
+    s.emit("join-room", id);
+
+    s.on("view-changed", (v: "content" | "board") => {
+      if (!isTeacher) {
+        setMainView(v);
+        setTab(v === "board" ? "board" : "lessons");
+      }
+    });
+
+    s.on("lesson-changed", (idx: number) => {
+      if (!isTeacher) setLessonIndex(idx);
+    });
+
+    s.on("new-chat-message", (msg) => {
+      setChatMessages((m) => [...m, msg]);
+    });
+
+    return () => {
+      s.disconnect();
+    };
+  }, [id, isTeacher]);
+
   // Auto-scroll chat
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -389,13 +504,17 @@ export default function LiveClassPage() {
   // ── Handlers
   const sendChat = () => {
     if (!chatInput.trim()) return;
-    setChatMessages((m) => [...m, {
+    const msg = {
       id: Date.now().toString(),
       user: user?.name ?? "Me",
       text: chatInput.trim(),
       time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-    }]);
+    };
+    setChatMessages((m) => [...m, msg]);
     setChatInput("");
+    if (socket) {
+      socket.emit("send-chat", id, msg);
+    }
   };
 
   const sendEmoji = (emoji: string) => {
@@ -444,11 +563,19 @@ export default function LiveClassPage() {
   };
 
   const nextLesson = () => {
-    if (lessonIndex < allLessons.length - 1) setLessonIndex((i) => i + 1);
+    if (lessonIndex < allLessons.length - 1) {
+      const newIdx = lessonIndex + 1;
+      setLessonIndex(newIdx);
+      if (socket && isTeacher) socket.emit("change-lesson", id, newIdx);
+    }
   };
 
   const prevLesson = () => {
-    if (lessonIndex > 0) setLessonIndex((i) => i - 1);
+    if (lessonIndex > 0) {
+      const newIdx = lessonIndex - 1;
+      setLessonIndex(newIdx);
+      if (socket && isTeacher) socket.emit("change-lesson", id, newIdx);
+    }
   };
 
   if (!liveClass) return <p className="p-8 text-muted-foreground">Live class not found</p>;
@@ -465,32 +592,38 @@ export default function LiveClassPage() {
   const activePoll = polls.find(p => !p.ended);
 
   return (
-    <div className="flex h-[calc(100vh-7rem)] overflow-hidden -m-6 bg-background">
+    <div ref={pageRef} className="flex h-[calc(100vh-7rem)] overflow-hidden -m-6 bg-background">
       {/* ══════ Left Sidebar (icon strip) ══════ */}
-      <div className="w-14 shrink-0 border-r bg-card flex flex-col items-center py-3 gap-1">
-        {TABS.map(({ id, icon: Icon, label, badge }) => (
-          <button
-            key={id}
-            onClick={() => {
-              setTab(id);
-              if (id === "board") setMainView("board");
-              else setMainView("content");
-            }}
-            className={cn(
-              "relative flex flex-col items-center gap-0.5 w-10 h-12 rounded-xl transition-colors text-[10px] font-medium",
-              tab === id ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground"
-            )}
-            title={label}
-          >
-            <Icon className="h-4 w-4 mt-2" />
-            <span className="leading-none">{label}</span>
-            {badge ? (
-              <span className="absolute top-1 right-1 h-3.5 w-3.5 rounded-full bg-red-500 text-white text-[8px] flex items-center justify-center font-bold">
-                {badge}
-              </span>
-            ) : null}
-          </button>
-        ))}
+      <div className="w-14 shrink-0 border-r bg-card flex flex-col items-center py-3 gap-1 shadow-sm">
+        {TABS.map(({ id: tabId, icon: Icon, label, badge }) => {
+          // Students cannot switch to Board or Lessons tabs manually — those are teacher-controlled
+          const studentRestricted = !isTeacher && (tabId === "board" || tabId === "lessons");
+          return (
+            <button
+              key={tabId}
+              onClick={() => {
+                if (studentRestricted) return;
+                setTab(tabId);
+                if (tabId === "board") setMainView("board");
+                else if (tabId === "lessons") setMainView("content");
+              }}
+              className={cn(
+                "relative flex flex-col items-center gap-0.5 w-10 h-12 rounded-xl transition-colors text-[10px] font-medium",
+                tab === tabId ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                studentRestricted && "opacity-40 cursor-not-allowed hover:bg-transparent"
+              )}
+              title={studentRestricted ? `${label} (controlled by teacher)` : label}
+            >
+              <Icon className="h-4 w-4 mt-2" />
+              <span className="leading-none">{label}</span>
+              {badge ? (
+                <span className="absolute top-1 right-1 h-3.5 w-3.5 rounded-full bg-red-500 text-white text-[8px] flex items-center justify-center font-bold">
+                  {badge}
+                </span>
+              ) : null}
+            </button>
+          );
+        })}
       </div>
 
       {/* ══════ Left Detail Panel ══════ */}
@@ -504,7 +637,7 @@ export default function LiveClassPage() {
             <ScrollArea className="flex-1">
               <div className="p-2 space-y-3">
                 {allModules.map((mod) => {
-                  const modLessons = getLessons(mod.id).sort((a, b) => a.order - b.order);
+                  const modLessons = mod.chapters?.flatMap((ch) => ch.lessons ?? []) ?? [];
                   return (
                     <div key={mod.id}>
                       <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground px-2 py-1">{mod.title}</p>
@@ -515,10 +648,20 @@ export default function LiveClassPage() {
                         return (
                           <button
                             key={l.id}
-                            onClick={() => { setLessonIndex(globalIdx); setMainView("content"); setTab("lessons"); }}
+                            onClick={() => {
+                              if (!isTeacher) return;
+                              setLessonIndex(globalIdx);
+                              setMainView("content");
+                              setTab("lessons");
+                              if (socket) {
+                                socket.emit("change-lesson", id, globalIdx);
+                                socket.emit("change-view", id, "content");
+                              }
+                            }}
                             className={cn(
                               "w-full flex items-center gap-2 px-2 py-2 rounded-lg text-xs text-left transition-colors",
-                              isActive ? "bg-primary/10 text-primary font-semibold" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                              isActive ? "bg-primary/10 text-primary font-semibold" : "text-muted-foreground",
+                              isTeacher ? "hover:bg-muted hover:text-foreground cursor-pointer" : "cursor-default"
                             )}
                           >
                             {isDone
@@ -700,37 +843,66 @@ export default function LiveClassPage() {
       <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
 
         {/* Top bar */}
-        <div className="h-12 border-b px-4 flex items-center gap-3 shrink-0 bg-card">
-          {/* Lesson nav (only teacher controls) */}
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={prevLesson} disabled={lessonIndex === 0}>
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <div className="text-sm">
+        <div className="h-13 border-b px-4 flex items-center gap-3 shrink-0 bg-card shadow-sm">
+          {/* LIVE badge + timer */}
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-500/10 border border-red-400/30 text-red-500 text-[11px] font-bold tracking-wide">
+              <Radio className="h-3 w-3 animate-pulse" /> LIVE
+            </span>
+            <span className="text-xs text-muted-foreground font-mono tabular-nums">{formatTime(elapsedSeconds)}</span>
+          </div>
+
+          {/* Divider */}
+          <div className="h-5 w-px bg-border shrink-0" />
+
+          {/* Lesson nav */}
+          <div className="flex items-center gap-1 min-w-0">
+            {isTeacher && (
+              <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={prevLesson} disabled={lessonIndex === 0}>
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+            )}
+            <div className="text-sm min-w-0">
+              {!isTeacher && (
+                <span className="text-[10px] font-medium text-primary bg-primary/10 rounded px-1.5 py-0.5 mr-1.5">Following Teacher</span>
+              )}
               <span className="text-muted-foreground">{currentLesson?.moduleName} · </span>
-              <span className="font-semibold">{currentLesson?.title ?? "No lesson"}</span>
+              <span className="font-semibold truncate">{currentLesson?.title ?? "No lesson"}</span>
             </div>
-            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={nextLesson} disabled={lessonIndex >= allLessons.length - 1}>
-              <ChevronRight className="h-4 w-4" />
-            </Button>
+            {isTeacher && (
+              <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={nextLesson} disabled={lessonIndex >= allLessons.length - 1}>
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            )}
           </div>
 
           <div className="ml-auto flex items-center gap-2">
-            {/* View toggle */}
-            <div className="flex rounded-lg border overflow-hidden">
-              <button
-                onClick={() => { setMainView("content"); setTab("lessons"); }}
-                className={cn("px-3 py-1 text-xs flex items-center gap-1.5 transition-colors", mainView === "content" ? "bg-primary text-primary-foreground" : "hover:bg-muted")}
-              >
-                <Sparkles className="h-3 w-3" /> Content
-              </button>
-              <button
-                onClick={() => { setMainView("board"); setTab("board"); }}
-                className={cn("px-3 py-1 text-xs flex items-center gap-1.5 transition-colors", mainView === "board" ? "bg-primary text-primary-foreground" : "hover:bg-muted")}
-              >
-                <PenLine className="h-3 w-3" /> Board
-              </button>
-            </div>
+            {/* View toggle — faculty only */}
+            {isTeacher ? (
+              <div className="flex rounded-lg border overflow-hidden shadow-sm">
+                <button
+                  onClick={() => { setMainView("content"); setTab("lessons"); if (socket) socket.emit("change-view", id, "content"); }}
+                  className={cn("px-3 py-1.5 text-xs flex items-center gap-1.5 transition-all", mainView === "content" ? "bg-primary text-primary-foreground" : "hover:bg-muted")}
+                >
+                  <Sparkles className="h-3 w-3" /> Content
+                </button>
+                <button
+                  onClick={() => { setMainView("board"); setTab("board"); if (socket) socket.emit("change-view", id, "board"); }}
+                  className={cn("px-3 py-1.5 text-xs flex items-center gap-1.5 transition-all", mainView === "board" ? "bg-primary text-primary-foreground" : "hover:bg-muted")}
+                >
+                  <PenLine className="h-3 w-3" /> Board
+                </button>
+              </div>
+            ) : (
+              <div className="flex rounded-lg border overflow-hidden opacity-60 pointer-events-none select-none" title="View is controlled by teacher">
+                <span className={cn("px-3 py-1.5 text-xs flex items-center gap-1.5", mainView === "content" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground")}>
+                  <Sparkles className="h-3 w-3" /> Content
+                </span>
+                <span className={cn("px-3 py-1.5 text-xs flex items-center gap-1.5", mainView === "board" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground")}>
+                  <PenLine className="h-3 w-3" /> Board
+                </span>
+              </div>
+            )}
 
             {/* Mark complete / next */}
             {isTeacher && mainView === "content" && (
@@ -767,17 +939,23 @@ export default function LiveClassPage() {
                 </button>
                 <div className="flex items-center gap-0.5">
                   {EMOJI_REACTIONS.map((emoji) => (
-                    <button
-                      key={emoji}
-                      onClick={() => sendEmoji(emoji)}
-                      className="h-8 w-8 rounded-lg text-base flex items-center justify-center hover:bg-muted transition-colors"
-                    >
+                    <button key={emoji} onClick={() => sendEmoji(emoji)}
+                      className="h-8 w-8 rounded-lg text-base flex items-center justify-center hover:bg-muted transition-colors">
                       {emoji}
                     </button>
                   ))}
                 </div>
               </>
             )}
+
+            {/* Fullscreen toggle */}
+            <button
+              onClick={toggleFullscreen}
+              title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+              className="h-8 w-8 rounded-lg flex items-center justify-center hover:bg-muted transition-colors border text-muted-foreground hover:text-foreground"
+            >
+              {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+            </button>
           </div>
         </div>
 
@@ -794,12 +972,12 @@ export default function LiveClassPage() {
 
         {/* Content OR Whiteboard */}
         {mainView === "content" ? (
-          <div className="flex-1 overflow-hidden grid grid-cols-2 grid-rows-2 gap-3 p-3">
+          <div className="flex-1 overflow-hidden grid grid-cols-2 grid-rows-2 gap-3 p-4">
 
             {/* Panel 1: Explanation (spans full left column) */}
-            <div className="row-span-2 border rounded-xl flex flex-col overflow-hidden bg-card">
-              <div className="flex items-center gap-2 px-4 py-2.5 border-b shrink-0">
-                <FileText className="h-3.5 w-3.5 text-primary" />
+            <div className="row-span-2 border rounded-xl flex flex-col overflow-hidden bg-card shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-2 px-4 py-3 border-b shrink-0 bg-gradient-to-r from-primary/5 to-transparent">
+                <FileText className="h-4 w-4 text-primary" />
                 <span className="text-sm font-semibold">Explanation</span>
                 <Sparkles className="h-3 w-3 text-primary/50 ml-1" />
               </div>
@@ -813,9 +991,9 @@ export default function LiveClassPage() {
             </div>
 
             {/* Panel 2: Examples (top right) */}
-            <div className="border rounded-xl flex flex-col overflow-hidden bg-card">
-              <div className="flex items-center gap-2 px-4 py-2.5 border-b shrink-0">
-                <Lightbulb className="h-3.5 w-3.5 text-amber-500" />
+            <div className="border rounded-xl flex flex-col overflow-hidden bg-card shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-2 px-4 py-3 border-b shrink-0 bg-gradient-to-r from-amber-500/5 to-transparent">
+                <Lightbulb className="h-4 w-4 text-amber-500" />
                 <span className="text-sm font-semibold">Solved Examples</span>
                 <div className="ml-auto flex items-center gap-1">
                   <button onClick={() => setExamplePage(p => Math.max(0, p - 1))} disabled={examplePage === 0} className="h-5 w-5 rounded flex items-center justify-center hover:bg-muted disabled:opacity-30">
@@ -836,9 +1014,9 @@ export default function LiveClassPage() {
             </div>
 
             {/* Panel 3: Visual Aids (bottom right) */}
-            <div className="border rounded-xl flex flex-col overflow-hidden bg-card">
-              <div className="flex items-center gap-2 px-4 py-2.5 border-b shrink-0">
-                <ImageIcon className="h-3.5 w-3.5 text-violet-500" />
+            <div className="border rounded-xl flex flex-col overflow-hidden bg-card shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-2 px-4 py-3 border-b shrink-0 bg-gradient-to-r from-violet-500/5 to-transparent">
+                <ImageIcon className="h-4 w-4 text-violet-500" />
                 <span className="text-sm font-semibold">Visual Aids</span>
                 <div className="ml-auto flex items-center gap-1">
                   <button onClick={() => setImagePage(p => Math.max(0, p - 1))} disabled={imagePage === 0} className="h-5 w-5 rounded flex items-center justify-center hover:bg-muted disabled:opacity-30">
@@ -861,7 +1039,7 @@ export default function LiveClassPage() {
           </div>
         ) : (
           <div className="flex-1 overflow-hidden">
-            <Whiteboard isTeacher={isTeacher} />
+            <Whiteboard isTeacher={isTeacher} socket={socket} roomId={id} />
           </div>
         )}
 
