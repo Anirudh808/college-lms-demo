@@ -33,13 +33,30 @@ app.prepare().then(() => {
     }
   });
 
+  const roomUsers = new Map(); // roomId -> Set of users {id, name, role}
+
   io.on("connection", (socket) => {
-    // console.log("Client connected", socket.id);
+    let currentUser = null;
+    let currentRoom = null;
 
     // Join a class room
-    socket.on("join-room", (roomId) => {
+    socket.on("join-room", (roomId, userData) => {
+      console.log(`[Socket] User ${userData?.name} joining room ${roomId}`);
       socket.join(roomId);
-      // console.log(`Socket ${socket.id} joined room ${roomId}`);
+      currentRoom = roomId;
+      currentUser = userData;
+
+      if (!roomUsers.has(roomId)) {
+        roomUsers.set(roomId, new Map());
+      }
+      
+      const usersInRoom = roomUsers.get(roomId);
+      // Mark as online when joining
+      usersInRoom.set(socket.id, { ...userData, online: true });
+
+      const currentList = Array.from(usersInRoom.values());
+      console.log(`[Socket] Updated user list for room ${roomId}:`, currentList.length, "users");
+      io.to(roomId).emit("users-updated", currentList);
     });
 
     // Handle view changes
@@ -65,6 +82,27 @@ app.prepare().then(() => {
     // Handle chat message
     socket.on("send-chat", (roomId, messageData) => {
       socket.to(roomId).emit("new-chat-message", messageData);
+    });
+
+    // Handle poll creation
+    socket.on("create-poll", (roomId, pollData) => {
+      console.log(`[Socket] Poll created in room ${roomId}:`, pollData.question);
+      socket.to(roomId).emit("poll-created", pollData);
+    });
+
+    // Handle poll vote
+    socket.on("cast-vote", (roomId, voteData) => {
+      console.log(`[Socket] Vote cast in room ${roomId}:`, voteData);
+      io.to(roomId).emit("vote-cast", voteData);
+    });
+
+    socket.on("disconnect", () => {
+      if (currentRoom && roomUsers.has(currentRoom)) {
+        const usersInRoom = roomUsers.get(currentRoom);
+        console.log(`[Socket] User ${currentUser?.name} disconnected from ${currentRoom}`);
+        usersInRoom.delete(socket.id);
+        io.to(currentRoom).emit("users-updated", Array.from(usersInRoom.values()));
+      }
     });
   });
 

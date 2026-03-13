@@ -54,38 +54,6 @@ const MOCK_STUDENTS = [
   { id: "s5", name: "Dev Shah", avatar: "DS", handRaised: false, online: false },
 ];
 
-const AI_CONTENT: Record<string, {
-  explanation: string[];
-  examples: { title: string; text: string }[];
-  images: { caption: string; color: string; icon: string }[];
-}> = {
-  default: {
-    explanation: [
-      "Integers are a set of numbers that include all the whole numbers (0, 1, 2, 3…) and their negative counterparts (-1, -2, -3…). Unlike fractions or decimals, integers represent complete, whole units.",
-      "Think of them as steps on a staircase: you can go up (positive), down (negative), or stand on the landing (zero). They are fundamental to algebra and help us describe real-world concepts like temperature, elevation, and financial debt.",
-    ],
-    examples: [
-      {
-        title: "Real World Example 1: Temperature",
-        text: "If the temperature is 5 degrees above zero, we write it as +5°C. If it drops to 3 degrees below zero, it's represented as an integer: -3°C.",
-      },
-      {
-        title: "Real World Example 2: Bank Balance",
-        text: "A bank balance of ₹500 is +500. An overdraft of ₹200 is represented as -200. Adding them gives 500 + (-200) = 300.",
-      },
-      {
-        title: "Real World Example 3: Elevator Floors",
-        text: "Ground floor = 0, 3rd floor above = +3, 2 floors in basement = -2. Moving from -2 to +3 means travelling 5 floors.",
-      },
-    ],
-    images: [
-      { caption: "Number Line: integers visualised", color: "from-blue-500/20 to-indigo-500/20", icon: "📏" },
-      { caption: "Temperature Scale", color: "from-orange-500/20 to-red-500/20", icon: "🌡️" },
-      { caption: "Real-world integer applications", color: "from-green-500/20 to-emerald-500/20", icon: "🌍" },
-    ],
-  },
-};
-
 const EMOJI_REACTIONS = ["👏", "❤️", "😮", "😂", "🔥", "👍"];
 
 type Tab = "lessons" | "board" | "people" | "chat" | "polls";
@@ -296,11 +264,12 @@ function Whiteboard({ isTeacher, socket, roomId }: { isTeacher: boolean; socket:
 
 function CreatePollModal({ onClose, onCreate }: {
   onClose: () => void;
-  onCreate: (q: string, opts: string[], dur: number) => void;
+  onCreate: (q: string, opts: string[], dur: number, correctIdx: number | null) => void;
 }) {
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState(["", ""]);
   const [duration, setDuration] = useState(30);
+  const [correctAnswer, setCorrectAnswer] = useState<number | null>(null);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
@@ -314,9 +283,21 @@ function CreatePollModal({ onClose, onCreate }: {
           <Input placeholder="Ask the class…" value={question} onChange={(e) => setQuestion(e.target.value)} />
         </div>
         <div className="space-y-2">
-          <label className="text-xs font-medium text-muted-foreground">Options</label>
+          <label className="text-xs font-medium text-muted-foreground flex justify-between">
+            <span>Options</span>
+            <span className="text-[10px] opacity-70 italic">Click circle to mark as correct</span>
+          </label>
           {options.map((o, i) => (
-            <div key={i} className="flex gap-2">
+            <div key={i} className="flex gap-2 items-center">
+              <button
+                onClick={() => setCorrectAnswer(correctAnswer === i ? null : i)}
+                className={cn(
+                  "h-5 w-5 rounded-full border flex items-center justify-center shrink-0 transition-colors",
+                  correctAnswer === i ? "bg-primary border-primary text-primary-foreground" : "border-muted-foreground/30 hover:border-primary"
+                )}
+              >
+                {correctAnswer === i && <Check className="h-3 w-3" />}
+              </button>
               <Input
                 placeholder={`Option ${i + 1}`}
                 value={o}
@@ -345,7 +326,7 @@ function CreatePollModal({ onClose, onCreate }: {
           <Button variant="outline" className="flex-1" onClick={onClose}>Cancel</Button>
           <Button className="flex-1" onClick={() => {
             if (question.trim() && options.filter(Boolean).length >= 2) {
-              onCreate(question, options.filter(Boolean), duration);
+              onCreate(question, options.filter(Boolean), duration, correctAnswer);
             }
           }}>
             Launch Poll
@@ -356,7 +337,103 @@ function CreatePollModal({ onClose, onCreate }: {
   );
 }
 
-// ─── Main Page ────────────────────────────────────────────────────────────────
+// ─── Student Poll Popup ───────────────────────────────────────────────────────
+
+function StudentPollPopup({ poll, onVote, totalJoined, onClose }: {
+  poll: { id: string; question: string; options: string[]; votes: number[]; ended: boolean; duration: number; timeLeft: number; myVote: number | null; correctAnswer: number | null };
+  onVote: (pollId: string, optionIdx: number) => void;
+  totalJoined: number;
+  onClose: () => void;
+}) {
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+  const totalVotes = poll.votes.reduce((a, b) => a + b, 0);
+
+  const handleSubmit = () => {
+    if (selectedIdx !== null) {
+      onVote(poll.id, selectedIdx);
+      onClose(); // Close immediately after manual submission
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md p-4 animate-in fade-in duration-300">
+      <div className="bg-card border rounded-3xl shadow-2xl w-full max-w-lg p-8 space-y-6 relative overflow-hidden">
+        {/* Progress bar at top */}
+        <div className="absolute top-0 left-0 h-1.5 bg-primary/20 w-full">
+          <div 
+            className="h-full bg-primary transition-all duration-1000 ease-linear"
+            style={{ width: `${(poll.timeLeft / poll.duration) * 100}%` }}
+          />
+        </div>
+
+        <div className="flex items-center justify-between">
+          <Badge variant="outline" className="text-xs gap-1.5 px-3 py-1 text-primary border-primary/20 bg-primary/5">
+            <Radio className="h-3.5 w-3.5 animate-pulse" /> Live Poll
+          </Badge>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Clock className="h-4 w-4" />
+            <span className="text-sm font-mono font-bold">{poll.timeLeft}s left</span>
+          </div>
+        </div>
+
+        <h2 className="text-2xl font-bold leading-tight tracking-tight">
+          {poll.question}
+        </h2>
+
+        <div className="space-y-3">
+          {poll.options.map((opt, i) => {
+            const isSelected = selectedIdx === i;
+            const hasVoted = poll.myVote !== null;
+
+            return (
+              <button
+                key={i}
+                disabled={hasVoted || poll.ended}
+                onClick={() => setSelectedIdx(i)}
+                className={cn(
+                  "w-full group relative rounded-2xl border-2 p-5 text-left transition-all duration-200",
+                  isSelected ? "border-primary bg-primary/5" : "border-border hover:border-primary/50 hover:bg-muted/50",
+                  hasVoted && "cursor-default opacity-80"
+                )}
+              >
+                <div className="relative flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className={cn(
+                      "h-6 w-6 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors",
+                      isSelected ? "border-primary bg-primary text-primary-foreground" : "border-muted-foreground/30"
+                    )}>
+                      {isSelected && <Check className="h-3.5 w-3.5 stroke-[3]" />}
+                    </div>
+                    <span className="text-lg font-medium">{opt}</span>
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="flex items-center justify-between pt-4">
+          <div className="flex items-center gap-2 text-muted-foreground text-sm">
+            <Users className="h-4 w-4" />
+            {totalVotes} response{totalVotes !== 1 ? "s" : ""}
+          </div>
+          
+          <Button 
+            disabled={selectedIdx === null || poll.myVote !== null || poll.ended}
+            onClick={handleSubmit}
+            className="rounded-xl px-6"
+          >
+            Submit Answer
+          </Button>
+        </div>
+
+        <p className="text-center text-[10px] text-muted-foreground italic">
+          Poll will auto-submit or close when the timer expires.
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export default function LiveClassPage() {
   const params = useParams();
@@ -380,16 +457,25 @@ export default function LiveClassPage() {
   const allLessons = allModules.flatMap((m) => {
     const chapters = m.chapters ?? [];
     const lessons = chapters.flatMap((ch) => ch.lessons ?? []);
-    return lessons.map((l) => ({ ...l, moduleName: m.title }));
+    return lessons.map((l) => ({ 
+      ...l, 
+      moduleName: m.title,
+      // Aggregating all subtopic contents into a single list for the explanation panel
+      paragraphs: l.topics?.flatMap(t => t.subtopics?.map(s => s.content).filter(Boolean) ?? []) ?? [],
+      // Aggregating all examples
+      allExamples: l.topics?.flatMap(t => t.subtopics?.flatMap(s => s.examples?.map(ex => ({ title: s.title, text: ex })) ?? []) ?? []) ?? [],
+      // Aggregating all images
+      allImages: l.topics?.flatMap(t => t.subtopics?.flatMap(s => s.images?.map(img => ({ caption: s.title, url: img })) ?? []) ?? []) ?? []
+    }));
   });
 
   const [lessonIndex, setLessonIndex] = useState(0);
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set());
   const currentLesson = allLessons[lessonIndex];
-  const aiContent = AI_CONTENT.default;
 
-  // Students state
-  const [students, setStudents] = useState(MOCK_STUDENTS);
+  // Students state (joined students)
+  const [students, setStudents] = useState<{ id: string; name: string; avatar: string; role: string; handRaised?: boolean; online?: boolean }[]>([]);
+  const [host, setHost] = useState<{ name: string; avatar: string } | null>(null);
 
   // Chat
   const [chatMessages, setChatMessages] = useState([
@@ -406,14 +492,16 @@ export default function LiveClassPage() {
   const [polls, setPolls] = useState<{
     id: string; question: string; options: string[];
     votes: number[]; ended: boolean; duration: number; timeLeft: number; myVote: number | null;
+    correctAnswer: number | null;
   }[]>([
     {
       id: "p0", question: "Are you familiar with negative integers?",
       options: ["Yes, fully", "Somewhat", "Not really"],
-      votes: [2, 1, 1], ended: true, duration: 30, timeLeft: 0, myVote: 0,
+      votes: [2, 1, 1], ended: true, duration: 30, timeLeft: 0, myVote: 0, correctAnswer: 0,
     },
   ]);
   const [showCreatePoll, setShowCreatePoll] = useState(false);
+  const [activePollId, setActivePollId] = useState<string | null>(null);
   const [timerRefs] = useState<Map<string, NodeJS.Timeout>>(new Map());
 
   // Example panel pagination
@@ -431,6 +519,10 @@ export default function LiveClassPage() {
               if (p.timeLeft <= 1) {
                 clearInterval(interval);
                 timerRefs.delete(p.id);
+                // Dismiss popup after timer ends (e.g., after 2 seconds to see results)
+                if (p.id === activePollId) {
+                  setTimeout(() => setActivePollId(null), 3000);
+                }
                 return { ...p, timeLeft: 0, ended: true };
               }
               return { ...p, timeLeft: p.timeLeft - 1 };
@@ -440,7 +532,7 @@ export default function LiveClassPage() {
         timerRefs.set(poll.id, interval);
       }
     });
-  }, [polls.length]);
+  }, [polls.length, isTeacher, activePollId]);
 
   // Elapsed session timer
   useEffect(() => {
@@ -473,10 +565,29 @@ export default function LiveClassPage() {
   // Socket init
   useEffect(() => {
     const s = io();
+    console.log("[Socket] Attempting to connect...");
     setSocket(s);
-    s.emit("join-room", id);
+    if (user) {
+      const avatar = user.name 
+        ? user.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
+        : (user.email ? user.email.slice(0, 2).toUpperCase() : "??");
+      
+      console.log("[Socket] Joining room:", id, "as", user.name || user.email);
+      s.emit("join-room", id, { 
+        id: user.id, 
+        name: user.name || user.email || "Anonymous", 
+        avatar,
+        role: user.role,
+        online: true
+      });
+    }
+
+    s.on("connect", () => {
+      console.log("[Socket] Connected with ID:", s.id);
+    });
 
     s.on("view-changed", (v: "content" | "board") => {
+      console.log("[Socket] View changed to:", v);
       if (!isTeacher) {
         setMainView(v);
         setTab(v === "board" ? "board" : "lessons");
@@ -484,6 +595,7 @@ export default function LiveClassPage() {
     });
 
     s.on("lesson-changed", (idx: number) => {
+      console.log("[Socket] Lesson changed to index:", idx);
       if (!isTeacher) setLessonIndex(idx);
     });
 
@@ -491,10 +603,41 @@ export default function LiveClassPage() {
       setChatMessages((m) => [...m, msg]);
     });
 
+    s.on("users-updated", (userList: any[]) => {
+      console.log("[Socket] Users updated:", userList);
+      // Filter for students
+      setStudents(userList.filter((u: any) => u.role === "student"));
+      // Find the faculty/host
+      const faculty = userList.find((u: any) => u.role === "faculty");
+      if (faculty) {
+        setHost({ name: faculty.name, avatar: faculty.avatar });
+      }
+    });
+
+    s.on("poll-created", (pollData) => {
+      console.log("[Socket] Poll created received:", pollData);
+      if (!isTeacher) {
+        setPolls(p => [...p, pollData]);
+        setActivePollId(pollData.id);
+        console.log("[Socket] Set activePollId to:", pollData.id);
+        setTab("polls");
+      }
+    });
+
+    s.on("vote-cast", ({ pollId, optionIdx }) => {
+      console.log("[Socket] Vote cast received for poll:", pollId);
+      setPolls(prev => prev.map(p => 
+        p.id === pollId 
+          ? { ...p, votes: p.votes.map((v, i) => i === optionIdx ? v + 1 : v) }
+          : p
+      ));
+    });
+
     return () => {
+      console.log("[Socket] Disconnecting...");
       s.disconnect();
     };
-  }, [id, isTeacher]);
+  }, [id, isTeacher, user]);
 
   // Auto-scroll chat
   useEffect(() => {
@@ -531,11 +674,15 @@ export default function LiveClassPage() {
   };
 
   const raiseHand = () => {
-    setStudents((s) => s.map((st) => st.id === "s1" ? { ...st, handRaised: !st.handRaised } : st));
+    const student = students.find(s => s.id === user?.id);
+    if (!student) return;
+    const newState = !student.handRaised;
+    setStudents((s) => s.map((st) => st.id === user?.id ? { ...st, handRaised: newState } : st));
+    // In a full implementation, we'd emit a socket event here too
   };
 
-  const createPoll = (question: string, options: string[], duration: number) => {
-    setPolls((p) => [...p, {
+  const createPoll = (question: string, options: string[], duration: number, correctAnswer: number | null) => {
+    const newPoll = {
       id: Date.now().toString(),
       question,
       options,
@@ -544,9 +691,14 @@ export default function LiveClassPage() {
       duration,
       timeLeft: duration,
       myVote: null,
-    }]);
+      correctAnswer,
+    };
+    setPolls((p) => [...p, newPoll]);
     setShowCreatePoll(false);
     setTab("polls");
+    if (socket) {
+      socket.emit("create-poll", id, newPoll);
+    }
   };
 
   const votePoll = (pollId: string, optionIdx: number) => {
@@ -555,6 +707,9 @@ export default function LiveClassPage() {
         ? { ...poll, myVote: optionIdx, votes: poll.votes.map((v, i) => i === optionIdx ? v + 1 : v) }
         : poll
     ));
+    if (socket) {
+      socket.emit("cast-vote", id, { pollId, optionIdx });
+    }
   };
 
   const markComplete = () => {
@@ -584,7 +739,7 @@ export default function LiveClassPage() {
   const TABS: { id: Tab; icon: typeof BookOpen; label: string; badge?: number }[] = [
     { id: "lessons", icon: BookOpen, label: "Lessons" },
     { id: "board", icon: PenLine, label: "Board" },
-    { id: "people", icon: Users, label: "People", badge: students.filter(s => s.handRaised).length || undefined },
+    { id: "people", icon: Users, label: "People", badge: students.length || undefined },
     { id: "chat", icon: MessageSquare, label: "Chat" },
     { id: "polls", icon: BarChart2, label: "Polls", badge: polls.filter(p => !p.ended).length || undefined },
   ];
@@ -704,13 +859,13 @@ export default function LiveClassPage() {
             </div>
             <ScrollArea className="flex-1">
               <div className="p-2 space-y-1">
-                {/* Teacher entry */}
+                {/* Host entry */}
                 <div className="flex items-center gap-2 px-2 py-2 rounded-lg bg-primary/5">
-                  <div className="h-7 w-7 rounded-full bg-primary flex items-center justify-center text-[10px] font-bold text-primary-foreground shrink-0">
-                    {(user?.name ?? "T").slice(0, 2).toUpperCase()}
+                  <div className="h-7 w-7 rounded-full bg-primary flex items-center justify-center text-[10px] font-bold text-primary-foreground shrink-0 uppercase">
+                    {host ? host.avatar : (isTeacher ? (user?.name ?? "T").slice(0, 2) : "H")}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs font-medium truncate">{user?.name ?? "Teacher"}</p>
+                    <p className="text-xs font-medium truncate">{host ? host.name : (isTeacher ? (user?.name ?? "Teacher") : "Host")}</p>
                     <p className="text-[10px] text-primary">Host</p>
                   </div>
                 </div>
@@ -800,6 +955,7 @@ export default function LiveClassPage() {
                         {poll.options.map((opt, i) => {
                           const pct = total > 0 ? Math.round((poll.votes[i] / total) * 100) : 0;
                           const voted = poll.myVote === i;
+                          const isCorrect = poll.correctAnswer === i;
                           return (
                             <button
                               key={i}
@@ -810,15 +966,21 @@ export default function LiveClassPage() {
                                 (isTeacher || poll.ended || poll.myVote !== null)
                                   ? "cursor-default"
                                   : "hover:border-primary cursor-pointer",
-                                "border"
+                                "border",
+                                isCorrect && (isTeacher || poll.ended) && "border-green-500/50"
                               )}
                             >
                               <div
-                                className={cn("absolute inset-y-0 left-0 transition-all duration-500", voted ? "bg-primary/20" : "bg-muted")}
+                                className={cn("absolute inset-y-0 left-0 transition-all duration-500", 
+                                  isCorrect && (isTeacher || poll.ended) ? "bg-green-500/10" : voted ? "bg-primary/20" : "bg-muted"
+                                )}
                                 style={{ width: (isTeacher || poll.ended || poll.myVote !== null) ? `${pct}%` : "0%" }}
                               />
                               <div className="relative flex items-center justify-between px-2.5 py-1.5">
-                                <span className="text-xs">{opt}</span>
+                                <div className="flex items-center gap-1.5">
+                                  <span className="text-xs">{opt}</span>
+                                  {isCorrect && (isTeacher || poll.ended) && <CheckCircle2 className="h-3 w-3 text-green-600" />}
+                                </div>
                                 {(isTeacher || poll.ended || poll.myVote !== null) && (
                                   <span className="text-[10px] font-semibold text-muted-foreground">{pct}%</span>
                                 )}
@@ -828,7 +990,19 @@ export default function LiveClassPage() {
                         })}
                       </div>
                       {(isTeacher || poll.ended) && (
-                        <p className="text-[10px] text-muted-foreground">{total} response{total !== 1 ? "s" : ""}</p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-[10px] text-muted-foreground">{total} response{total !== 1 ? "s" : ""}</p>
+                          {isTeacher && poll.correctAnswer !== null && (
+                            <div className="flex gap-2">
+                              <Badge variant="outline" className="text-[9px] text-green-600 border-green-200 bg-green-50 px-1.5 py-0">
+                                Success: {poll.votes[poll.correctAnswer]}
+                              </Badge>
+                              <Badge variant="outline" className="text-[9px] text-red-600 border-red-200 bg-red-50 px-1.5 py-0">
+                                Wrong/Skipped: {students.length - poll.votes[poll.correctAnswer]}
+                              </Badge>
+                            </div>
+                          )}
+                        </div>
                       )}
                     </div>
                   );
@@ -982,10 +1156,21 @@ export default function LiveClassPage() {
                 <Sparkles className="h-3 w-3 text-primary/50 ml-1" />
               </div>
               <ScrollArea className="flex-1">
-                <div className="p-4 space-y-3">
-                  {aiContent.explanation.map((para, i) => (
-                    <p key={i} className="text-sm leading-relaxed text-muted-foreground">{para}</p>
-                  ))}
+                <div className="p-4 space-y-4">
+                  {currentLesson?.paragraphs && currentLesson.paragraphs.length > 0 ? (
+                    currentLesson.paragraphs.map((para: string | undefined, i: number) => para && (
+                      <div key={i} className="space-y-2">
+                        <p className="text-sm leading-relaxed text-muted-foreground whitespace-pre-wrap">
+                          {para}
+                        </p>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-12 text-center space-y-3 opacity-50">
+                      <FileText className="h-12 w-12 text-muted-foreground" />
+                      <p className="text-sm">No detailed explanation available for this lesson.</p>
+                    </div>
+                  )}
                 </div>
               </ScrollArea>
             </div>
@@ -999,16 +1184,27 @@ export default function LiveClassPage() {
                   <button onClick={() => setExamplePage(p => Math.max(0, p - 1))} disabled={examplePage === 0} className="h-5 w-5 rounded flex items-center justify-center hover:bg-muted disabled:opacity-30">
                     <ChevronLeft className="h-3.5 w-3.5" />
                   </button>
-                  <span className="text-[10px] text-muted-foreground">{examplePage + 1} / {aiContent.examples.length}</span>
-                  <button onClick={() => setExamplePage(p => Math.min(aiContent.examples.length - 1, p + 1))} disabled={examplePage >= aiContent.examples.length - 1} className="h-5 w-5 rounded flex items-center justify-center hover:bg-muted disabled:opacity-30">
+                  <span className="text-[10px] text-muted-foreground">{examplePage + 1} / {Math.max(1, currentLesson?.allExamples?.length ?? 0)}</span>
+                  <button onClick={() => setExamplePage(p => Math.min((currentLesson?.allExamples?.length ?? 1) - 1, p + 1))} disabled={examplePage >= (currentLesson?.allExamples?.length ?? 1) - 1} className="h-5 w-5 rounded flex items-center justify-center hover:bg-muted disabled:opacity-30">
                     <ChevronRight className="h-3.5 w-3.5" />
                   </button>
                 </div>
               </div>
               <ScrollArea className="flex-1">
-                <div className="p-4 space-y-2">
-                  <p className="text-xs font-semibold text-primary">{aiContent.examples[examplePage].title}</p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{aiContent.examples[examplePage].text}</p>
+                <div className="p-4">
+                  {currentLesson?.allExamples && currentLesson.allExamples.length > 0 ? (
+                    <div className="space-y-3">
+                      <h4 className="text-xs font-bold text-amber-700 uppercase tracking-wider">{currentLesson.allExamples[examplePage]?.title}</h4>
+                      <pre className="text-[11px] bg-amber-500/5 p-4 rounded-xl border border-amber-500/10 font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap text-muted-foreground">
+                        {currentLesson.allExamples[examplePage]?.text}
+                      </pre>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-8 text-center opacity-40">
+                      <Lightbulb className="h-8 w-8 mb-2" />
+                      <p className="text-xs">No examples available.</p>
+                    </div>
+                  )}
                 </div>
               </ScrollArea>
             </div>
@@ -1022,17 +1218,35 @@ export default function LiveClassPage() {
                   <button onClick={() => setImagePage(p => Math.max(0, p - 1))} disabled={imagePage === 0} className="h-5 w-5 rounded flex items-center justify-center hover:bg-muted disabled:opacity-30">
                     <ChevronLeft className="h-3.5 w-3.5" />
                   </button>
-                  <span className="text-[10px] text-muted-foreground">{imagePage + 1} / {aiContent.images.length}</span>
-                  <button onClick={() => setImagePage(p => Math.min(aiContent.images.length - 1, p + 1))} disabled={imagePage >= aiContent.images.length - 1} className="h-5 w-5 rounded flex items-center justify-center hover:bg-muted disabled:opacity-30">
+                  <span className="text-[10px] text-muted-foreground">{imagePage + 1} / {Math.max(1, currentLesson?.allImages?.length ?? 0)}</span>
+                  <button onClick={() => setImagePage(p => Math.min((currentLesson?.allImages?.length ?? 1) - 1, p + 1))} disabled={imagePage >= (currentLesson?.allImages?.length ?? 1) - 1} className="h-5 w-5 rounded flex items-center justify-center hover:bg-muted disabled:opacity-30">
                     <ChevronRight className="h-3.5 w-3.5" />
                   </button>
                 </div>
               </div>
               <div className="flex-1 p-4 flex flex-col items-center justify-center">
-                <div className={cn("w-full rounded-xl bg-gradient-to-br flex flex-col items-center justify-center gap-3 h-full min-h-[100px]", aiContent.images[imagePage].color)}>
-                  <span className="text-5xl">{aiContent.images[imagePage].icon}</span>
-                  <p className="text-xs text-muted-foreground font-medium">{aiContent.images[imagePage].caption}</p>
-                </div>
+                {currentLesson?.allImages && currentLesson.allImages.length > 0 ? (
+                  <div className="w-full flex flex-col items-center justify-center gap-3 h-full">
+                    <div className="relative w-full aspect-video rounded-xl overflow-hidden border shadow-inner bg-muted/30">
+                      <img 
+                        src={currentLesson.allImages[imagePage]?.url} 
+                        alt={currentLesson.allImages[imagePage]?.caption}
+                        className="w-full h-full object-contain"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = `https://placehold.co/800x450?text=${encodeURIComponent(currentLesson.allImages[imagePage]?.caption || "Visual Aid")}`;
+                        }}
+                      />
+                    </div>
+                    <p className="text-[10px] font-medium text-center text-muted-foreground px-2">
+                      {currentLesson.allImages[imagePage]?.caption}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center text-center opacity-30 gap-2">
+                    <ImageIcon className="h-10 w-10" />
+                    <p className="text-xs">No visual aids available.</p>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -1072,6 +1286,21 @@ export default function LiveClassPage() {
           100% { transform: translateY(-120px); opacity: 0; }
         }
       `}} />
+      {/* Student Poll Popup Overlay */}
+      {!isTeacher && activePollId && (
+        (() => {
+          const p = polls.find(p => p.id === activePollId);
+          if (!p) return null;
+          return (
+            <StudentPollPopup 
+              poll={p}
+              onVote={votePoll}
+              totalJoined={students.length}
+              onClose={() => setActivePollId(null)}
+            />
+          );
+        })()
+      )}
     </div>
   );
 }
