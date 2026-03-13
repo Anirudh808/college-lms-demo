@@ -7,7 +7,7 @@ import {
   useCallback,
 } from "react";
 import { useParams, useSearchParams } from "next/navigation";
-import { io, Socket } from "socket.io-client";
+// HTTP Polling proxy replaces socket.io
 import { getLiveClass, getCourse, getLessons } from "@/lib/data";
 import { getCourseSyllabus } from "@/lib/syllabusMap";
 import { useSession } from "@/store/session";
@@ -64,7 +64,7 @@ type DrawTool = "pen" | "eraser";
 
 // ─── Whiteboard Component ─────────────────────────────────────────────────────
 
-function Whiteboard({ isTeacher, socket, roomId }: { isTeacher: boolean; socket: Socket | null; roomId: string }) {
+function Whiteboard({ isTeacher, socket, roomId }: { isTeacher: boolean; socket: any; roomId: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawing = useRef(false);
   const lastPos = useRef<{ x: number; y: number } | null>(null);
@@ -445,7 +445,7 @@ export default function LiveClassPage() {
   const liveClass = getLiveClass(id);
   const course = liveClass ? getCourse(liveClass.courseId) : null as any;
   const isTeacher = user?.role === "faculty";
-  const [socket, setSocket] = useState<Socket | null>(null);
+  const [socket, setSocket] = useState<any>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const pageRef = useRef<HTMLDivElement>(null);
@@ -575,17 +575,42 @@ export default function LiveClassPage() {
     return `${m}:${sec}`;
   };
 
-  // Socket init
+  // HTTP Polling init
   useEffect(() => {
-    const s = io();
-    console.log("[Socket] Attempting to connect...");
+    let handledStrokes = 0;
+    let lastView = "";
+    let lastLessonIndex = -1;
+
+    class MockSocket {
+      listeners: Record<string, Function[]> = {};
+      pendingEvents: any[] = [];
+      on(event: string, cb: Function) {
+        if (!this.listeners[event]) this.listeners[event] = [];
+        this.listeners[event].push(cb);
+      }
+      off(event: string, cb: Function) {
+        if (!this.listeners[event]) return;
+        this.listeners[event] = this.listeners[event].filter(l => l !== cb);
+      }
+      trigger(event: string, ...args: any[]) {
+        if (this.listeners[event]) this.listeners[event].forEach(cb => cb(...args));
+      }
+      emit(event: string, roomId: string, payload?: any) {
+        if (event === "draw-stroke") handledStrokes++;
+        if (event === "clear-board") handledStrokes = 0;
+        this.pendingEvents.push({ type: event, payload });
+      }
+      disconnect() {}
+    }
+
+    const s = new MockSocket();
     setSocket(s);
+
     if (user) {
       const avatar = user.name
         ? user.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
         : (user.email ? user.email.slice(0, 2).toUpperCase() : "??");
 
-      console.log("[Socket] Joining room:", id, "as", user.name || user.email);
       s.emit("join-room", id, {
         id: user.id,
         name: user.name || user.email || "Anonymous",
@@ -595,12 +620,72 @@ export default function LiveClassPage() {
       });
     }
 
-    s.on("connect", () => {
-      console.log("[Socket] Connected with ID:", s.id);
-    });
+    const interval = setInterval(async () => {
+       const evts = s.pendingEvents;
+       s.pendingEvents = [];
+       if (user) evts.push({ type: 'heartbeat', payload: { id: user.id }});
+       
+       try {
+         const res = await fetch(`/api/live/${id}`, {
+            method: 'POST',
+            body: JSON.stringify({ events: evts })
+         });
+         const data = await res.json();
+         
+         s.trigger("users-updated", data.users);
+         
+         if (data.view && data.view !== lastView) {
+             s.trigger("view-changed", data.view);
+             lastView = data.view;
+         }
+         
+         if (data.lessonIndex !== undefined && data.lessonIndex !== lastLessonIndex) {
+             s.trigger("lesson-changed", data.lessonIndex);
+             lastLessonIndex = data.lessonIndex;
+         }
+         
+         if (data.strokes.length === 0 && handledStrokes > 0) {
+            s.trigger("board-cleared");
+            handledStrokes = 0;
+         } else if (data.strokes.length > handledStrokes) {
+            for (let i = handledStrokes; i < data.strokes.length; i++) {
+               s.trigger("new-stroke", data.strokes[i]);
+            }
+            handledStrokes = data.strokes.length;
+         }
+         
+         if (data.chats) setChatMessages(data.chats);
+         if (data.polls) {
+           setPolls(prev => {
+              const currentActive = prev.find(p => !p.ended)?.id;
+              
+              const newPolls = data.polls.map((sp: any) => {
+                 const local = prev.find(p => p.id === sp.id);
+                 return { 
+                   ...sp, 
+                   myVote: local ? local.myVote : null, 
+                   timeLeft: local ? local.timeLeft : sp.duration, 
+                   ended: local ? local.ended : sp.ended 
+                 };
+              });
 
+              if (!isTeacher) {
+                 const newActive = newPolls.find((p: any) => !p.ended && p.timeLeft > 0)?.id;
+                 if (newActive && newActive !== currentActive) {
+                    setActivePollId(newActive);
+                    setTab("polls");
+                 }
+              }
+              return newPolls;
+           });
+         }
+       } catch (e) {
+         console.error("Polling error", e);
+       }
+    }, 1000);
+
+    // Keep existing event listeners bound to our mock socket
     s.on("view-changed", (v: "content" | "board") => {
-      console.log("[Socket] View changed to:", v);
       if (!isTeacher) {
         setMainView(v);
         setTab(v === "board" ? "board" : "lessons");
@@ -608,46 +693,17 @@ export default function LiveClassPage() {
     });
 
     s.on("lesson-changed", (idx: number) => {
-      console.log("[Socket] Lesson changed to index:", idx);
       if (!isTeacher) setLessonIndex(idx);
     });
 
-    s.on("new-chat-message", (msg) => {
-      setChatMessages((m) => [...m, msg]);
-    });
-
     s.on("users-updated", (userList: any[]) => {
-      console.log("[Socket] Users updated:", userList);
-      // Filter for students
       setStudents(userList.filter((u: any) => u.role === "student"));
-      // Find the faculty/host
       const faculty = userList.find((u: any) => u.role === "faculty");
-      if (faculty) {
-        setHost({ name: faculty.name, avatar: faculty.avatar });
-      }
-    });
-
-    s.on("poll-created", (pollData) => {
-      console.log("[Socket] Poll created received:", pollData);
-      if (!isTeacher) {
-        setPolls(p => [...p, pollData]);
-        setActivePollId(pollData.id);
-        console.log("[Socket] Set activePollId to:", pollData.id);
-        setTab("polls");
-      }
-    });
-
-    s.on("vote-cast", ({ pollId, optionIdx }) => {
-      console.log("[Socket] Vote cast received for poll:", pollId);
-      setPolls(prev => prev.map(p =>
-        p.id === pollId
-          ? { ...p, votes: p.votes.map((v, i) => i === optionIdx ? v + 1 : v) }
-          : p
-      ));
+      if (faculty) setHost({ name: faculty.name, avatar: faculty.avatar });
     });
 
     return () => {
-      console.log("[Socket] Disconnecting...");
+      clearInterval(interval);
       s.disconnect();
     };
   }, [id, isTeacher, user]);
