@@ -14,6 +14,7 @@ import type {
   Attendance,
   Announcement,
   AIUsageRecord,
+	Assessment,
 } from "./types";
 
 import tenantsData from "@/data/tenants.json";
@@ -33,6 +34,7 @@ import attendanceData from "@/data/attendance.json";
 import announcementsData from "@/data/announcements.json";
 import aiUsageData from "@/data/aiUsage.json";
 import rawCoursesData from "@/data/courses.json";
+import rawAssessmentsData from "@/data/assessment_mock.json";
 
 const tenants = tenantsData as Tenant[];
 const users = usersData as User[];
@@ -40,6 +42,7 @@ const departments = departmentsData as import("./types").Department[];
 const programs = programsData as import("./types").Program[];
 // Cast courses from JSON — field names differ from old schema, cast via unknown
 const courses = rawCoursesData as unknown as Course[];
+const assessments = rawAssessmentsData as unknown as Assessment;
 const lessons = lessonsData as Lesson[];
 let assignments = [...(assignmentsData as Assignment[])];
 let submissions = [...(submissionsData as Submission[])];
@@ -100,6 +103,10 @@ export function getCourses(facultyId?: string, departmentId?: string, enrollment
 
 export function getCourse(id: string) {
   return courses.find((c) => c.id === id);
+}
+
+export function getAssessment() {
+	return assessments;
 }
 
 export function getLessons(moduleId?: string) {

@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { LocalStorageService } from "@/components/LocalStorageService";
 import { Wand2, Plus, Trash2 } from "lucide-react";
 import { Assessment, AssessmentQuestion } from "@/lib/types";
+import { getAssessment } from "@/lib/data";
 
 export function AssignmentForm({
   courseId, syllabusModules, onSuccess, onCancel
@@ -43,15 +44,14 @@ export function AssignmentForm({
   const handleGenerateAI = async () => {
     setIsLoadingAI(true);
     try {
-      const resp = await fetch("/data/assessment_mock.json");
-      if (resp.ok) {
-        const data = await resp.json();
-        setDuration(data.durationInSeconds.toString());
-        setQuestionLimit(data.questionLimit.toString());
+      const assessments = getAssessment();
+      if (assessments) {
+        setDuration(assessments.durationInSeconds.toString());
+        setQuestionLimit(assessments.questionLimit.toString());
         // Map the existing mock data to inject type into questions if missing
-        const typedQuestions = data.questions.map((q: any) => ({
+        const typedQuestions = assessments.questions.map((q: any) => ({
           ...q,
-          type: q.type || data.type || "MCQ"
+          type: q.type || assessments.type || "MCQ"
         }));
         setQuestions(typedQuestions);
       } else {
@@ -89,6 +89,7 @@ export function AssignmentForm({
       chapter,
       lesson,
       topic,
+			type,
       subTopic,
       durationInSeconds: parseInt(durationInSeconds) || 0,
       questionLimit: parseInt(questionLimit) || 0,

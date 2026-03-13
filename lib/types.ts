@@ -271,6 +271,7 @@ export interface Assessment {
   subTopic?: string;
   durationInSeconds: number;
   questionLimit: number;
+	type: string;
   questions: AssessmentQuestion[];
 }
 
