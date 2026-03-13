@@ -14,8 +14,12 @@ import {
   FileText, MessageSquare, ClipboardList, HelpCircle,
   PlayCircle, Download, CheckCircle2, Circle, Clock,
   Flame, Award, Target, BookOpen, AlertCircle, Bot,
-  GraduationCap, User, Layers,
+  GraduationCap, User, Layers, FileSignature
 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { LocalStorageService } from "@/components/LocalStorageService";
+import { Assessment, AssessmentSubmission } from "@/lib/types";
+import { useSession } from "@/store/session";
 
 export default function StudentCourseDetailPage() {
   const params = useParams();
@@ -29,6 +33,26 @@ export default function StudentCourseDetailPage() {
   const syllabusData = getCourseSyllabus(id);
   const syllabusModules: SyllabusModule[] = syllabusData?.course?.modules ?? [];
 
+  const { user } = useSession();
+  const [assessments, setAssessments] = useState<Assessment[]>([]);
+  const [submissions, setSubmissions] = useState<Record<string, AssessmentSubmission>>({});
+
+  useEffect(() => {
+    LocalStorageService.getAssessments(id).then(async (data) => {
+      setAssessments(data);
+      if (user?.name) {
+        const subs: Record<string, AssessmentSubmission> = {};
+        for (const a of data) {
+          const s = await LocalStorageService.getSubmissions(a.id);
+          const userSub = s.find(sub => sub.studentId === user.id || sub.studentName === user.name);
+          if (userSub) {
+            subs[a.id] = userSub;
+          }
+        }
+        setSubmissions(subs);
+      }
+    });
+  }, [id, user?.name]);
   // Resolve faculty name
   const facultyUser = allUsers.find((u) => u.id === course.faculty);
   const facultyName = facultyUser?.name ?? "Faculty";
@@ -137,6 +161,7 @@ export default function StudentCourseDetailPage() {
               <TabsTrigger value="modules">Syllabus &amp; Modules</TabsTrigger>
               <TabsTrigger value="assignments">Assignments</TabsTrigger>
               <TabsTrigger value="quizzes">Quizzes</TabsTrigger>
+              <TabsTrigger value="assessments">Assessments</TabsTrigger>
               <TabsTrigger value="discussion">Discussion</TabsTrigger>
             </TabsList>
 
@@ -202,14 +227,14 @@ export default function StudentCourseDetailPage() {
                                     state === "completed"
                                       ? CheckCircle2
                                       : state === "in-progress"
-                                      ? PlayCircle
-                                      : Circle;
+                                        ? PlayCircle
+                                        : Circle;
                                   const iconColor =
                                     state === "completed"
                                       ? "text-green-500"
                                       : state === "in-progress"
-                                      ? "text-primary"
-                                      : "text-muted-foreground";
+                                        ? "text-primary"
+                                        : "text-muted-foreground";
 
                                   return (
                                     <Link
@@ -218,11 +243,10 @@ export default function StudentCourseDetailPage() {
                                       className={isLocked ? "pointer-events-none" : ""}
                                     >
                                       <div
-                                        className={`group flex items-center justify-between p-3 rounded-lg border border-transparent transition-colors ${
-                                          state === "in-progress"
-                                            ? "bg-primary/5 border-primary/20"
-                                            : "hover:bg-muted"
-                                        }`}
+                                        className={`group flex items-center justify-between p-3 rounded-lg border border-transparent transition-colors ${state === "in-progress"
+                                          ? "bg-primary/5 border-primary/20"
+                                          : "hover:bg-muted"
+                                          }`}
                                       >
                                         <div className="flex items-center gap-3">
                                           <Icon className={`h-4 w-4 shrink-0 ${iconColor}`} />
@@ -281,16 +305,33 @@ export default function StudentCourseDetailPage() {
             </TabsContent>
 
             <TabsContent value="assignments" className="mt-6">
-              <Card>
-                <CardContent className="py-12 flex flex-col items-center justify-center text-center">
-                  <ClipboardList className="h-12 w-12 text-muted-foreground/30 mb-4" />
-                  <h3 className="text-lg font-semibold">Course Assignments</h3>
-                  <p className="text-muted-foreground text-sm max-w-sm mb-4">View your upcoming and past assignments for this course.</p>
-                  <Button asChild>
-                    <Link href={`/student/courses/${id}/assignments`}>Go to Assignments</Link>
-                  </Button>
-                </CardContent>
-              </Card>
+              <CardContent>
+                {assessments.length === 0 ? (
+                  <div className="py-12 flex flex-col items-center justify-center text-center">
+                    <FileSignature className="h-12 w-12 text-muted-foreground/30 mb-4" />
+                    <p className="text-muted-foreground">No assessments available yet.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {assessments.map(a => {
+                      const hasSubmitted = !!submissions[a.id];
+                      return (
+                        <div key={a.id} className="flex flex-wrap items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                          <div>
+                            <h4 className="font-semibold text-base">{a.questions?.[0]?.type || "Assessment"} Assessment</h4>
+                            <p className="text-sm text-muted-foreground mt-1">Module: {a.module} • {a.durationInSeconds / 60} mins</p>
+                          </div>
+                          <Button asChild variant={hasSubmitted ? "outline" : "default"}>
+                            <Link href={`/student/courses/${id}/assignments/${a.id}`}>
+                              {hasSubmitted ? "View Result" : "Attempt Now"}
+                            </Link>
+                          </Button>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </CardContent>
             </TabsContent>
 
             <TabsContent value="quizzes" className="mt-6">
@@ -302,6 +343,44 @@ export default function StudentCourseDetailPage() {
                   <Button asChild>
                     <Link href={`/student/courses/${id}/quizzes`}>Go to Quizzes</Link>
                   </Button>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="assessments" className="mt-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <FileSignature className="h-5 w-5 text-primary" />
+                    Course Assessments
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {assessments.length === 0 ? (
+                    <div className="py-12 flex flex-col items-center justify-center text-center">
+                      <FileSignature className="h-12 w-12 text-muted-foreground/30 mb-4" />
+                      <p className="text-muted-foreground">No assessments available yet.</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {assessments.map(a => {
+                        const hasSubmitted = !!submissions[a.id];
+                        return (
+                          <div key={a.id} className="flex flex-wrap items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                            <div>
+                              <h4 className="font-semibold text-base">{a.questions?.[0]?.type || "Assessment"} Assessment</h4>
+                              <p className="text-sm text-muted-foreground mt-1">Module: {a.module} • {a.durationInSeconds / 60} mins</p>
+                            </div>
+                            <Button asChild variant={hasSubmitted ? "outline" : "default"}>
+                              <Link href={`/student/courses/${id}/assignments/${a.id}`}>
+                                {hasSubmitted ? "View Result" : "Attempt Now"}
+                              </Link>
+                            </Button>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>

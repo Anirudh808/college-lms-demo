@@ -44,13 +44,8 @@ export default function LoginPage() {
     router.push(`/${user.role}/dashboard`);
   };
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      router.replace("/");
-    }
-  }, [isLoggedIn, router]);
-
   if (isLoggedIn) {
+    router.push("/");
     return null;
   }
 

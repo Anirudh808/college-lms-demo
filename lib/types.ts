@@ -243,3 +243,43 @@ export interface PlanLimit {
   limit: number | "unlimited";
   period: "day" | "week" | "month";
 }
+
+export interface AssessmentQuestionOption {
+  key: string;
+  text: string;
+  reason?: string;
+}
+
+export interface AssessmentQuestion {
+  question: string;
+  type: string;
+  options?: AssessmentQuestionOption[];
+  correctAnswer?: {
+    option?: string;
+    answer?: boolean;
+    multiOptions?: string[];
+  };
+}
+
+export interface Assessment {
+  id: string;
+  courseId: string;
+  module: string;
+  chapter: string;
+  lesson: string;
+  topic?: string;
+  subTopic?: string;
+  durationInSeconds: number;
+  questionLimit: number;
+  type: string;
+  questions: AssessmentQuestion[];
+}
+
+export interface AssessmentSubmission {
+  assessmentId: string;
+  courseId: string;
+  studentId?: string;
+  studentName?: string;
+  studentAnswers: any[];
+  submittedAt: number;
+}

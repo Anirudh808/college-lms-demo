@@ -9,7 +9,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { FileText, ClipboardList, Video, Plus, Users, ChevronRight, Layers } from "lucide-react";
+import { FileText, ClipboardList, Video, Plus, Users, ChevronRight, Layers, FileSignature, Presentation, ArrowRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { AssignmentSidePanel } from "@/components/AssignmentSidePanel";
+import { AssignmentForm } from "@/components/AssignmentForm";
+import { AssignmentAttemptLayout } from "@/components/AssignmentAttemptLayout";
+import { LocalStorageService } from "@/components/LocalStorageService";
+import { Assessment, AssessmentSubmission } from "@/lib/types";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -35,6 +42,21 @@ export default function FacultyCourseDetailPage() {
     .map((userId) => getUser(userId))
     .filter((u): u is NonNullable<typeof u> => !!u);
 
+  const [isAssessmentPanelOpen, setAssessmentPanelOpen] = useState(false);
+  const [assessments, setAssessments] = useState<Assessment[]>([]);
+  const [submissionsMap, setSubmissionsMap] = useState<Record<string, AssessmentSubmission[]>>({});
+  const [selectedSubmissionView, setSelectedSubmissionView] = useState<{ assessment: Assessment; submission: AssessmentSubmission } | null>(null);
+
+  useEffect(() => {
+    LocalStorageService.getAssessments(id).then(async (fetched) => {
+      setAssessments(fetched);
+      const subMap: Record<string, AssessmentSubmission[]> = {};
+      for (const a of fetched) {
+        subMap[a.id] = await LocalStorageService.getSubmissions(a.id);
+      }
+      setSubmissionsMap(subMap);
+    });
+  }, [id, isAssessmentPanelOpen]);
   return (
     <div className="space-y-6">
       <div>
@@ -59,6 +81,7 @@ export default function FacultyCourseDetailPage() {
           <TabsTrigger value="roster">Student Roster</TabsTrigger>
           <TabsTrigger value="assignments">Assignments</TabsTrigger>
           <TabsTrigger value="quizzes">Quizzes</TabsTrigger>
+          <TabsTrigger value="assessments">Assessments</TabsTrigger>
           <TabsTrigger value="live">Live Sessions</TabsTrigger>
         </TabsList>
 
@@ -186,16 +209,98 @@ export default function FacultyCourseDetailPage() {
 
         <TabsContent value="assignments" className="mt-4">
           <Card>
-            <CardContent className="pt-6">
-              <ClipboardList className="h-8 w-8 text-muted-foreground mb-2" />
-              <h3 className="font-semibold">Assignments</h3>
-              <p className="text-sm text-muted-foreground">Create and manage assignments</p>
-              <Link href={`/faculty/grading`}>
-                <Button variant="outline" className="mt-4">View Grading Queue</Button>
-              </Link>
-              <Button variant="outline" className="mt-4 ml-2" disabled>
-                <Plus className="h-4 w-4 mr-1" /> Create Assignment
-              </Button>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <div>
+                <CardTitle className="flex items-center gap-2">
+                  <ClipboardList className="h-5 w-5 text-primary" />
+                  Course Assignments
+                </CardTitle>
+                <p className="text-sm text-muted-foreground mt-1">Create and manage assignments mapping to syllabus topics.</p>
+              </div>
+              <div className="flex gap-2">
+                <Link href={`/faculty/grading`}>
+                  <Button variant="outline">View Grading Queue</Button>
+                </Link>
+                <Button onClick={() => setAssessmentPanelOpen(true)} className="bg-primary">
+                  <Plus className="h-4 w-4 mr-1" /> Create Assignment
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {assessments.length === 0 ? (
+                <div className="py-12 flex flex-col items-center justify-center text-center">
+                  <ClipboardList className="h-12 w-12 text-muted-foreground/30 mb-4" />
+                  <p className="text-muted-foreground">No assignments given.</p>
+                </div>
+              ) : (
+                <Table className="mt-4">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Assessment Info</TableHead>
+                      <TableHead>Questions</TableHead>
+                      <TableHead>Duration</TableHead>
+                      <TableHead>Submissions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {assessments.map((assignment) => {
+                      const submissions = submissionsMap[assignment.id] || [];
+
+                      return (
+                        <TableRow key={assignment.id}>
+                          <TableCell className="font-medium">{assignment.questions?.[0]?.type || "Assessment"} ({assignment.module})</TableCell>
+                          <TableCell>{assignment.questions?.length || 0} Questions</TableCell>
+                          <TableCell>{assignment.durationInSeconds / 60} mins</TableCell>
+                          <TableCell>
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button variant="link" className="p-0 h-auto font-semibold">
+                                  {submissions.length} students <ChevronRight className="h-4 w-4 ml-1" />
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent className="max-w-2xl">
+                                <DialogHeader>
+                                  <DialogTitle>Submissions for {assignment.questions?.[0]?.type || "Assessment"} Assessment</DialogTitle>
+                                </DialogHeader>
+                                <div className="space-y-4">
+                                  {submissions.length === 0 ? (
+                                    <p className="text-muted-foreground text-center py-4">No submissions yet.</p>
+                                  ) : (
+                                    <Table>
+                                      <TableHeader>
+                                        <TableRow>
+                                          <TableHead>Student Name</TableHead>
+                                          <TableHead>Submitted At</TableHead>
+                                          <TableHead>Answers</TableHead>
+                                          <TableHead className="text-right">Action</TableHead>
+                                        </TableRow>
+                                      </TableHeader>
+                                      <TableBody>
+                                        {submissions.map((sub, i) => (
+                                          <TableRow key={i}>
+                                            <TableCell className="font-medium">{sub.studentName || "Student"}</TableCell>
+                                            <TableCell>{new Date(sub.submittedAt).toLocaleString()}</TableCell>
+                                            <TableCell>{sub.studentAnswers?.length || 0} answers recorded</TableCell>
+                                            <TableCell className="text-right">
+                                              <Button variant="outline" size="sm" onClick={() => setSelectedSubmissionView({ assessment: assignment, submission: sub })}>
+                                                View Details
+                                              </Button>
+                                            </TableCell>
+                                          </TableRow>
+                                        ))}
+                                      </TableBody>
+                                    </Table>
+                                  )}
+                                </div>
+                              </DialogContent>
+                            </Dialog>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -213,6 +318,53 @@ export default function FacultyCourseDetailPage() {
           </Card>
         </TabsContent>
 
+        <TabsContent value="ass" className="mt-4">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <div>
+
+                <CardTitle className="flex items-center gap-2">
+                  <FileSignature className="h-5 w-5 text-primary" />
+                  Course Assessments
+                </CardTitle>
+                <p className="text-sm text-muted-foreground mt-1">Manage assessments from Local Storage.</p>
+              </div>
+              <Button onClick={() => setAssessmentPanelOpen(true)} className="bg-primary">
+                <Plus className="h-4 w-4 mr-1" /> Create Assessment
+              </Button>
+            </CardHeader>
+            <CardContent>
+              {assessments.length === 0 ? (
+                <div className="py-12 flex flex-col items-center justify-center text-center">
+                  <FileSignature className="h-12 w-12 text-muted-foreground/30 mb-4" />
+                  <p className="text-muted-foreground">No assessments created yet.</p>
+                </div>
+              ) : (
+                <Table className="mt-4">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Type</TableHead>
+                      <TableHead>Module</TableHead>
+                      <TableHead>Duration</TableHead>
+                      <TableHead>Questions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {assessments.map(a => (
+                      <TableRow key={a.id}>
+                        <TableCell className="font-medium">{a.questions?.[0]?.type || "Assessment"}</TableCell>
+                        <TableCell>{a.module}</TableCell>
+                        <TableCell>{a.durationInSeconds / 60} mins</TableCell>
+                        <TableCell>{a.questions.length}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
         <TabsContent value="live" className="mt-4">
           <Card>
             <CardContent className="pt-6">
@@ -226,6 +378,32 @@ export default function FacultyCourseDetailPage() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      <AssignmentSidePanel isOpen={isAssessmentPanelOpen} onClose={() => setAssessmentPanelOpen(false)}>
+        <AssignmentForm
+          courseId={id}
+          syllabusModules={syllabusModules}
+          onSuccess={() => setAssessmentPanelOpen(false)}
+          onCancel={() => setAssessmentPanelOpen(false)}
+        />
+      </AssignmentSidePanel>
+
+      <Dialog open={!!selectedSubmissionView} onOpenChange={(open) => !open && setSelectedSubmissionView(null)}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>View Submission Details</DialogTitle>
+          </DialogHeader>
+          <div className="pt-4">
+            {selectedSubmissionView && (
+              <AssignmentAttemptLayout
+                assessment={selectedSubmissionView.assessment}
+                courseId={id}
+                facultyViewSubmission={selectedSubmissionView.submission}
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

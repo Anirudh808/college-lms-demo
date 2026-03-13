@@ -1,74 +1,41 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import Link from "next/link";
-import { getCourse, getAssignments, getSubmissions } from "@/lib/data";
-import { useSession } from "@/store/session";
-import { Card, CardContent } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { LocalStorageService } from "@/components/LocalStorageService";
+import { AssignmentAttemptLayout } from "@/components/AssignmentAttemptLayout";
+import { Assessment } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { ArrowLeft } from "lucide-react";
-import { format } from "date-fns";
 
-export default function CourseAssignmentsPage() {
+export default function AssessmentAttemptPage() {
   const params = useParams();
+  const router = useRouter();
   const courseId = params.id as string;
-  const { user } = useSession();
-  const course = getCourse(courseId) as any;
-  const assignments = getAssignments(courseId);
+  const assignmentId = params.assessmentId as string;
 
-  if (!course) return <p>Course not found</p>;
+  const [assignment, setAssignment] = useState<Assessment | null>(null);
 
-  return (
-    <div className="space-y-6">
-      <Link href={`/student/courses/${courseId}`}>
-        <Button variant="ghost" size="sm">
-          <ArrowLeft className="w-4 h-4 mr-1" /> Back to course
+  useEffect(() => {
+    LocalStorageService.getAssessmentById(assignmentId).then(data => {
+      if (data) setAssignment(data);
+    });
+  }, [assignmentId]);
+
+  if (!assignment) {
+    return (
+      <div className="p-8 text-center space-y-4">
+        <p className="text-muted-foreground">Assessment not found or loading...</p>
+        <Button variant="outline" onClick={() => router.push(`/student/courses/${courseId}`)}>
+          <ArrowLeft className="w-4 h-4 mr-2" /> Go Back
         </Button>
-      </Link>
-
-      <div>
-        <h1 className="text-2xl font-bold">Assignments - {course.program}</h1>
-        <p className="text-muted-foreground">{course.title}</p>
       </div>
-
-      <div className="space-y-4">
-        {assignments.map((a) => {
-          const sub = user ? getSubmissions(a.id, user.id)[0] : null;
-          const submitted = !!sub?.submittedAt;
-          const graded = sub?.score != null;
-          const overdue = new Date(a.dueDate) < new Date() && !submitted;
-
-          return (
-            <Card key={a.id}>
-              <CardContent className="pt-6">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="font-semibold">{a.title}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">{a.description}</p>
-                    <p className="text-xs text-muted-foreground mt-2">
-                      Due {format(new Date(a.dueDate), "MMM d, yyyy")} • Max {a.maxScore} pts
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {submitted && (
-                      <Badge variant={graded ? "default" : "secondary"}>
-                        {graded ? `${sub!.score}/${a.maxScore}` : "Submitted"}
-                      </Badge>
-                    )}
-                    {overdue && !submitted && <Badge variant="destructive">Overdue</Badge>}
-                  </div>
-                </div>
-                <Button className="mt-4" variant={submitted ? "outline" : "default"} asChild>
-                  <Link href={`/student/courses/${courseId}/assignments/${a.id}`}>
-                    {submitted ? "View submission" : "Submit"}
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+    );
+  }
+  console.log("assignment", assignment)
+  return (
+    <div className="py-6">
+      <AssignmentAttemptLayout assessment={assignment} courseId={courseId} />
     </div>
   );
 }

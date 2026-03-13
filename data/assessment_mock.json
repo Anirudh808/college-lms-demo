@@ -1,0 +1,62 @@
+{
+  "durationInSeconds": 1800,
+  "type": "MCQ",
+  "questionLimit": 5,
+  "questions": [
+    {
+      "question": "What is the primary purpose of a feedback control system?",
+      "options": [
+        { "key": "A", "text": "To reduce steady state error", "reason": "" },
+        { "key": "B", "text": "To increase gain", "reason": "" },
+        { "key": "C", "text": "To increase bandwidth", "reason": "" },
+        { "key": "D", "text": "To decrease stability", "reason": "" }
+      ],
+      "correctAnswer": { "option": "A", "answer": true },
+      "multiOptions": []
+    },
+    {
+      "question": "Which of the following is an open-loop system?",
+      "options": [
+        { "key": "A", "text": "A toaster", "reason": "No feedback based on toast color" },
+        { "key": "B", "text": "Cruise control in car", "reason": "" },
+        { "key": "C", "text": "Air conditioner", "reason": "" },
+        { "key": "D", "text": "Autopilot", "reason": "" }
+      ],
+      "correctAnswer": { "option": "A", "answer": true },
+      "multiOptions": []
+    },
+    {
+      "question": "What is the transfer function defined as?",
+      "options": [
+        { "key": "A", "text": "Ratio of output to input in Laplace domain assuming zero initial conditions", "reason": "" },
+        { "key": "B", "text": "Ratio of input to output", "reason": "" },
+        { "key": "C", "text": "Ratio of output to input in time domain", "reason": "" },
+        { "key": "D", "text": "None of the above", "reason": "" }
+      ],
+      "correctAnswer": { "option": "A", "answer": true },
+      "multiOptions": []
+    },
+    {
+      "question": "The error signal in a feedback loop is?",
+      "options": [
+        { "key": "A", "text": "Difference between reference input and actual output", "reason": "" },
+        { "key": "B", "text": "Sum of reference input and actual output", "reason": "" },
+        { "key": "C", "text": "Ratio of reference input and actual output", "reason": "" },
+        { "key": "D", "text": "None of the above", "reason": "" }
+      ],
+      "correctAnswer": { "option": "A", "answer": true },
+      "multiOptions": []
+    },
+    {
+      "question": "Which transform is predominantly used in continuous control systems?",
+      "options": [
+        { "key": "A", "text": "Laplace Transform", "reason": "" },
+        { "key": "B", "text": "Z Transform", "reason": "" },
+        { "key": "C", "text": "Fourier Transform", "reason": "" },
+        { "key": "D", "text": "Wavelet Transform", "reason": "" }
+      ],
+      "correctAnswer": { "option": "A", "answer": true },
+      "multiOptions": []
+    }
+  ]
+}
