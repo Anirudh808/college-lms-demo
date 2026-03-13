@@ -21,6 +21,92 @@ app.prepare().then(() => {
     }
   });
 
+  const io = new Server(server, {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"]
+    }
+  });
+
+  const roomUsers = new Map(); // roomId -> Set of users {id, name, role}
+
+  io.on("connection", (socket) => {
+    let currentUser = null;
+    let currentRoom = null;
+
+    // Join a class room
+    socket.on("join-room", (roomId, userData) => {
+      console.log(`[Socket] User ${userData?.name} joining room ${roomId}`);
+      socket.join(roomId);
+      currentRoom = roomId;
+      currentUser = userData;
+
+      if (!roomUsers.has(roomId)) {
+        roomUsers.set(roomId, new Map());
+      }
+      
+      const usersInRoom = roomUsers.get(roomId);
+      // Mark as online when joining
+      usersInRoom.set(socket.id, { ...userData, online: true });
+
+      const currentList = Array.from(usersInRoom.values());
+      console.log(`[Socket] Updated user list for room ${roomId}:`, currentList.length, "users");
+      io.to(roomId).emit("users-updated", currentList);
+    });
+
+    // Handle view changes
+    socket.on("change-view", (roomId, view) => {
+      socket.to(roomId).emit("view-changed", view);
+    });
+
+    // Handle lesson change
+    socket.on("change-lesson", (roomId, lessonIndex) => {
+      socket.to(roomId).emit("lesson-changed", lessonIndex);
+    });
+
+    // Handle drawing strokes
+    socket.on("draw-stroke", (roomId, strokeData) => {
+      socket.to(roomId).emit("new-stroke", strokeData);
+    });
+    
+    // Handle clearing board
+    socket.on("clear-board", (roomId) => {
+      socket.to(roomId).emit("board-cleared");
+    });
+
+    // Handle chat message
+    socket.on("send-chat", (roomId, messageData) => {
+      socket.to(roomId).emit("new-chat-message", messageData);
+    });
+
+    // Handle poll creation
+    socket.on("create-poll", (roomId, pollData) => {
+      console.log(`[Socket] Poll created in room ${roomId}:`, pollData.question);
+      socket.to(roomId).emit("poll-created", pollData);
+    });
+
+    // Handle poll vote
+    socket.on("cast-vote", (roomId, pollId, optionIdx) => {
+    console.log(`[Socket] Vote cast in ${roomId}: poll ${pollId}, option ${optionIdx}`);
+    socket.to(roomId).emit("vote-cast", { pollId, optionIdx });
+  });
+
+  socket.on("content-highlight", (roomId, highlightData) => {
+    // highlightData: { type, id, ranges, active, clearAll, isRemove }
+    console.log(`[Socket] Room ${roomId} highlight:`, highlightData.id, "ranges:", highlightData.ranges?.length);
+    socket.to(roomId).emit("content-highlight", highlightData);
+  });
+
+  socket.on("disconnect", () => {
+      if (currentRoom && roomUsers.has(currentRoom)) {
+        const usersInRoom = roomUsers.get(currentRoom);
+        console.log(`[Socket] User ${currentUser?.name} disconnected from ${currentRoom}`);
+        usersInRoom.delete(socket.id);
+        io.to(currentRoom).emit("users-updated", Array.from(usersInRoom.values()));
+      }
+    });
+  });
+
   server.once("error", (err) => {
     console.error(err);
     process.exit(1);

@@ -59,6 +59,56 @@ const MOCK_STUDENTS = [
 
 const EMOJI_REACTIONS = ["👏", "❤️", "😮", "😂", "🔥", "👍"];
 
+// ─── Highlighted Text Component ───────────────────────────────────────────
+function HighlightedText({ text, ranges, onRemove, isTeacher }: { 
+  text: string; 
+  ranges: { start: number; end: number }[];
+  onRemove?: (rangeIdx: number) => void;
+  isTeacher?: boolean;
+}) {
+  if (!ranges || ranges.length === 0) return <>{text}</>;
+
+  // Use the original ranges to allow for index-based removal
+  const sorted = [...ranges].map((r, i) => ({ ...r, originalIdx: i })).sort((a, b) => a.start - b.start);
+  
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+
+  sorted.forEach((range, i) => {
+    // Add plain text before the range
+    if (range.start > lastIndex) {
+      parts.push(text.substring(lastIndex, range.start));
+    }
+    // Add highlighted text
+    parts.push(
+      <mark 
+        key={i} 
+        onClick={(e) => {
+          if (isTeacher && onRemove) {
+            e.stopPropagation();
+            onRemove(range.originalIdx);
+          }
+        }}
+        className={cn(
+          "bg-yellow-200 dark:bg-yellow-800/60 rounded px-0.5 transition-all duration-300 shadow-[0_0_10px_rgba(253,224,71,0.3)] select-none",
+          isTeacher && "cursor-pointer hover:bg-red-200 hover:text-red-900 dark:hover:bg-red-900"
+        )}
+        title={isTeacher ? "Click to remove highlight" : ""}
+      >
+        {text.substring(range.start, range.end)}
+      </mark>
+    );
+    lastIndex = range.end;
+  });
+
+  // Add remaining plain text
+  if (lastIndex < text.length) {
+    parts.push(text.substring(lastIndex));
+  }
+
+  return <>{parts}</>;
+}
+
 type Tab = "lessons" | "board" | "people" | "chat" | "polls";
 type DrawTool = "pen" | "eraser";
 
@@ -308,9 +358,14 @@ function CreatePollModal({ onClose, onCreate }: {
                 className="h-8 text-sm"
               />
               {options.length > 2 && (
-                <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" onClick={() => setOptions(o => o.filter((_, j) => j !== i))}>
+                <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" onClick={() => {
+                  setOptions(o => o.filter((_, j) => j !== i));
+                  if (correctAnswer === i) setCorrectAnswer(null);
+                  else if (correctAnswer !== null && correctAnswer > i) setCorrectAnswer(correctAnswer - 1);
+                }}>
                   <X className="h-3.5 w-3.5" />
                 </Button>
+
               )}
             </div>
           ))}
@@ -329,7 +384,13 @@ function CreatePollModal({ onClose, onCreate }: {
           <Button variant="outline" className="flex-1" onClick={onClose}>Cancel</Button>
           <Button className="flex-1" onClick={() => {
             if (question.trim() && options.filter(Boolean).length >= 2) {
-              onCreate(question, options.filter(Boolean), duration, correctAnswer);
+              const filteredOptions = options.filter(Boolean);
+              let newCorrectIdx = null;
+              if (correctAnswer !== null && options[correctAnswer]) {
+                const correctText = options[correctAnswer];
+                newCorrectIdx = filteredOptions.indexOf(correctText);
+              }
+              onCreate(question, filteredOptions, duration, newCorrectIdx);
             }
           }}>
             Launch Poll
@@ -517,6 +578,99 @@ export default function LiveClassPage() {
   const [activePollId, setActivePollId] = useState<string | null>(null);
   const [timerRefs] = useState<Map<string, NodeJS.Timeout>>(new Map());
 
+  // Content Highlighting (Granular)
+  const [highlights, setHighlights] = useState<Record<string, { start: number; end: number }[]>>({});
+  const [selectionMenu, setSelectionMenu] = useState<{ x: number, y: number, type: 'explanation' | 'example', blockId: string, range: { start: number, end: number } } | null>(null);
+
+  const handleTextSelection = (type: 'explanation' | 'example', blockId: string) => {
+    if (!isTeacher) return;
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed || selection.rangeCount === 0) {
+      setSelectionMenu(null);
+      return;
+    }
+
+    const range = selection.getRangeAt(0);
+    const container = range.commonAncestorContainer;
+    // Find the root p or pre element that contains the selection
+    let root: Node | null = container;
+    while (root && root.nodeName !== 'P' && root.nodeName !== 'PRE') {
+      root = root.parentNode;
+    }
+    if (!root) return;
+
+    const getGlobalOffset = (targetNode: Node, targetOffset: number, rootNode: Node) => {
+      let total = 0;
+      const walk = (node: Node): boolean => {
+        if (node === targetNode) {
+          total += targetOffset;
+          return true;
+        }
+        if (node.nodeType === Node.TEXT_NODE) {
+          total += node.textContent?.length || 0;
+        }
+        for (let i = 0; i < node.childNodes.length; i++) {
+          if (walk(node.childNodes[i])) return true;
+        }
+        return false;
+      };
+      walk(rootNode);
+      return total;
+    };
+
+    const start = getGlobalOffset(range.startContainer, range.startOffset, root);
+    const end = getGlobalOffset(range.endContainer, range.endOffset, root);
+    const rect = range.getBoundingClientRect();
+
+    setSelectionMenu({
+      x: rect.left + rect.width / 2,
+      y: rect.top - 10,
+      type,
+      blockId,
+      range: { start, end }
+    });
+  };
+
+  const applyHighlight = () => {
+    if (!selectionMenu) return;
+    const { type, blockId, range } = selectionMenu;
+    const hKey = `${type}-${blockId}`;
+    
+    setHighlights(prev => ({
+      ...prev,
+      [hKey]: [...(prev[hKey] || []), range]
+    }));
+
+    if (socket) {
+      console.log("[Socket] Emitting highlight:", hKey, "to room:", id);
+      socket.emit("content-highlight", id, { type, id: hKey, ranges: [range], active: true });
+    }
+    
+    setSelectionMenu(null);
+    window.getSelection()?.removeAllRanges();
+  };
+
+  const removeHighlight = (type: 'explanation' | 'example', blockId: string, rangeIdx: number) => {
+    if (!isTeacher) return;
+    const hKey = `${type}-${blockId}`;
+    const targetRange = highlights[hKey]?.[rangeIdx];
+    if (!targetRange) return;
+
+    setHighlights(prev => ({
+      ...prev,
+      [hKey]: prev[hKey].filter((_, i) => i !== rangeIdx)
+    }));
+
+    if (socket) {
+      socket.emit("content-highlight", id, { type, id: hKey, ranges: [targetRange], isRemove: true, active: true });
+    }
+  };
+
+  const clearHighlights = () => {
+    setHighlights({});
+    if (socket && isTeacher) socket.emit("content-highlight", id, { clearAll: true });
+  };
+
   // Example panel pagination
   const [examplePage, setExamplePage] = useState(0);
   const [imagePage, setImagePage] = useState(0);
@@ -693,13 +847,62 @@ export default function LiveClassPage() {
     });
 
     s.on("lesson-changed", (idx: number) => {
-      if (!isTeacher) setLessonIndex(idx);
+      console.log("[Socket] Lesson changed to index:", idx);
+      if (!isTeacher) {
+        setLessonIndex(idx);
+        setHighlights({}); // Students should also clear highlights on lesson change
+        setExamplePage(0);
+        setImagePage(0);
+      }
     });
 
     s.on("users-updated", (userList: any[]) => {
       setStudents(userList.filter((u: any) => u.role === "student"));
       const faculty = userList.find((u: any) => u.role === "faculty");
-      if (faculty) setHost({ name: faculty.name, avatar: faculty.avatar });
+      if (faculty) {
+        setHost({ name: faculty.name, avatar: faculty.avatar });
+      }
+    });
+
+    s.on("poll-created", (pollData) => {
+      console.log("[Socket] Poll created received:", pollData);
+      if (!isTeacher) {
+        setPolls(p => [...p, pollData]);
+        setActivePollId(pollData.id);
+        console.log("[Socket] Set activePollId to:", pollData.id);
+        setTab("polls");
+      }
+    });
+
+    s.on("vote-cast", (data: { pollId: string, optionIdx: number }) => {
+      console.log("[Socket] Vote cast received:", data);
+
+      setPolls(prev => prev.map(p => 
+        p.id === data.pollId 
+          ? { ...p, votes: p.votes.map((v, i) => i === Number(data.optionIdx) ? v + 1 : v) }
+          : p
+      ));
+    });
+
+    s.on("content-highlight", (data: { id: string, ranges?: { start: number; end: number }[], active: boolean, clearAll?: boolean, isRemove?: boolean }) => {
+      console.log("[Socket] Received highlight event:", data.id, !!data.active);
+      if (data.clearAll) {
+        setHighlights({});
+        return;
+      }
+      if (data.isRemove) {
+        setHighlights(prev => ({
+          ...prev,
+          [data.id]: (prev[data.id] || []).filter(r => 
+            !data.ranges?.some(dr => dr.start === r.start && dr.end === r.end)
+          )
+        }));
+        return;
+      }
+      setHighlights(prev => ({
+        ...prev,
+        [data.id]: data.active ? [...(prev[data.id] || []), ...(data.ranges || [])] : []
+      }));
     });
 
     return () => {
@@ -765,6 +968,7 @@ export default function LiveClassPage() {
     setPolls((p) => [...p, newPoll]);
     setShowCreatePoll(false);
     setTab("polls");
+    console.log("[Socket] Emitting create-poll:", newPoll.id);
     if (socket) {
       socket.emit("create-poll", id, newPoll);
     }
@@ -777,7 +981,7 @@ export default function LiveClassPage() {
         : poll
     ));
     if (socket) {
-      socket.emit("cast-vote", id, { pollId, optionIdx });
+      socket.emit("cast-vote", id, pollId, optionIdx);
     }
   };
 
@@ -788,19 +992,26 @@ export default function LiveClassPage() {
 
   const nextLesson = () => {
     if (lessonIndex < allLessons.length - 1) {
-      const newIdx = lessonIndex + 1;
-      setLessonIndex(newIdx);
-      if (socket && isTeacher) socket.emit("change-lesson", id, newIdx);
+      const idx = lessonIndex + 1;
+      setLessonIndex(idx);
+      setExamplePage(0);
+      setImagePage(0);
+      setHighlights({}); // Clear on change
+      if (socket && isTeacher) socket.emit("change-lesson", id, idx);
     }
   };
 
   const prevLesson = () => {
     if (lessonIndex > 0) {
-      const newIdx = lessonIndex - 1;
-      setLessonIndex(newIdx);
-      if (socket && isTeacher) socket.emit("change-lesson", id, newIdx);
+      const idx = lessonIndex - 1;
+      setLessonIndex(idx);
+      setExamplePage(0);
+      setImagePage(0);
+      setHighlights({}); // Clear on change
+      if (socket && isTeacher) socket.emit("change-lesson", id, idx);
     }
   };
+
 
   if (!liveClass) return <p className="p-8 text-muted-foreground">Live class not found</p>;
 
@@ -1106,7 +1317,7 @@ export default function LiveClassPage() {
         )}
       </div>
 
-      {/* ══════ Main Content Area ══════ */}
+      {/* Main Content Area */}
       <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
 
         {/* Top bar */}
@@ -1259,17 +1470,44 @@ export default function LiveClassPage() {
                 <FileText className="h-4 w-4 text-primary" />
                 <span className="text-sm font-semibold">Explanation</span>
                 <Sparkles className="h-3 w-3 text-primary/50 ml-1" />
+                {isTeacher && (
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="h-6 w-6 ml-auto hover:text-red-600" 
+                    title="Clear all highlights"
+                    onClick={clearHighlights}
+                  >
+                    <Eraser className="h-3.5 w-3.5" />
+                  </Button>
+                )}
               </div>
               <ScrollArea className="flex-1">
                 <div className="p-4 space-y-4">
                   {currentLesson?.paragraphs && currentLesson.paragraphs.length > 0 ? (
-                    currentLesson.paragraphs.map((para: string | undefined, i: number) => para && (
-                      <div key={i} className="space-y-2">
-                        <p className="text-sm leading-relaxed text-muted-foreground whitespace-pre-wrap">
-                          {para}
-                        </p>
-                      </div>
-                    ))
+                    currentLesson.paragraphs.map((para: string | undefined, i: number) => {
+                      const hKey = `explanation-${i}`;
+                      const ranges = highlights[hKey] || [];
+                      return para && (
+                        <div 
+                          key={i} 
+                          onMouseUp={() => isTeacher && handleTextSelection('explanation', i.toString())}
+                          className={cn(
+                            "group relative p-3 rounded-lg transition-all duration-300",
+                            isTeacher && "cursor-text hover:bg-primary/5 select-text"
+                          )}
+                        >
+                          <p className="text-sm leading-relaxed text-muted-foreground">
+                            <HighlightedText 
+                              text={para} 
+                              ranges={ranges} 
+                              isTeacher={isTeacher}
+                              onRemove={(rangeIdx) => removeHighlight('explanation', i.toString(), rangeIdx)}
+                            />
+                          </p>
+                        </div>
+                      );
+                    })
                   ) : (
                     <div className="flex flex-col items-center justify-center py-12 text-center space-y-3 opacity-50">
                       <FileText className="h-12 w-12 text-muted-foreground" />
@@ -1298,12 +1536,30 @@ export default function LiveClassPage() {
               <ScrollArea className="flex-1">
                 <div className="p-4">
                   {currentLesson?.allExamples && currentLesson.allExamples.length > 0 ? (
-                    <div className="space-y-3">
-                      <h4 className="text-xs font-bold text-amber-700 uppercase tracking-wider">{currentLesson.allExamples[examplePage]?.title}</h4>
-                      <pre className="text-[11px] bg-amber-500/5 p-4 rounded-xl border border-amber-500/10 font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap text-muted-foreground">
-                        {currentLesson.allExamples[examplePage]?.text}
-                      </pre>
-                    </div>
+                    (() => {
+                      const hKey = `example-${examplePage}`;
+                      const ranges = highlights[hKey] || [];
+                      const text = currentLesson.allExamples[examplePage]?.text || "";
+                      return (
+                        <div 
+                          className={cn(
+                            "group relative space-y-3 p-3 rounded-xl transition-all duration-300",
+                            isTeacher && "cursor-text hover:bg-primary/5"
+                          )}
+                          onMouseUp={() => isTeacher && handleTextSelection('example', examplePage.toString())}
+                        >
+                          <h4 className="text-xs font-bold text-amber-700 uppercase tracking-wider">{currentLesson.allExamples[examplePage]?.title}</h4>
+                          <pre className="text-[11px] p-4 rounded-xl border border-amber-500/10 bg-amber-500/5 font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap text-muted-foreground selection:bg-yellow-300/30">
+                            <HighlightedText 
+                              text={text} 
+                              ranges={ranges} 
+                              isTeacher={isTeacher}
+                              onRemove={(rangeIdx) => removeHighlight('example', examplePage.toString(), rangeIdx)}
+                            />
+                          </pre>
+                        </div>
+                      );
+                    })()
                   ) : (
                     <div className="flex flex-col items-center justify-center py-8 text-center opacity-40">
                       <Lightbulb className="h-8 w-8 mb-2" />
@@ -1379,6 +1635,7 @@ export default function LiveClassPage() {
         </div>
       </div>
 
+
       {/* Poll creation modal */}
       {showCreatePoll && (
         <CreatePollModal onClose={() => setShowCreatePoll(false)} onCreate={createPoll} />
@@ -1407,52 +1664,82 @@ export default function LiveClassPage() {
         })()
       )}
 
-      {/* ── QR Code Modal (faculty desktop) ───────────────────────────────── */}
-      {showQR && isTeacher && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="bg-card border rounded-2xl shadow-2xl w-full max-w-sm p-6 flex flex-col items-center gap-5">
-            {/* Header */}
-            <div className="flex items-center justify-between w-full">
-              <div className="flex items-center gap-2">
-                <Tablet className="h-5 w-5 text-violet-600" />
-                <h3 className="font-semibold text-base">Open on iPad / Phone</h3>
-              </div>
-              <button
-                onClick={() => setShowQR(false)}
-                className="h-7 w-7 rounded-full flex items-center justify-center hover:bg-muted transition-colors text-muted-foreground"
-              >
-                <X className="h-4 w-4" />
-              </button>
+      {/* Floating Selection Menu for Teacher */}
+{isTeacher && selectionMenu && (
+  <div 
+    className="fixed z-[100] -translate-x-1/2 -translate-y-full pb-2 animate-in fade-in zoom-in duration-200"
+    style={{ top: selectionMenu.y, left: selectionMenu.x }}
+  >
+    <div className="bg-white dark:bg-zinc-900 border shadow-xl rounded-full px-1 py-1 flex items-center gap-1">
+      <Button 
+        size="sm" 
+        className="h-7 rounded-full text-[10px] px-3 bg-yellow-400 hover:bg-yellow-500 text-yellow-950 font-bold border-none"
+        onClick={applyHighlight}
+      >
+        <Sparkles className="h-3 w-3 mr-1" /> Highlight
+      </Button>
+      <div className="w-px h-4 bg-border mx-0.5" />
+      <Button 
+        variant="ghost" 
+        size="icon" 
+        className="h-7 w-7 rounded-full hover:bg-muted"
+        onClick={() => {
+          setSelectionMenu(null);
+          window.getSelection()?.removeAllRanges();
+        }}
+      >
+        <X className="h-3 w-3" />
+      </Button>
+    </div>
+  </div>
+)}
+
+    {/* ── QR Code Modal (faculty desktop) ───────────────────────────────── */}
+    {showQR && isTeacher && (
+      <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm">
+        <div className="bg-card border rounded-2xl shadow-2xl w-full max-w-sm p-6 flex flex-col items-center gap-5">
+          {/* Header */}
+          <div className="flex items-center justify-between w-full">
+            <div className="flex items-center gap-2">
+              <Tablet className="h-5 w-5 text-violet-600" />
+              <h3 className="font-semibold text-base">Open on iPad / Phone</h3>
             </div>
-
-            {/* QR Code */}
-            <div className="p-4 bg-white rounded-xl border">
-              <QRCode value={tabletUrl} size={200} />
-            </div>
-
-            <p className="text-xs text-muted-foreground text-center leading-relaxed">
-              Scan with your iPad, phone, or tablet camera.
-              <br />Opens the whiteboard in drawing-only mode.
-            </p>
-
-            {/* Copyable URL */}
-            <div className="w-full flex items-center gap-2 rounded-lg border bg-muted/40 px-3 py-2">
-              <QrCode className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
-              <span className="text-[10px] text-muted-foreground truncate flex-1 font-mono">{tabletUrl}</span>
-              <button
-                className="text-[10px] text-primary font-medium shrink-0 hover:underline"
-                onClick={() => navigator.clipboard.writeText(tabletUrl)}
-              >
-                Copy
-              </button>
-            </div>
-
-            <Badge variant="outline" className="gap-1 text-xs text-emerald-600 border-emerald-200 bg-emerald-50 w-full justify-center py-1.5">
-              <Wifi className="h-3 w-3" /> Drawings will sync in real-time to all students
-            </Badge>
+            <button
+              onClick={() => setShowQR(false)}
+              className="h-7 w-7 rounded-full flex items-center justify-center hover:bg-muted transition-colors text-muted-foreground"
+            >
+              <X className="h-4 w-4" />
+            </button>
           </div>
+
+          {/* QR Code */}
+          <div className="p-4 bg-white rounded-xl border">
+            <QRCode value={tabletUrl} size={200} />
+          </div>
+
+          <p className="text-xs text-muted-foreground text-center leading-relaxed">
+            Scan with your iPad, phone, or tablet camera.
+            <br />Opens the whiteboard in drawing-only mode.
+          </p>
+
+          {/* Copyable URL */}
+          <div className="w-full flex items-center gap-2 rounded-lg border bg-muted/40 px-3 py-2">
+            <QrCode className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+            <span className="text-[10px] text-muted-foreground truncate flex-1 font-mono">{tabletUrl}</span>
+            <button
+              className="text-[10px] text-primary font-medium shrink-0 hover:underline"
+              onClick={() => navigator.clipboard.writeText(tabletUrl)}
+            >
+              Copy
+            </button>
+          </div>
+
+          <Badge variant="outline" className="gap-1 text-xs text-emerald-600 border-emerald-200 bg-emerald-50 w-full justify-center py-1.5">
+            <Wifi className="h-3 w-3" /> Drawings will sync in real-time to all students
+          </Badge>
         </div>
-      )}
+      </div>
+    )}
     </div>
   );
 }
