@@ -34,7 +34,9 @@ export default function FacultyLiveClassesPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="font-semibold">{lc.title}</h3>
-                    <p className="text-sm text-muted-foreground">{course?.program}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {course?.title} • {course?.program}
+                    </p>
                     <p className="text-xs text-muted-foreground mt-1">
                       {format(new Date(lc.scheduledAt), "MMM d, yyyy HH:mm")} • {lc.duration} min
                     </p>
@@ -42,7 +44,7 @@ export default function FacultyLiveClassesPage() {
                   <div className="flex items-center gap-2">
                     <Badge>{lc.status}</Badge>
                     <Button asChild>
-                      <Link href={`/student/live-classes/${lc.id}`}>Host / Join</Link>
+                      <Link href={`/faculty/live-classes/${lc.id}`}>Host / Join</Link>
                     </Button>
                   </div>
                 </div>

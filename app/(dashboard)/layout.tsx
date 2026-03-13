@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useSession } from "@/store/session";
 import { AppSidebar } from "@/components/app-sidebar";
 import { TopBar } from "@/components/top-bar";
+
+export const dynamic = "force-dynamic";
 
 export default function DashboardLayout({
   children,
@@ -14,12 +16,21 @@ export default function DashboardLayout({
   const router = useRouter();
   const pathname = usePathname();
   const { isLoggedIn, user } = useSession();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (!isLoggedIn || !user) {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted && (!isLoggedIn || !user)) {
       router.replace("/login");
     }
-  }, [isLoggedIn, user, router]);
+  }, [mounted, isLoggedIn, user, router]);
+
+  if (!mounted) {
+    return null;
+  }
 
   if (!isLoggedIn || !user) {
     return (
@@ -30,8 +41,10 @@ export default function DashboardLayout({
   }
 
   const roleFromPath = pathname?.split("/")[1];
+  
+  // Note: useEffect inside a condition is technically bad practice, but here we're past the basic return. 
+  // It's safer to not have conditional hooks though, so we only run logic if user is present.
   if (roleFromPath && roleFromPath !== user.role) {
-    router.replace(`/${user.role}/dashboard`);
     return null;
   }
 

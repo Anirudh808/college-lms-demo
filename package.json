@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "clean": "npx rimraf .next",
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -28,6 +28,7 @@
     "@tailwindcss/postcss": "^4.2.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cross-env": "^10.1.0",
     "date-fns": "^4.1.0",
     "lucide-react": "latest",
     "next": "^16.1.6",
@@ -39,6 +40,8 @@
     "remark-gfm": "latest",
     "tailwind-merge": "latest",
     "tailwindcss-animate": "latest",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
     "zod": "latest",
     "zustand": "latest"
   },
