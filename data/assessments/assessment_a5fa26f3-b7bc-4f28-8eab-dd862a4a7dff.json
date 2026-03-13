@@ -1,0 +1,58 @@
+{
+  "id": "a5fa26f3-b7bc-4f28-8eab-dd862a4a7dff",
+  "courseId": "p2",
+  "module": "M1",
+  "chapter": "M1C1",
+  "lesson": "M1C1L1",
+  "topic": "",
+  "type": "MCQ",
+  "subTopic": "",
+  "durationInSeconds": 1800,
+  "questionLimit": 5,
+  "questions": [
+    {
+      "question": "Hii",
+      "type": "MCQ",
+      "options": [
+        {
+          "key": "A",
+          "text": "Hii"
+        },
+        {
+          "key": "B",
+          "text": "hii"
+        },
+        {
+          "key": "C",
+          "text": "hii"
+        },
+        {
+          "key": "D",
+          "text": "hii"
+        }
+      ],
+      "correctAnswer": {
+        "option": "A",
+        "answer": true
+      }
+    },
+    {
+      "question": "HIi",
+      "type": "Fill in the blanks",
+      "options": [],
+      "correctAnswer": {
+        "option": "Hii",
+        "answer": true
+      }
+    },
+    {
+      "question": "Hii",
+      "type": "Short Answer",
+      "options": [],
+      "correctAnswer": {
+        "option": "hii",
+        "answer": true
+      }
+    }
+  ]
+}

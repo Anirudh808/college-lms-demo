@@ -6,7 +6,7 @@ import {
   useEffect,
   useCallback,
 } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { io, Socket } from "socket.io-client";
 import { getLiveClass, getCourse, getLessons } from "@/lib/data";
 import { getCourseSyllabus } from "@/lib/syllabusMap";
@@ -42,7 +42,10 @@ import {
   Maximize2,
   Minimize2,
   Radio,
+  Tablet,
+  QrCode,
 } from "lucide-react";
+import QRCode from "react-qr-code";
 
 // ─── Static mock data ────────────────────────────────────────────────────────
 
@@ -360,7 +363,7 @@ function StudentPollPopup({ poll, onVote, totalJoined, onClose }: {
       <div className="bg-card border rounded-3xl shadow-2xl w-full max-w-lg p-8 space-y-6 relative overflow-hidden">
         {/* Progress bar at top */}
         <div className="absolute top-0 left-0 h-1.5 bg-primary/20 w-full">
-          <div 
+          <div
             className="h-full bg-primary transition-all duration-1000 ease-linear"
             style={{ width: `${(poll.timeLeft / poll.duration) * 100}%` }}
           />
@@ -417,8 +420,8 @@ function StudentPollPopup({ poll, onVote, totalJoined, onClose }: {
             <Users className="h-4 w-4" />
             {totalVotes} response{totalVotes !== 1 ? "s" : ""}
           </div>
-          
-          <Button 
+
+          <Button
             disabled={selectedIdx === null || poll.myVote !== null || poll.ended}
             onClick={handleSubmit}
             className="rounded-xl px-6"
@@ -447,6 +450,16 @@ export default function LiveClassPage() {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const pageRef = useRef<HTMLDivElement>(null);
 
+  // Detect iPad/tablet mode via URL param ?tabview=true
+  const searchParams = useSearchParams();
+  const isTabletView = searchParams.get("tabview") === "true";
+
+  // QR modal state (desktop faculty only)
+  const [showQR, setShowQR] = useState(false);
+  const tabletUrl = typeof window !== "undefined"
+    ? `${window.location.origin}${window.location.pathname}?tabview=true`
+    : ``;
+
   // Sidebar tab
   const [tab, setTab] = useState<Tab>("lessons");
   // Current main view: "content" or "board"
@@ -457,8 +470,8 @@ export default function LiveClassPage() {
   const allLessons = allModules.flatMap((m) => {
     const chapters = m.chapters ?? [];
     const lessons = chapters.flatMap((ch) => ch.lessons ?? []);
-    return lessons.map((l) => ({ 
-      ...l, 
+    return lessons.map((l) => ({
+      ...l,
       moduleName: m.title,
       // Aggregating all subtopic contents into a single list for the explanation panel
       paragraphs: l.topics?.flatMap(t => t.subtopics?.map(s => s.content).filter(Boolean) ?? []) ?? [],
@@ -568,14 +581,14 @@ export default function LiveClassPage() {
     console.log("[Socket] Attempting to connect...");
     setSocket(s);
     if (user) {
-      const avatar = user.name 
+      const avatar = user.name
         ? user.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
         : (user.email ? user.email.slice(0, 2).toUpperCase() : "??");
-      
+
       console.log("[Socket] Joining room:", id, "as", user.name || user.email);
-      s.emit("join-room", id, { 
-        id: user.id, 
-        name: user.name || user.email || "Anonymous", 
+      s.emit("join-room", id, {
+        id: user.id,
+        name: user.name || user.email || "Anonymous",
         avatar,
         role: user.role,
         online: true
@@ -626,8 +639,8 @@ export default function LiveClassPage() {
 
     s.on("vote-cast", ({ pollId, optionIdx }) => {
       console.log("[Socket] Vote cast received for poll:", pollId);
-      setPolls(prev => prev.map(p => 
-        p.id === pollId 
+      setPolls(prev => prev.map(p =>
+        p.id === pollId
           ? { ...p, votes: p.votes.map((v, i) => i === optionIdx ? v + 1 : v) }
           : p
       ));
@@ -734,6 +747,30 @@ export default function LiveClassPage() {
   };
 
   if (!liveClass) return <p className="p-8 text-muted-foreground">Live class not found</p>;
+
+  // ── Tablet / iPad Mode: faculty opened URL with ?tabview=true → whiteboard only
+  if (isTeacher && true) {
+    return (
+      <div className="fixed inset-0 z-50 flex flex-col bg-white dark:bg-zinc-950">
+        {/* Minimal header */}
+        <div className="h-12 shrink-0 flex items-center justify-between px-4 border-b bg-card shadow-sm">
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-500/10 border border-red-400/30 text-red-500 text-[11px] font-bold tracking-wide">
+              <Radio className="h-3 w-3 animate-pulse" /> LIVE
+            </span>
+            <span className="text-xs font-semibold text-muted-foreground">iPad Whiteboard Mode</span>
+          </div>
+          <Badge variant="outline" className="gap-1 text-xs text-emerald-600 border-emerald-200 bg-emerald-50">
+            <Wifi className="h-3 w-3" /> Syncing
+          </Badge>
+        </div>
+        {/* Full-screen whiteboard — draws sync to all students via socket */}
+        <div className="flex-1 overflow-hidden">
+          <Whiteboard isTeacher={true} socket={socket} roomId={id} />
+        </div>
+      </div>
+    );
+  }
 
   // ── Nav tabs for sidebar
   const TABS: { id: Tab; icon: typeof BookOpen; label: string; badge?: number }[] = [
@@ -971,7 +1008,7 @@ export default function LiveClassPage() {
                               )}
                             >
                               <div
-                                className={cn("absolute inset-y-0 left-0 transition-all duration-500", 
+                                className={cn("absolute inset-y-0 left-0 transition-all duration-500",
                                   isCorrect && (isTeacher || poll.ended) ? "bg-green-500/10" : voted ? "bg-primary/20" : "bg-muted"
                                 )}
                                 style={{ width: (isTeacher || poll.ended || poll.myVote !== null) ? `${pct}%` : "0%" }}
@@ -1122,6 +1159,18 @@ export default function LiveClassPage() {
               </>
             )}
 
+            {/* Faculty: iPad / QR mode button */}
+            {isTeacher && (
+              <button
+                onClick={() => setShowQR(true)}
+                title="Open on iPad / Phone / Tablet"
+                className="h-8 px-2.5 rounded-lg text-xs flex items-center gap-1.5 transition-colors border border-violet-300 bg-violet-50 text-violet-700 hover:bg-violet-100"
+              >
+                <Tablet className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">iPad Mode</span>
+              </button>
+            )}
+
             {/* Fullscreen toggle */}
             <button
               onClick={toggleFullscreen}
@@ -1228,8 +1277,8 @@ export default function LiveClassPage() {
                 {currentLesson?.allImages && currentLesson.allImages.length > 0 ? (
                   <div className="w-full flex flex-col items-center justify-center gap-3 h-full">
                     <div className="relative w-full aspect-video rounded-xl overflow-hidden border shadow-inner bg-muted/30">
-                      <img 
-                        src={currentLesson.allImages[imagePage]?.url} 
+                      <img
+                        src={currentLesson.allImages[imagePage]?.url}
                         alt={currentLesson.allImages[imagePage]?.caption}
                         className="w-full h-full object-contain"
                         onError={(e) => {
@@ -1292,7 +1341,7 @@ export default function LiveClassPage() {
           const p = polls.find(p => p.id === activePollId);
           if (!p) return null;
           return (
-            <StudentPollPopup 
+            <StudentPollPopup
               poll={p}
               onVote={votePoll}
               totalJoined={students.length}
@@ -1300,6 +1349,53 @@ export default function LiveClassPage() {
             />
           );
         })()
+      )}
+
+      {/* ── QR Code Modal (faculty desktop) ───────────────────────────────── */}
+      {showQR && isTeacher && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="bg-card border rounded-2xl shadow-2xl w-full max-w-sm p-6 flex flex-col items-center gap-5">
+            {/* Header */}
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center gap-2">
+                <Tablet className="h-5 w-5 text-violet-600" />
+                <h3 className="font-semibold text-base">Open on iPad / Phone</h3>
+              </div>
+              <button
+                onClick={() => setShowQR(false)}
+                className="h-7 w-7 rounded-full flex items-center justify-center hover:bg-muted transition-colors text-muted-foreground"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            {/* QR Code */}
+            <div className="p-4 bg-white rounded-xl border">
+              <QRCode value={tabletUrl} size={200} />
+            </div>
+
+            <p className="text-xs text-muted-foreground text-center leading-relaxed">
+              Scan with your iPad, phone, or tablet camera.
+              <br />Opens the whiteboard in drawing-only mode.
+            </p>
+
+            {/* Copyable URL */}
+            <div className="w-full flex items-center gap-2 rounded-lg border bg-muted/40 px-3 py-2">
+              <QrCode className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+              <span className="text-[10px] text-muted-foreground truncate flex-1 font-mono">{tabletUrl}</span>
+              <button
+                className="text-[10px] text-primary font-medium shrink-0 hover:underline"
+                onClick={() => navigator.clipboard.writeText(tabletUrl)}
+              >
+                Copy
+              </button>
+            </div>
+
+            <Badge variant="outline" className="gap-1 text-xs text-emerald-600 border-emerald-200 bg-emerald-50 w-full justify-center py-1.5">
+              <Wifi className="h-3 w-3" /> Drawings will sync in real-time to all students
+            </Badge>
+          </div>
+        </div>
       )}
     </div>
   );
