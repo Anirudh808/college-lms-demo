@@ -91,12 +91,18 @@ app.prepare().then(() => {
     });
 
     // Handle poll vote
-    socket.on("cast-vote", (roomId, voteData) => {
-      console.log(`[Socket] Vote cast in room ${roomId}:`, voteData);
-      io.to(roomId).emit("vote-cast", voteData);
-    });
+    socket.on("cast-vote", (roomId, pollId, optionIdx) => {
+    console.log(`[Socket] Vote cast in ${roomId}: poll ${pollId}, option ${optionIdx}`);
+    socket.to(roomId).emit("vote-cast", { pollId, optionIdx });
+  });
 
-    socket.on("disconnect", () => {
+  socket.on("content-highlight", (roomId, highlightData) => {
+    // highlightData: { type, id, ranges, active, clearAll, isRemove }
+    console.log(`[Socket] Room ${roomId} highlight:`, highlightData.id, "ranges:", highlightData.ranges?.length);
+    socket.to(roomId).emit("content-highlight", highlightData);
+  });
+
+  socket.on("disconnect", () => {
       if (currentRoom && roomUsers.has(currentRoom)) {
         const usersInRoom = roomUsers.get(currentRoom);
         console.log(`[Socket] User ${currentUser?.name} disconnected from ${currentRoom}`);
