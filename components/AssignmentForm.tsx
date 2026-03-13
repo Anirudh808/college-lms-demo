@@ -89,7 +89,7 @@ export function AssignmentForm({
       chapter,
       lesson,
       topic,
-			type,
+      type,
       subTopic,
       durationInSeconds: parseInt(durationInSeconds) || 0,
       questionLimit: parseInt(questionLimit) || 0,
@@ -165,26 +165,7 @@ export function AssignmentForm({
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <Label>Type</Label>
-            <select
-              className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm"
-              value={type} onChange={e => setType(e.target.value)}
-            >
-              <option value="MCQ">MCQ</option>
-              <option value="Fill in the blanks">Fill in the blanks</option>
-              <option value="Short Answer">Short Answer</option>
-              <option value="Multi Select">Multi Select</option>
-              <option value="Upload Document">Upload Document</option>
-              <option value="True or False">True or False</option>
-            </select>
-          </div>
-          <div>
-            <Label>Duration (Seconds)</Label>
-            <Input type="number" value={durationInSeconds} onChange={e => setDuration(e.target.value)} required />
-          </div>
-        </div>
+
 
         {type !== "Upload Document" && (
           <div>
@@ -224,7 +205,7 @@ export function AssignmentForm({
                         const newType = e.target.value as any;
                         const newQ = [...questions];
                         newQ[idx].type = newType;
-                        
+
                         if (newType === "MCQ" || newType === "Multi Select") {
                           newQ[idx].options = [
                             { key: "A", text: "" }, { key: "B", text: "" }, { key: "C", text: "" }, { key: "D", text: "" }
@@ -234,7 +215,7 @@ export function AssignmentForm({
                           newQ[idx].options = [];
                           newQ[idx].correctAnswer = { option: "", answer: true };
                         }
-                        
+
                         setQuestions(newQ);
                       }}
                     >
@@ -284,25 +265,25 @@ export function AssignmentForm({
                         </select>
                       ) : (
                         <div className="flex flex-wrap gap-2 items-center">
-                           {q.options.map(opt => (
-                              <label key={opt.key} className="flex items-center gap-1 text-xs cursor-pointer bg-muted/30 px-2 py-1 rounded hover:bg-muted/50 transition-colors">
-                                <input type="checkbox" className="w-3 h-3"
-                                  checked={q.correctAnswer?.multiOptions?.includes(opt.key) || false}
-                                  onChange={e => {
-                                    const checked = e.target.checked;
-                                    const current = q.correctAnswer?.multiOptions || [];
-                                    const newQ = [...questions];
-                                    if (checked) {
-                                      newQ[idx].correctAnswer = { ...newQ[idx].correctAnswer, multiOptions: [...current, opt.key] };
-                                    } else {
-                                      newQ[idx].correctAnswer = { ...newQ[idx].correctAnswer, multiOptions: current.filter((k: string) => k !== opt.key) };
-                                    }
-                                    setQuestions(newQ);
-                                  }}
-                                />
-                                <span>{opt.key}</span>
-                              </label>
-                           ))}
+                          {q.options.map(opt => (
+                            <label key={opt.key} className="flex items-center gap-1 text-xs cursor-pointer bg-muted/30 px-2 py-1 rounded hover:bg-muted/50 transition-colors">
+                              <input type="checkbox" className="w-3 h-3"
+                                checked={q.correctAnswer?.multiOptions?.includes(opt.key) || false}
+                                onChange={e => {
+                                  const checked = e.target.checked;
+                                  const current = q.correctAnswer?.multiOptions || [];
+                                  const newQ = [...questions];
+                                  if (checked) {
+                                    newQ[idx].correctAnswer = { ...newQ[idx].correctAnswer, multiOptions: [...current, opt.key] };
+                                  } else {
+                                    newQ[idx].correctAnswer = { ...newQ[idx].correctAnswer, multiOptions: current.filter((k: string) => k !== opt.key) };
+                                  }
+                                  setQuestions(newQ);
+                                }}
+                              />
+                              <span>{opt.key}</span>
+                            </label>
+                          ))}
                         </div>
                       )}
                     </div>
@@ -310,32 +291,32 @@ export function AssignmentForm({
                 )}
                 {/* Fallback for other answer inputs like Short Answer or True/False correct answer config */}
                 {(q.type === "Short Answer" || q.type === "Fill in the blanks" || q.type === "True or False") && (
-                   <div className="mt-2 flex items-center gap-2 border-t pt-2">
-                     <Label className="text-xs font-semibold">Ideal Answer:</Label>
-                     {q.type === "True or False" ? (
-                        <select className="h-8 rounded text-xs px-2 border bg-green-50/50"
-                          value={q.correctAnswer?.option || "True"}
-                          onChange={e => {
-                            const newQ = [...questions];
-                            newQ[idx].correctAnswer = { option: e.target.value, answer: true };
-                            setQuestions(newQ);
-                          }}
-                        >
-                          <option value="True">True</option>
-                          <option value="False">False</option>
-                        </select>
-                     ) : (
-                        <Input className="h-8 text-xs bg-green-50/50 flex-1"
-                          placeholder="Type correct answer"
-                          value={q.correctAnswer?.option || ""}
-                          onChange={e => {
-                            const newQ = [...questions];
-                            newQ[idx].correctAnswer = { option: e.target.value, answer: true };
-                            setQuestions(newQ);
-                          }}
-                        />
-                     )}
-                   </div>
+                  <div className="mt-2 flex items-center gap-2 border-t pt-2">
+                    <Label className="text-xs font-semibold">Ideal Answer:</Label>
+                    {q.type === "True or False" ? (
+                      <select className="h-8 rounded text-xs px-2 border bg-green-50/50"
+                        value={q.correctAnswer?.option || "True"}
+                        onChange={e => {
+                          const newQ = [...questions];
+                          newQ[idx].correctAnswer = { option: e.target.value, answer: true };
+                          setQuestions(newQ);
+                        }}
+                      >
+                        <option value="True">True</option>
+                        <option value="False">False</option>
+                      </select>
+                    ) : (
+                      <Input className="h-8 text-xs bg-green-50/50 flex-1"
+                        placeholder="Type correct answer"
+                        value={q.correctAnswer?.option || ""}
+                        onChange={e => {
+                          const newQ = [...questions];
+                          newQ[idx].correctAnswer = { option: e.target.value, answer: true };
+                          setQuestions(newQ);
+                        }}
+                      />
+                    )}
+                  </div>
                 )}
               </div>
             ))}

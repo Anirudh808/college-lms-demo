@@ -21,7 +21,6 @@ export default function AssignmentAttemptPage() {
       if (data) setAssignment(data);
     });
   }, [assignmentId]);
-  console.log("assignment", assignment)
   if (!assignment) {
     return (
       <div className="p-8 text-center space-y-4">

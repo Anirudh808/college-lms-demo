@@ -1,0 +1,19 @@
+{
+  "assessmentId": "00a36d94-d332-401d-b637-1df7fb0f7014",
+  "courseId": "p2",
+  "studentName": "Priya Patel",
+  "studentId": "u2",
+  "studentAnswers": [
+    "A",
+    "Hii",
+    "UII",
+    [
+      "A",
+      "B",
+      "C"
+    ],
+    null
+  ],
+  "submittedAt": 1773375347543,
+  "id": "29ca8e0f-ba5b-4996-8d42-604227bd8641"
+}

@@ -45,7 +45,7 @@ export default function LoginPage() {
   };
 
   if (isLoggedIn) {
-    router.replace("/");
+    router.push("/");
     return null;
   }
 

@@ -8,9 +8,11 @@ import { Progress } from "@/components/ui/progress";
 import { LocalStorageService } from "@/components/LocalStorageService";
 import { Clock, UploadCloud, ChevronLeft, ChevronRight, CheckCircle2, XCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useSession } from "@/store/session";
 
 export function AssignmentAttemptLayout({ assessment, courseId, facultyViewSubmission }: { assessment: Assessment; courseId: string; facultyViewSubmission?: AssessmentSubmission; }) {
   const router = useRouter();
+  const { user } = useSession();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<any[]>(new Array(assessment.questions.length).fill(null));
   const [timeLeft, setTimeLeft] = useState(assessment.durationInSeconds);
@@ -26,7 +28,7 @@ export function AssignmentAttemptLayout({ assessment, courseId, facultyViewSubmi
     }
     // Check if the user already submitted
     LocalStorageService.getSubmissions(assessment.id).then((subs: AssessmentSubmission[]) => {
-      const existing = subs.find(s => s.studentId === "current-student");
+      const existing = subs.find(s => s.studentId === user?.id || s.studentName === user?.name);
       if (existing) {
         setAnswers(existing.studentAnswers);
         setIsSubmitted(true);
@@ -57,7 +59,8 @@ export function AssignmentAttemptLayout({ assessment, courseId, facultyViewSubmi
     const submission: AssessmentSubmission = {
       assessmentId: assessment.id,
       courseId,
-      studentId: "current-student", // Would come from auth context normally
+      studentName: user?.name,
+      studentId: user?.id, // Would come from auth context normally
       studentAnswers: answers,
       submittedAt: Date.now()
     };
@@ -134,15 +137,15 @@ export function AssignmentAttemptLayout({ assessment, courseId, facultyViewSubmi
                     </span>
                   </p>
                   {isAutoGraded(res.q.type) && !res.isCorrect && (
-                     <p>
-                       <span className="font-semibold text-muted-foreground">Correct Answer:</span>{" "}
-                       <span className="text-primary font-medium">{res.correctAnsText}</span>
-                     </p>
+                    <p>
+                      <span className="font-semibold text-muted-foreground">Correct Answer:</span>{" "}
+                      <span className="text-primary font-medium">{res.correctAnsText}</span>
+                    </p>
                   )}
                   {!isAutoGraded(res.q.type) && (
-                     <div className="p-3 mt-2 bg-muted rounded text-muted-foreground italic">
-                       This question requires manual review and grading by your instructor.
-                     </div>
+                    <div className="p-3 mt-2 bg-muted rounded text-muted-foreground italic">
+                      This question requires manual review and grading by your instructor.
+                    </div>
                   )}
                 </div>
               </CardContent>

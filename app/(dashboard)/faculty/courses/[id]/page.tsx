@@ -245,7 +245,7 @@ export default function FacultyCourseDetailPage() {
                   <TableBody>
                     {assessments.map((assignment) => {
                       const submissions = submissionsMap[assignment.id] || [];
-                      
+
                       return (
                         <TableRow key={assignment.id}>
                           <TableCell className="font-medium">{assignment.questions?.[0]?.type || "Assessment"} ({assignment.module})</TableCell>
@@ -269,7 +269,7 @@ export default function FacultyCourseDetailPage() {
                                     <Table>
                                       <TableHeader>
                                         <TableRow>
-                                          <TableHead>Student ID</TableHead>
+                                          <TableHead>Student Name</TableHead>
                                           <TableHead>Submitted At</TableHead>
                                           <TableHead>Answers</TableHead>
                                           <TableHead className="text-right">Action</TableHead>
@@ -278,7 +278,7 @@ export default function FacultyCourseDetailPage() {
                                       <TableBody>
                                         {submissions.map((sub, i) => (
                                           <TableRow key={i}>
-                                            <TableCell className="font-medium">{sub.studentId || "Student"}</TableCell>
+                                            <TableCell className="font-medium">{sub.studentName || "Student"}</TableCell>
                                             <TableCell>{new Date(sub.submittedAt).toLocaleString()}</TableCell>
                                             <TableCell>{sub.studentAnswers?.length || 0} answers recorded</TableCell>
                                             <TableCell className="text-right">
@@ -395,10 +395,10 @@ export default function FacultyCourseDetailPage() {
           </DialogHeader>
           <div className="pt-4">
             {selectedSubmissionView && (
-              <AssignmentAttemptLayout 
-                assessment={selectedSubmissionView.assessment} 
-                courseId={id} 
-                facultyViewSubmission={selectedSubmissionView.submission} 
+              <AssignmentAttemptLayout
+                assessment={selectedSubmissionView.assessment}
+                courseId={id}
+                facultyViewSubmission={selectedSubmissionView.submission}
               />
             )}
           </div>

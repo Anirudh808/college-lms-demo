@@ -271,7 +271,7 @@ export interface Assessment {
   subTopic?: string;
   durationInSeconds: number;
   questionLimit: number;
-	type: string;
+  type: string;
   questions: AssessmentQuestion[];
 }
 
@@ -279,7 +279,7 @@ export interface AssessmentSubmission {
   assessmentId: string;
   courseId: string;
   studentId?: string;
+  studentName?: string;
   studentAnswers: any[];
   submittedAt: number;
 }
-

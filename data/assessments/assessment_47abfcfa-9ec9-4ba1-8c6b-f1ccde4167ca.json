@@ -1,0 +1,169 @@
+{
+  "id": "47abfcfa-9ec9-4ba1-8c6b-f1ccde4167ca",
+  "courseId": "p2",
+  "module": "M1",
+  "chapter": "M1C1",
+  "lesson": "M1C1L1",
+  "topic": "M1C1L1T1",
+  "type": "MCQ",
+  "subTopic": "M1C1L1T1S1",
+  "durationInSeconds": 1800,
+  "questionLimit": 5,
+  "questions": [
+    {
+      "question": "What is the primary purpose of a feedback control system?",
+      "options": [
+        {
+          "key": "A",
+          "text": "To reduce steady state error",
+          "reason": ""
+        },
+        {
+          "key": "B",
+          "text": "To increase gain",
+          "reason": ""
+        },
+        {
+          "key": "C",
+          "text": "To increase bandwidth",
+          "reason": ""
+        },
+        {
+          "key": "D",
+          "text": "To decrease stability",
+          "reason": ""
+        }
+      ],
+      "correctAnswer": {
+        "option": "A",
+        "answer": true
+      },
+      "multiOptions": [],
+      "type": "MCQ"
+    },
+    {
+      "question": "Which of the following is an open-loop system?",
+      "options": [
+        {
+          "key": "A",
+          "text": "A toaster",
+          "reason": "No feedback based on toast color"
+        },
+        {
+          "key": "B",
+          "text": "Cruise control in car",
+          "reason": ""
+        },
+        {
+          "key": "C",
+          "text": "Air conditioner",
+          "reason": ""
+        },
+        {
+          "key": "D",
+          "text": "Autopilot",
+          "reason": ""
+        }
+      ],
+      "correctAnswer": {
+        "option": "A",
+        "answer": true
+      },
+      "multiOptions": [],
+      "type": "MCQ"
+    },
+    {
+      "question": "What is the transfer function defined as?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Ratio of output to input in Laplace domain assuming zero initial conditions",
+          "reason": ""
+        },
+        {
+          "key": "B",
+          "text": "Ratio of input to output",
+          "reason": ""
+        },
+        {
+          "key": "C",
+          "text": "Ratio of output to input in time domain",
+          "reason": ""
+        },
+        {
+          "key": "D",
+          "text": "None of the above",
+          "reason": ""
+        }
+      ],
+      "correctAnswer": {
+        "option": "A",
+        "answer": true
+      },
+      "multiOptions": [],
+      "type": "MCQ"
+    },
+    {
+      "question": "The error signal in a feedback loop is?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Difference between reference input and actual output",
+          "reason": ""
+        },
+        {
+          "key": "B",
+          "text": "Sum of reference input and actual output",
+          "reason": ""
+        },
+        {
+          "key": "C",
+          "text": "Ratio of reference input and actual output",
+          "reason": ""
+        },
+        {
+          "key": "D",
+          "text": "None of the above",
+          "reason": ""
+        }
+      ],
+      "correctAnswer": {
+        "option": "A",
+        "answer": true
+      },
+      "multiOptions": [],
+      "type": "MCQ"
+    },
+    {
+      "question": "Which transform is predominantly used in continuous control systems?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Laplace Transform",
+          "reason": ""
+        },
+        {
+          "key": "B",
+          "text": "Z Transform",
+          "reason": ""
+        },
+        {
+          "key": "C",
+          "text": "Fourier Transform",
+          "reason": ""
+        },
+        {
+          "key": "D",
+          "text": "Wavelet Transform",
+          "reason": ""
+        }
+      ],
+      "correctAnswer": {
+        "option": "A",
+        "answer": true
+      },
+      "multiOptions": [],
+      "type": "MCQ"
+    }
+  ]
+}
