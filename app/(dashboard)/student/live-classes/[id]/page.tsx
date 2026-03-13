@@ -749,7 +749,7 @@ export default function LiveClassPage() {
   if (!liveClass) return <p className="p-8 text-muted-foreground">Live class not found</p>;
 
   // ── Tablet / iPad Mode: faculty opened URL with ?tabview=true → whiteboard only
-  if (isTeacher && true) {
+  if (isTeacher && isTabletView) {
     return (
       <div className="fixed inset-0 z-50 flex flex-col bg-white dark:bg-zinc-950">
         {/* Minimal header */}
