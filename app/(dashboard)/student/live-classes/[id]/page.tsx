@@ -532,7 +532,7 @@ export default function LiveClassPage() {
               if (p.timeLeft <= 1) {
                 clearInterval(interval);
                 timerRefs.delete(p.id);
-                // Dismiss popup after timer ends (e.g., after 2 seconds to see results)
+                // Dismiss popup after timer ends (e.g., after 2 seconds to see results).
                 if (p.id === activePollId) {
                   setTimeout(() => setActivePollId(null), 3000);
                 }
