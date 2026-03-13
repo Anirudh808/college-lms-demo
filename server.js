@@ -1,7 +1,6 @@
 const { createServer } = require("http");
 const { parse } = require("url");
 const next = require("next");
-const { Server } = require("socket.io");
 
 const dev = process.env.NODE_ENV !== "production";
 const hostname = "localhost";
@@ -13,12 +12,8 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const server = createServer(async (req, res) => {
     try {
-      if (req.url === '/api/socket') {
-        res.end();
-      } else {
-        const parsedUrl = parse(req.url, true);
-        await handle(req, res, parsedUrl);
-      }
+      const parsedUrl = parse(req.url, true);
+      await handle(req, res, parsedUrl);
     } catch (err) {
       console.error("Error occurred handling", req.url, err);
       res.statusCode = 500;
@@ -91,12 +86,18 @@ app.prepare().then(() => {
     });
 
     // Handle poll vote
-    socket.on("cast-vote", (roomId, voteData) => {
-      console.log(`[Socket] Vote cast in room ${roomId}:`, voteData);
-      io.to(roomId).emit("vote-cast", voteData);
-    });
+    socket.on("cast-vote", (roomId, pollId, optionIdx) => {
+    console.log(`[Socket] Vote cast in ${roomId}: poll ${pollId}, option ${optionIdx}`);
+    socket.to(roomId).emit("vote-cast", { pollId, optionIdx });
+  });
 
-    socket.on("disconnect", () => {
+  socket.on("content-highlight", (roomId, highlightData) => {
+    // highlightData: { type, id, ranges, active, clearAll, isRemove }
+    console.log(`[Socket] Room ${roomId} highlight:`, highlightData.id, "ranges:", highlightData.ranges?.length);
+    socket.to(roomId).emit("content-highlight", highlightData);
+  });
+
+  socket.on("disconnect", () => {
       if (currentRoom && roomUsers.has(currentRoom)) {
         const usersInRoom = roomUsers.get(currentRoom);
         console.log(`[Socket] User ${currentUser?.name} disconnected from ${currentRoom}`);
