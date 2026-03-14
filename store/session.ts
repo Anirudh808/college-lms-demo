@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 import type { User, Tenant, Role, Plan } from "@/lib/types";
 import { getCreditsAllocatedDaily } from "@/lib/plans";
 import { addAIUsage } from "@/lib/data";
@@ -34,16 +35,18 @@ const getDateKey = (date: string, period: "day" | "week" | "month") => {
   return date.slice(0, 7); // YYYY-MM
 };
 
-export const useSession = create<SessionState>((set, get) => ({
-  tenant: null,
-  user: null,
-  plan: "basic",
-  isLoggedIn: false,
-  currentDate: new Date().toISOString().slice(0, 10),
-  creditsAllocatedDaily: 0,
-  creditsUsedToday: 0,
-  creditsExpiredTotal: 0,
-  usageByFeature: {},
+export const useSession = create<SessionState>()(
+  persist(
+    (set, get) => ({
+      tenant: null,
+      user: null,
+      plan: "basic",
+      isLoggedIn: false,
+      currentDate: new Date().toISOString().slice(0, 10),
+      creditsAllocatedDaily: 0,
+      creditsUsedToday: 0,
+      creditsExpiredTotal: 0,
+      usageByFeature: {},
 
   login: (tenant, user, plan) => {
     const credits = getCreditsAllocatedDaily(user.role, plan);
@@ -141,4 +144,11 @@ export const useSession = create<SessionState>((set, get) => ({
     const used = get().getFeatureUsage(feature, period);
     return used < limit;
   },
-}));
+}),
+    {
+      name: "axon-lms-session",
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);
+

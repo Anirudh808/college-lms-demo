@@ -37,9 +37,11 @@ export default function FacultyCoursesPage() {
           <h1 className="text-2xl font-bold">My Courses</h1>
           <p className="text-muted-foreground">Manage your courses and content</p>
         </div>
-        <Button className="gap-2">
-          <Plus className="h-4 w-4" />
-          Create New Course
+        <Button className="gap-2" asChild>
+          <Link href="/faculty/courses/create">
+            <Plus className="h-4 w-4" />
+            Create New Course
+          </Link>
         </Button>
       </div>
 

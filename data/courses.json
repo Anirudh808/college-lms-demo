@@ -6,59 +6,110 @@
     "year": 3,
     "semester": 5,
     "university": "Anna University",
-    "departmentId": ["d2"],
+    "departmentId": [
+      "d2"
+    ],
     "description": "A rigorous, industry-oriented course on heat and mass transfer. Students begin with real engineering problems — cooling a gas turbine blade, insulating a refinery pipe, quenching a steel billet — and work backward to the theory needed to solve them. Applicable to thermal system design, process industries, energy systems, electronics cooling, and manufacturing.",
-		"syllabus": "./heat_and_mass_transfer_course.json",
-		"enrollment": ["u1"],
-		"faculty": "f2"
+    "syllabus": "./heat_and_mass_transfer_course.json",
+    "enrollment": [
+      "u1"
+    ],
+    "faculty": "f2"
   },
-	{
-		"id": "p2",
+  {
+    "id": "p2",
     "title": "Control Systems",
     "program": "B.E. Computer Science and Engineering",
     "year": 2,
     "semester": 3,
-		"departmentId": ["d1"],
+    "departmentId": [
+      "d1"
+    ],
     "description": "This course introduces the fundamental concepts of control systems, covering mathematical modeling, time and frequency domain analysis, stability analysis, and state variable methods. Students will gain both theoretical foundations and practical industry-relevant skills in designing and analyzing control systems.",
-		"syllabus": "./control_systems_course.json",
-		"enrollment": ["u2"],
-		"faculty": "f1"
-	},
-		{
-		"id": "p3",
+    "syllabus": "./control_systems_course.json",
+    "enrollment": [
+      "u2"
+    ],
+    "faculty": "f1"
+  },
+  {
+    "id": "p3",
     "title": "Data Structures",
     "program": "B.E. Computer Science and Engineering",
     "year": 2,
     "semester": 3,
-		"departmentId": ["d1"],
+    "departmentId": [
+      "d1"
+    ],
     "language": "Python",
     "description": "This course covers fundamental and advanced data structures with real-world applications. Students will learn to design, analyze, and implement efficient data structures for solving complex computational problems relevant to modern software engineering.",
-		"syllabus": "./data_structures_course.json",
-		"enrollment": ["u1"],
-		"faculty": "f1"
-	},
+    "syllabus": "./data_structures_course.json",
+    "enrollment": [
+      "u1"
+    ],
+    "faculty": "f1"
+  },
   {
-		"id": "p4",
+    "id": "p4",
     "title": "Microprocessor and Microcontroller",
     "program": "BE EEE - 3rd Year",
-		"year": 3,
+    "year": 3,
     "semester": 6,
-		"departmentId": ["d2"],
+    "departmentId": [
+      "d2"
+    ],
     "description": "A comprehensive industry-relevant course covering 8085 microprocessor architecture, assembly language programming, peripheral interfacing ICs, 8051 microcontroller, and RISC-based PIC architecture with real-world applications in industrial automation, power systems, and embedded IoT systems.",
-		"syllabus": "./microprocessor_and_microcontroller_course.json",
-		"enrollment": ["u2"],
-		"faculty": "f2"
-	},
+    "syllabus": "./microprocessor_and_microcontroller_course.json",
+    "enrollment": [
+      "u2"
+    ],
+    "faculty": "f2"
+  },
   {
-		"id": "p5",
+    "id": "p5",
     "title": "Analytical Geometry",
     "program": "B.Sc. Mathematics",
     "year": "First Year",
     "semester": 1,
-		"departmentId": ["d1", "d2"],
+    "departmentId": [
+      "d1",
+      "d2"
+    ],
     "description": "Emphasize and enhance student knowledge in three-dimensional analytical geometry. Develop understanding of geometrical aspects of three-dimensional figures such as sphere, cone and cylinder.",
-		"syllabus": "./analytical_geometry_course.json",
-		"enrollment": ["u2"],
-		"faculty": "f1"
-	}
+    "syllabus": "./analytical_geometry_course.json",
+    "enrollment": [
+      "u2"
+    ],
+    "faculty": "f1"
+  },
+  {
+    "id": "p6_1773465875214",
+    "title": "test",
+    "program": "test",
+    "year": 4,
+    "semester": 7,
+    "university": "test",
+    "departmentId": [
+      "d2"
+    ],
+    "description": "adaf df adf  adfadfadfa dfa dfa a df",
+    "faculty": "f1",
+    "enrollment": [],
+    "syllabus": "./p6_1773465875214_course.json"
+  },
+  {
+    "id": "p7_1773466812631",
+    "title": "adfadf",
+    "program": "afdadfadf",
+    "year": 2,
+    "semester": 4,
+    "university": "sfgsfg",
+    "departmentId": [
+      "d1"
+    ],
+    "description": "sfgsfgsfgs  gfgfdgsd gsfgs gsfgsfgfs gsfgsf gsfg",
+    "faculty": "f1",
+    "syllabus": "./test_course.json",
+    "enrollment": []
+  }
 ]
