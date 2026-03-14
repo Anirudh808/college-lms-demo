@@ -1,0 +1,1281 @@
+{
+  "course_title": "Elements of Mechanical Engineering",
+  "course_description": "A comprehensive foundational course in Mechanical Engineering designed for first and second year undergraduate students. This course bridges theoretical concepts with practical applications across five core domains: Manufacturing Processes (Casting & Welding), Mechanics of Materials (Stress & Strain), Fluid Mechanics & Hydraulic Machines, Thermodynamics & Internal Combustion Engines, and Power Transmission Systems (Belts, Ropes, Chains & Gear Trains). The curriculum follows Bloom's Taxonomy to ensure progressive learning from conceptual understanding to analytical application.",
+  "target_audience": "College Students (1st and 2nd Year Undergraduate - Engineering Branches including ECE, EEE, Civil, and Mechanical)",
+  "difficulty_level": "Beginner to Intermediate",
+  "estimated_duration": "45-60 Hours (15 Weeks Semester Course)",
+  "modules": [
+    {
+      "module_title": "Module 1: Manufacturing Processes — Casting, Moulding & Welding",
+      "module_objective": "Understand foundational manufacturing methods including casting, moulding, and joining processes used in modern industry. Students will be able to identify process types, explain their working principles, and compare their industrial applications.",
+      "chapters": [
+        {
+          "chapter_title": "Chapter 1: Casting and Moulding Processes",
+          "chapter_summary": "This chapter introduces casting as one of the oldest manufacturing methods. Students learn how metal is melted, poured into moulds, and solidified to produce components of complex shapes. Topics include pattern types, moulding materials, and sand properties.",
+          "lessons": [
+            {
+              "lesson_title": "Lesson 1.1: Introduction to Casting",
+              "lesson_outcomes": [
+                "Define casting and describe its role in manufacturing",
+                "Explain the general steps involved in making a casting",
+                "Identify the components of a basic casting setup"
+              ],
+              "topics": [
+                {
+                  "topic_title": "What is Casting?",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Definition and Importance of Casting",
+                      "content": "Casting is a primary manufacturing process in which a liquid material, most commonly molten metal or alloy, is poured or injected into a precisely designed mould containing a hollow cavity of the desired final shape. The material is then allowed to cool and undergo a phase change from liquid to solid. Once solidified, the resulting object—referred to as a casting—is ejected or broken out of the mould. Dating back thousands of years, casting remains one of the most versatile and indispensable manufacturing techniques in modern engineering. It is uniquely capable of producing intricate, single-piece geometries, complex internal cavities (using cores), and large-scale components that would be highly impractical, time-consuming, or cost-prohibitive to manufacture using subtractive methods like machining. Industries such as automotive, aerospace, heavy machinery, and construction rely critically on casting to produce fundamental components such as engine blocks, transmission housings, turbine blades, and municipal piping. Key advantages include high production rates, minimal material waste (as sprues can be remelted), and the ability to process materials that are extremely difficult to machine, such as cast iron and high-temperature superalloys.",
+                      "examples": [
+                        "Cast iron engine blocks in automobiles",
+                        "Bronze statues produced by sand casting",
+                        "Aluminium alloy wheels for vehicles"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A cross-sectional diagram showing a mould cavity with molten metal being poured from a ladle, with labels pointing to sprue, runner, gate, riser, and mould cavity",
+                          "image_purpose": "To visually introduce the basic components of a casting setup for first-time learners"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "General Steps in the Casting Process",
+                      "content": "The casting process is a highly coordinated sequence of operations requiring strict metallurgical and thermal control. The steps include: (1) Pattern Making — A physical replica of the final product is created, scaled up to account for material shrinkage. (2) Mould and Core Making — The pattern is placed in a moulding box (flask) containing a cope (top half) and drag (bottom half). Moulding sand is rammed around it to form the cavity. Cores made of baked sand are inserted if internal hollows are required. (3) Melting and Pouring — Raw metal ingots and scrap are melted in a furnace (e.g., induction or cupola) to a specified superheat temperature to ensure fluidity. The molten metal is poured through a gating system consisting of a pouring basin, sprue, runner, and gates. (4) Solidification and Cooling — The metal cools and solidifies. Risers are incorporated into the mould to feed extra liquid metal to the casting as it shrinks, preventing shrinkage cavities. (5) Shakeout — The solid casting is extracted by breaking the sand mould (in expendable mould casting). (6) Fettling, Cleaning, and Finishing — The gating system and risers are cut off. The casting undergoes shot blasting, grinding, and heat treatment to relieve residual internal stresses and achieve the final desired properties.",
+                      "examples": [
+                        "Sand casting used for large industrial components like pump housings",
+                        "Die casting used in small, precise components like mobile phone housings"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A numbered flowchart showing 6 steps of the casting process: Pattern Making → Mould Preparation → Metal Melting → Pouring → Solidification → Cleaning, each step shown with a simple icon",
+                          "image_purpose": "To provide a process overview that students can memorize and recall"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "lesson_title": "Lesson 1.2: Patterns — Types, Materials, and Allowances",
+              "lesson_outcomes": [
+                "List the different types of patterns used in casting",
+                "Identify the materials used for making patterns",
+                "Explain the various allowances added to patterns and their purposes"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Types of Patterns",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Single-Piece (Solid) Pattern",
+                      "content": "A single-piece or solid pattern is the most basic and inexpensive type of pattern, constructed as one continuous, solid unit without any joints, partings, or loose pieces. It is exclusively used for designing parts with simple geometries that lack complex undercuts, ensuring the pattern can be easily withdrawn from the sand mould without damaging the delicate mould cavity walls. Because there is no parting line on the pattern itself, the foundry worker must manually cut the parting line in the sand, which requires higher skill and limits this pattern to small-scale or prototype production rather than mass manufacturing.",
+                      "examples": [
+                        "A simple cylindrical shaft pattern",
+                        "Flat plate patterns for simple rectangular castings"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A 3D sketch of a single-piece wooden pattern beside its corresponding mould impression, showing how the pattern fits and is withdrawn",
+                          "image_purpose": "To help students visualize the relationship between a pattern and the mould cavity it creates"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Split Pattern",
+                      "content": "A split pattern is divided into two or more separate halves along a predetermined parting plane, which perfectly corresponds to the parting line of the moulding box. The lower half is moulded into the drag, and the upper half is moulded into the cope. This type is essential for complex shapes that cannot be withdrawn as a single piece without destroying the mould. To ensure exact alignment between the two halves during mould assembly, precision dowel pins are fitted into one half and corresponding holes are drilled into the other. This significantly reduces the time required by the moulder and is widely used for moderate production runs.",
+                      "examples": [
+                        "Patterns for gear blanks",
+                        "Valve body casting patterns"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "An exploded view diagram showing the cope and drag of a split mould with each half of the pattern positioned inside, with alignment pins highlighted",
+                          "image_purpose": "To clarify how split patterns work in two-part moulds"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Match Plate, Loose Piece, Gated, and Sweep Patterns",
+                      "content": "Match Plate Pattern: Both halves of a split pattern are permanently mounted on opposite sides of a rigid metallic or wooden plate. The gating system is also often attached to the plate. This allows for rapid, mechanized moulding and is the standard for high-volume mass production. Loose Piece Pattern: Utilized when a casting has protruding parts or undercuts that obstruct direct vertical withdrawal. The obstructing parts are made as separate 'loose pieces' connected to the main pattern via wooden pins. After the main pattern is withdrawn, the loose pieces are carefully pulled out horizontally from the cavity. Gated Pattern: Consists of multiple small patterns attached to a central runner and gating system. This allows multiple identical castings to be poured simultaneously from a single sprue, greatly increasing efficiency for small parts. Sweep Pattern: Instead of a full 3D physical replica, a sweep pattern is merely a 2D template (usually wood) mounted on a rotating central spindle. By sweeping the template around the axis, it scrapes the sand to generate large, rotationally symmetric cavities, saving immense material costs for massive castings like industrial bells or large kettles.",
+                      "examples": [
+                        "Match plate patterns used in automotive brake drum production",
+                        "Sweep patterns used for making large cylindrical pipes and bells"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A four-panel comparison diagram showing each pattern type: Match Plate, Loose Piece, Gated, and Sweep patterns with simple labeled sketches",
+                          "image_purpose": "To provide a quick visual reference for comparing all pattern types"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Pattern Materials and Allowances",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Materials Used for Pattern Making",
+                      "content": "The selection of pattern material depends on the required production volume, desired dimensional accuracy, and complexity of the shape. Wood (Teak, Mahogany, White Pine): The most widely used material for small-batch or prototype patterns due to its low cost, lightweight nature, and excellent machinability. However, wood is prone to absorbing moisture, which causes warping and dimensional instability over time. Metal (Cast Iron, Aluminium, Brass): Chosen for mass production where extreme durability, wear resistance, and high dimensional accuracy are mandated. Aluminium is heavily favored because of its high strength-to-weight ratio. Plastics and Resins (Epoxy, Polyurethane): Modern materials that offer the durability of metal but at a lower weight and without the risk of corrosion. They are highly dimensionally stable. Wax: Utilized specifically in the investment casting (lost-wax) process. Wax patterns are easily moulded into incredibly intricate shapes and are melted out of the ceramic mould prior to pouring, leaving a perfect cavity with no parting lines.",
+                      "examples": [
+                        "Wooden patterns for prototype castings",
+                        "Aluminium patterns for repetitive production runs"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A comparison table visual showing pattern materials (Wood, Metal, Plastic, Wax) with icons indicating cost, durability, accuracy, and typical use cases",
+                          "image_purpose": "To help students quickly compare and choose appropriate pattern materials"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Pattern Allowances",
+                      "content": "Patterns are never made to the exact final dimensions of the desired casting; they must be slightly modified through 'allowances' to compensate for physical phenomena that occur during the casting cycle. (1) Shrinkage (Contraction) Allowance: As liquid metal cools to room temperature, it undergoes volumetric contraction. Patterns are systematically made larger than the final part. Different metals have different shrinkage coefficients (e.g., Cast Iron shrinks ~10mm/m, Aluminium shrinks ~20mm/m). Specialized 'shrink rules' are used by pattern makers. (2) Draft (Taper) Allowance: A slight taper (usually 1°–3°) provided on all vertical surfaces of the pattern. This ensures that as the pattern is pulled upward, it immediately loses contact with the sand, preventing the mould walls from collapsing or breaking. (3) Machining (Finish) Allowance: Castings inherently have rough surfaces. Extra material (typically 2-5mm) is added to surfaces that require subsequent precision machining to ensure there is enough 'meat' to cut away. (4) Distortion (Camber) Allowance: For castings with irregular shapes (like U, V, or long flat plates), unequal cooling rates cause the part to warp or distort. The pattern is intentionally bowed in the opposite direction so the final part cools into a perfectly straight geometry. (5) Shake (Rapping) Allowance: To withdraw the pattern, the moulder must tap or shake it to break the bond with the sand. This action slightly enlarges the mould cavity. To compensate, a negative shake allowance is applied, making the pattern slightly smaller.",
+                      "examples": [
+                        "A steel casting pattern includes 20mm/m shrinkage allowance",
+                        "A bore hole surface gets extra 3mm machining allowance for finishing"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A labeled cross-section diagram of a pattern showing all five allowances: shrinkage, draft angle, machining layer, distortion bend, and shake dimension — each highlighted in a different color",
+                          "image_purpose": "To provide students with a single visual that integrates all five allowances for clear recall"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "lesson_title": "Lesson 1.3: Moulding Materials, Equipment, and Sand Properties",
+              "lesson_outcomes": [
+                "Identify the components and properties of moulding sand",
+                "Explain the preparation process of moulding sand",
+                "List the equipment used in the moulding process"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Moulding Sand and Its Properties",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Composition of Moulding Sand",
+                      "content": "Moulding sand is an engineered granular composite specifically formulated to withstand extreme thermal shocks while holding a precise geometric shape. It typically consists of four main ingredients: (1) Base Sand (Silica, Olivine, or Zircon): Usually Silica sand (SiO₂) making up 80-90% of the mixture. It provides the skeletal structure, superior refractoriness (heat resistance), and high permeability. Zircon sand is used for highly specialized steel castings due to its higher melting point. (2) Binder (Clay): Typically Bentonite clay (5-10%). Clay acts as the 'glue' that binds the silica grains together, giving the sand mechanical strength, cohesion, and plasticity to take the shape of the pattern. (3) Moisture (Water): Comprising 2-8% of the mix, water activates the clay. Without water, clay has no binding property; too much water causes excess steam generation leading to casting defects like blowholes. (4) Additives: Small amounts of organic or inorganic materials added to enhance specific properties. Examples include coal dust (seacoal) to improve the surface finish and prevent metal-sand fusion, wood flour to improve collapsibility by burning out and leaving voids for sand expansion, and cereals to improve green strength.",
+                      "examples": [
+                        "Green sand (moist sand with clay) used for most general castings",
+                        "Dry sand moulds used for large heavy castings"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A pie chart showing the composition of typical moulding sand: Silica Sand (~85%), Clay (~10%), Moisture (~3%), Additives (~2%), with each segment labeled and color-coded",
+                          "image_purpose": "To make the composition of moulding sand easy to remember and understand proportionally"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Essential Properties of Moulding Sand",
+                      "content": "For a successful casting without defects, the moulding sand mixture must strictly possess the following controlled properties: (1) Permeability (Porosity): The ability of the sand to allow massive volumes of hot gases, air, and steam generated during pouring to vent outwards. Low permeability traps gases, resulting in blowhole and pinhole porosity defects in the final casting. (2) Green Strength: The mechanical strength of the moist (green) sand to retain the exact shape of the pattern after withdrawal and during handling, without collapsing. (3) Dry Strength: As molten metal enters, the heat immediately evaporates the moisture, converting the green sand into dry sand. The sand must retain high dry strength to withstand the metallostatic pressure of the liquid metal without washing away or breaking. (4) Refractoriness: The ability to withstand the extreme pouring temperatures (e.g., 1600°C for steel) without undergoing fusion, sintering, or breaking down chemically. (5) Collapsibility: After the metal solidifies, it begins to contract. The sand mould must easily collapse or yield to this contraction. If the sand is too rigid, it will restrict the metal's shrinkage, causing 'hot tears' or severe cracking in the casting. (6) Flowability: The capacity of the sand to flow around complex pattern contours and pack uniformly into deep recesses during the ramming process. (7) Adhesiveness and Cohesiveness: Adhesiveness ensures the sand sticks to the walls of the moulding box (preventing fallout), while cohesiveness ensures sand grains bond strongly to one another.",
+                      "examples": [
+                        "High permeability sand prevents porosity defects in castings",
+                        "Good collapsibility prevents hot tears in the casting"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A hexagonal diagram with each side labeled with one property of moulding sand (Permeability, Green Strength, Dry Strength, Refractoriness, Collapsibility, Flowability) with small icons and brief definitions",
+                          "image_purpose": "To visually summarize all six key properties in a compact memorable format"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "chapter_title": "Chapter 2: Welding, Soldering, and Brazing",
+          "chapter_summary": "This chapter covers the principles and methods of joining metals permanently through welding (fusion and solid state), brazing, and soldering. Students learn to differentiate these processes and understand their industrial applications, advantages, and limitations.",
+          "lessons": [
+            {
+              "lesson_title": "Lesson 2.1: Principles of Gas Welding and Arc Welding",
+              "lesson_outcomes": [
+                "Explain the fundamental principle of fusion welding",
+                "Describe the process of oxyacetylene (gas) welding and identify its flame types",
+                "Explain electric arc welding, its components, and shielding methods"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Gas Welding (Oxyacetylene Welding)",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Principle and Setup of Gas Welding",
+                      "content": "Gas welding is a fusion welding process that utilizes the heat generated by the combustion of a fuel gas mixed with pure oxygen to generate an intensely hot flame. This flame is directed at the joint edges of the base metals, melting them to form a molten weld pool. As the pool cools, the metals fuse together permanently. The most dominant and effective gas welding process is Oxyacetylene welding, where acetylene (C₂H₂) is mixed with oxygen. This specific chemical combination produces a maximum flame temperature of approximately 3,200°C—making it the only gas combination hot enough to successfully weld commercial steel. The physical setup consists of high-pressure storage cylinders: an oxygen cylinder (typically painted black or green) and an acetylene cylinder (painted maroon or red, containing porous material and acetone to safely dissolve and stabilize the highly volatile acetylene). Pressure regulators step down the high cylinder pressures to usable working pressures. Flexible, color-coded hoses deliver the gases to a hand-held welding torch. Inside the torch body, the gases are volumetrically mixed before exiting through interchangeable copper nozzles to sustain the flame. A consumable filler rod of similar composition to the base metal is often manually fed into the weld pool to provide additional material for reinforcing the joint.",
+                      "examples": [
+                        "Repair welding of thin sheet metal panels in automotive bodywork",
+                        "Welding of thin-walled copper pipes in plumbing"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A labeled diagram of a complete oxyacetylene welding setup showing: oxygen cylinder (blue), acetylene cylinder (red), regulators, hoses, torch body, tip, flame, and filler rod with arrows indicating gas flow direction",
+                          "image_purpose": "To give students a clear understanding of all components in a gas welding setup"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Types of Oxyacetylene Flames",
+                      "content": "The chemical characteristics and temperature of the oxyacetylene flame are precisely controlled by adjusting the volumetric ratio of oxygen to acetylene via the valves on the torch. This results in three distinct types of flames tailored for different metallurgical applications: (1) Neutral Flame: Produced when roughly equal volumes of oxygen and acetylene are mixed (ratio 1:1). It burns completely with a maximum temperature of ≈3,200°C. Visually, it has a sharply defined, luminous inner cone and a faint outer envelope. It is the most common flame, used extensively for welding mild steel, cast iron, copper, and aluminium because it does not alter the chemical composition of the weld pool. (2) Oxidizing Flame: Produced by supplying an excess of oxygen (ratio ~1.5:1). The inner cone becomes much shorter, sharper, and pointed, and the flame produces a distinct harsh, hissing sound. The excess oxygen can severely oxidize (burn) steel, making the weld brittle. Therefore, it is strictly used for welding copper-base alloys like brass and bronze, where the excess oxygen forms a protective oxide layer that prevents the evaporation of zinc. (3) Carburizing (Reducing) Flame: Produced by an excess of acetylene (ratio ~0.9:1). It is identifiable by a brilliant, feathery intermediate zone between the inner cone and the outer envelope. The unburned carbon in this flame gets absorbed by the molten metal, increasing its carbon content. It is primarily used for welding high-carbon steels, hard-facing operations, and certain alloy steels where oxidation must be strictly avoided.",
+                      "examples": [
+                        "Neutral flame for general-purpose steel welding",
+                        "Carburizing flame for welding tools made of high-carbon steel"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "Three side-by-side diagrams of torch tip flames showing Neutral, Oxidizing, and Carburizing flames with clear labels identifying the inner cone, intermediate feather (for carburizing), and outer envelope, with the oxygen-to-acetylene ratio noted below each",
+                          "image_purpose": "To enable students to visually distinguish between flame types and correlate them with applications"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Arc Welding",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Principle of Electric Arc Welding",
+                      "content": "Arc welding is a highly efficient fusion welding process that utilizes the immense thermal energy of an electric arc to melt the base metals and a filler material at the joint. An electric arc is a continuous, luminous electrical discharge across a small gaseous gap between an electrode and the workpiece, driven by a high-current, low-voltage power supply (AC or DC). Upon striking the arc, temperatures in the core can reach between 4,000°C and 5,500°C, instantly melting the localized area to form a weld pool. As the electrode is moved along the joint, the molten pool cools rapidly and solidifies into a strong metallurgical bond. A critical challenge in arc welding is that molten metals react violently with atmospheric oxygen and nitrogen, leading to severe porosity and embrittlement. To combat this, shielding is mandatory. In Shielded Metal Arc Welding (SMAW or 'stick welding'), a consumable metal electrode is coated with a chemical flux. The heat of the arc decomposes this flux, creating a protective cloud of shielding gases (like CO2) around the arc and depositing a layer of protective liquid slag over the cooling weld bead, which must be chipped off later. In advanced processes like Gas Tungsten Arc Welding (GTAW/TIG) or Gas Metal Arc Welding (GMAW/MIG), inert gases (such as Argon or Helium) are externally supplied from cylinders to blanket the arc area, eliminating the need for flux and slag.",
+                      "examples": [
+                        "Structural steel welding in construction using Shielded Metal Arc Welding (SMAW)",
+                        "Aluminium welding using TIG (Tungsten Inert Gas) welding in aerospace"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A cross-sectional diagram of arc welding showing: electrode, electric arc, molten metal pool, weld bead, base metal, flux shield/slag, and ground clamp, with arrows indicating heat flow direction",
+                          "image_purpose": "To provide a clear structural view of the arc welding process and its components"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "lesson_title": "Lesson 2.2: Soldering, Brazing, and Comparative Analysis",
+              "lesson_outcomes": [
+                "Define soldering and brazing and distinguish them from welding",
+                "Describe different methods of soldering and brazing",
+                "Compare the three joining processes across key parameters"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Soldering",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Definition, Principle, and Types of Solders",
+                      "content": "Soldering is a low-temperature metallurgical joining process where two or more base metals are bonded together by melting and flowing a filler metal (called solder) into the joint via capillary action. Crucially, the process temperature is kept strictly below the solidus (melting) temperature of the base metals, and the solder itself must have a melting point below 450°C. The bond is formed by surface adhesion and a microscopic diffusion-alloying layer at the interface, rather than deep fusion. This makes soldering ideal for delicate components that would warp or be destroyed by welding heat. Traditionally, solders were predominantly alloys of Tin (Sn) and Lead (Pb), favored for their low melting points and excellent wetting characteristics. However, due to the extreme toxicity of lead and RoHS environmental regulations, modern industries have shifted to Lead-Free solders (alloys of Tin, Silver, and Copper, known as SAC alloys). Flux (typically rosin-based) is an essential chemical agent applied before or during soldering to dissolve surface oxides, prevent re-oxidation during heating, and significantly improve the 'wetting' (flowability) of the liquid solder across the metal surfaces. Common traditional variants included: 60/40 (60%Sn/40%Pb melting at 188°C) standard for electronics, and 50/50 used for plumbing.",
+                      "examples": [
+                        "Soldering electronic components to a printed circuit board (PCB)",
+                        "Joining copper pipes in traditional plumbing applications"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A table-style visual showing different solder compositions with tin percentage, lead percentage, melting point, and application, with color coding for each solder type",
+                          "image_purpose": "To help students memorize solder types and their appropriate applications"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Methods of Soldering",
+                      "content": "Industrial and manual soldering operations are executed using several distinct methods tailored to production volume and precision requirements: (1) Hand Soldering: Executed manually using a heated electric soldering iron or a small gas torch. It requires high operator skill to apply heat to the joint (not just the solder) so that the solder melts and flows by capillary action. It is highly flexible but slow, suitable for prototyping, rework, and small-scale electronic repairs. (2) Wave Soldering: A highly automated, continuous process engineered for high-volume PCB manufacturing (particularly through-hole components). The PCB travels on a conveyor over a fluxing station, a pre-heating zone, and finally over a pumped, standing 'wave' of molten solder. The wave briefly touches the bottom of the board, forming hundreds of perfect joints simultaneously in seconds. (3) Reflow Soldering: The dominant method for Surface Mount Technology (SMT) in modern electronics. A precise pattern of solder paste (a sticky mixture of microscopic solder powder and flux) is printed onto the bare PCB pads using a stencil. Tiny SMT components are placed onto the sticky paste by robotic pick-and-place machines. The entire assembly is then passed through a multi-zone conveyor oven with a carefully calibrated thermal profile. The board is pre-heated, the flux activates to clean the pads, and finally, the temperature spikes past the melting point to 'reflow' the solder, forming secure electrical and mechanical bonds upon cooling.",
+                      "examples": [
+                        "Wave soldering in automated electronics assembly lines",
+                        "Reflow soldering for smartphone circuit board manufacturing"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A process flow diagram showing three soldering methods side by side: (1) Hand Soldering with iron tip, (2) Wave Soldering conveyor with solder wave cross-section, (3) Reflow Soldering oven profile with temperature zones labeled",
+                          "image_purpose": "To compare the three soldering methods visually for students learning process selection"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Brazing Processes",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Principle of Brazing and Key Methods",
+                      "content": "Brazing is a thermal joining process that bridges the gap between soldering and welding. Like soldering, the base metals are heated but never melted, and the filler metal is drawn into a tightly fitted joint by capillary action. However, brazing utilizes a filler metal (often called spelter, typically alloys of copper, zinc, silver, or aluminium) with a melting point above 450°C, but still safely below the melting point of the base metals. Because of the higher temperatures and different metallurgical alloying, brazing produces joints that are significantly stronger than soldered joints, often approaching the strength of the base metals themselves. Proper joint clearance (typically 0.02 to 0.1 mm) is critical for optimal capillary action. Key methods include: (1) Torch Brazing: The most common manual method. Flux is applied, and an oxyacetylene or oxy-propane torch provides localized heat. A reducing flame is preferred to minimize oxidation. (2) Furnace Brazing: Ideal for mass production. Pre-assembled parts with flux and pre-placed filler metal rings/foils are loaded into a conveyor furnace. Heating occurs in a controlled protective atmosphere (inert gas or vacuum), entirely eliminating the need for post-process cleaning. (3) Induction Brazing: High-frequency alternating current is passed through an induction coil surrounding the joint. The fluctuating magnetic field induces eddy currents in the workpiece, generating extremely rapid, localized heating via electrical resistance. Highly repeatable and clean. (4) Dip Brazing: The entire assembled joint is submerged into a molten chemical salt bath that acts as both the heating medium and the flux, ensuring the filler metal flows perfectly into complex, multi-joint assemblies like aerospace heat exchangers.",
+                      "examples": [
+                        "Torch brazing for joining copper tubing in HVAC systems",
+                        "Furnace brazing for automotive heat exchanger assemblies"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A 6-box grid diagram showing each brazing method with a simplified icon, heat source type, and typical application noted beneath each box",
+                          "image_purpose": "To provide a quick reference guide for all brazing methods in a single visual"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Comparison: Welding vs Brazing vs Soldering",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Key Differences Across Three Joining Processes",
+                      "content": "Understanding when to specify each joining process is a core engineering competency. The three processes are differentiated across several critical parameters: (1) Joint Strength and Integrity: Welding inherently produces the strongest joint, as the base metals are fully melted and fused into a single continuous micro-structure; the weld is often stronger than the parent material. Brazing produces a moderately strong, load-bearing joint excellent for dynamic stresses. Soldering produces the weakest joint, strictly utilized for electrical continuity or hermetic sealing rather than mechanical load bearing. (2) Thermal Requirements: Welding requires extreme, localized temperatures well above the base metal's melting point (e.g., >1500°C for steel), inducing high residual thermal stresses and severe part distortion. Brazing requires moderate heating (>450°C to ~900°C), causing minimal distortion. Soldering requires the lowest heat input (<450°C), preventing any thermal damage to sensitive components like microchips. (3) Base Metal Condition: In welding, the base metal is liquefied at the joint boundary. In both brazing and soldering, the base metal remains entirely in the solid state. (4) Dissimilar Metals: Welding dissimilar metals (e.g., steel to copper) is metallurgically highly complex and often impossible due to differing melting points and galvanic issues. Brazing and soldering are exceptional for joining completely dissimilar metals effortlessly. (5) Skill and Economics: Manual welding demands immense operator skill and expensive safety equipment. Soldering is highly accessible, low-cost, and easily automated.",
+                      "examples": [
+                        "Welding for structural I-beams in bridge construction",
+                        "Brazing for joining tungsten carbide cutting tips to steel tool shanks",
+                        "Soldering for mounting microprocessors onto electronics circuit boards"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A three-column comparison table visual with rows for: Joint Strength, Temperature Required, Base Metal Condition, Filler Material, Cost, and Typical Use — with Welding, Brazing, and Soldering as column headers, color-coded (red, orange, green)",
+                          "image_purpose": "To serve as a study reference card for exam preparation and quick comparison"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module_title": "Module 2: Mechanics of Materials — Stress, Strain, and Material Properties",
+      "module_objective": "Develop a thorough understanding of how materials respond to external forces. Students will learn to calculate stress and strain, apply Hooke's Law, interpret stress-strain diagrams, understand elastic constants, and analyze compound bars and thermal stresses.",
+      "chapters": [
+        {
+          "chapter_title": "Chapter 3: Stress and Strain — Fundamentals",
+          "chapter_summary": "This chapter introduces the concept of stress as internal resistance and strain as deformation measure. Students learn different types of stresses and strains, Hooke's Law, and the stress-strain diagram for a ductile metal like mild steel.",
+          "lessons": [
+            {
+              "lesson_title": "Lesson 3.1: Concepts of Stress and Strain",
+              "lesson_outcomes": [
+                "Define stress and strain using mathematical expressions",
+                "Classify types of stress and strain with examples",
+                "State Hooke's Law and identify its limitations"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Stress",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Definition and Formula for Stress",
+                      "content": "In solid mechanics, when an external force or load is applied to a physical body, the material inherently resists deformation. It does so by setting up internal reactive forces distributed continuously throughout the body's volume. The intensity of this internal resisting force distributed over a specific cross-sectional area is defined as 'Stress'. Mathematically, engineering stress (σ) is expressed as the ratio of the applied external load (P) to the original, undeformed cross-sectional area (A). Thus: Stress (σ) = P / A. The standard SI Unit for stress is the Pascal (Pa), which is equivalent to one Newton per square meter (N/m²). Because engineering materials routinely withstand millions of Pascals, it is standard practice to express stress in MegaPascals (MPa = 10⁶ N/m² = N/mm²) or GigaPascals (GPa = 10⁹ N/m²). It is vital to distinguish stress from pressure: while both share the same units (Force/Area), pressure is an external contact force acting perpendicularly to a surface, whereas stress is an internal reaction defined within the material itself.",
+                      "examples": [
+                        "A steel suspension rod with a cross-sectional area of 100 mm² subjected to a pure axial tensile force of 10,000 N → Stress = 10,000 N / 100 mm² = 100 N/mm² = 100 MPa",
+                        "A concrete column supporting a compressive 500 kN load over a 0.25 m² structural base → Stress = 500,000 N / 0.25 m² = 2,000,000 Pa = 2 MPa"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A rectangular bar with arrows showing an axial tensile force P applied at both ends, a cross-section highlighted in the middle with area A labeled, and the stress formula σ = P/A displayed beside it",
+                          "image_purpose": "To introduce the stress concept visually with a simple and relatable mechanical scenario"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Types of Stress",
+                      "content": "Stress vectors can be resolved into two primary components relative to the cross-sectional plane: Normal Stress (perpendicular to the plane) and Shear Stress (parallel to the plane). Based on the nature and direction of the applied loads, stresses are classified into: (1) Tensile Stress (Normal): Induced when equal and opposite forces pull the body longitudinally away from its center, attempting to stretch or elongate it. It results in an increase in length and a decrease in cross-sectional area (Poisson effect). (2) Compressive Stress (Normal): Induced when equal and opposite forces push inward against the body, attempting to crush or shorten it. (3) Shear Stress (Tangential): Induced when forces act tangentially or parallel to the cross-sectional area plane, attempting to slide one internal plane of the material past an adjacent plane. It is denoted by 'τ' (tau) and is the primary failure mode in pins, bolts, and keys. (4) Bearing (Crushing) Stress: A highly localized normal compressive stress that occurs exclusively at the contact interface between two mechanical parts, such as a rivet shank pressing against the wall of a hole. (5) Thermal Stress: A unique internal stress induced within a body when it is subjected to a temperature gradient, but its natural thermal expansion or contraction is mechanically restricted by rigid supports.",
+                      "examples": [
+                        "Bridge suspension cables operating under massive tensile stress",
+                        "Building foundations and concrete pillars under static compressive stress",
+                        "Fasteners like bolts, rivets, and shaft-keys subjected to shear stress",
+                        "Railroad tracks experiencing extreme thermal stress during peak summer heating"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "Five separate mini-diagrams arranged in a grid showing: (1) a bar being pulled apart (tensile), (2) a bar being compressed (compressive), (3) a block with forces parallel to surface (shear), (4) a pin in a plate hole (crushing), and (5) a rail track with temperature arrows (thermal) — each labeled clearly",
+                          "image_purpose": "To provide a visual taxonomy of all five stress types for easy classification and recall"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Strain",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Definition and Types of Strain",
+                      "content": "While stress measures the internal force intensity, 'Strain' is the purely geometric measure of the resulting physical deformation. It is mathematically defined as the ratio of the change in a specific dimension to the original, undeformed dimension of the body. Because it is a ratio of identical units (e.g., meters per meter), engineering strain is a dimensionless quantity (having no units), though it is frequently expressed as a percentage or in 'microstrain' (μɛ) for very small deformations. The primary types of strain correspond directly to the applied stresses: (1) Linear (Longitudinal) Strain: ε = δL / L, where δL is the change in length and L is the original length. It can be tensile (elongation, mathematically positive) or compressive (shortening, mathematically negative). (2) Shear Strain: Denoted by 'γ' (gamma), it measures the angular distortion of a body. It is defined as the change in the initial right angle between two perpendicular line segments within the material, measured in radians. (3) Volumetric (Bulk) Strain: ε_v = δV / V. It measures the fractional change in total volume under hydrostatic (three-dimensional) loading conditions. (4) Lateral Strain: The strain occurring in the transverse dimensions (width or diameter) perpendicular to the axis of the applied longitudinal force. Due to volume conservation principles, a material elongating longitudinally will necessarily contract laterally.",
+                      "examples": [
+                        "A 2.0 meter steel tie rod stretches by exactly 2 mm under load → Linear tensile strain = 0.002 m / 2.0 m = 0.001 (or 0.1% strain)",
+                        "A rubber mounting block deforms angularly by 0.05 radians when subjected to a transverse load → Shear strain = 0.05"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "Four labeled diagrams showing: (1) a bar elongating with δL labeled (linear strain), (2) a bar shortening with compression (compressive strain), (3) a block tilting sideways with angle φ (shear strain), and (4) a cube changing volume (volumetric strain)",
+                          "image_purpose": "To give students a visual association for each strain type"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Hooke's Law and Modulus of Elasticity",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Statement and Significance of Hooke's Law",
+                      "content": "First formulated by Robert Hooke in 1676, Hooke's Law is the foundational axiom of linear elastic solid mechanics. The law dictates that for isotropic, homogeneous materials loaded within their elastic limit, the stress (σ) developed in the material is directly and linearly proportional to the induced strain (ε). Mathematically: σ ∝ ε. Removing the proportionality sign introduces a constant: σ = E × ε. This constant 'E' is known as the Modulus of Elasticity, or Young's Modulus, measured in units of pressure (Pa, but typically GPa). Young's Modulus represents the inherent stiffness or rigidity of a material—essentially, how much stress is required to generate a single unit of elastic strain. A higher E-value indicates a stiffer material that deforms very little under heavy loads. It is an intrinsic material property determined by the atomic bond strength. For example, Structural Steel has an E of approximately 200 GPa, making it highly rigid. Aluminium is much more compliant at E ≈ 70 GPa. Rubber, conversely, is highly hyperelastic and compliant with an E of roughly 0.01 to 0.1 GPa. It is critical to note that Hooke's law is only an approximation valid purely in the initial linear-elastic region of loading; once the material yields and enters plastic deformation, Hooke's Law entirely breaks down.",
+                      "examples": [
+                        "Steel (E = 200 GPa): If subjected to a tensile stress of 200 MPa, the resulting strain = 200 MPa / 200,000 MPa = 0.001 (0.1% deformation)",
+                        "Rubber (E ≈ 0.01 GPa): Subjected to that same 200 MPa stress, it would theoretically deform 20,000 times more than steel—demonstrating its lack of structural stiffness"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A linear graph of Stress (σ) on Y-axis vs Strain (ε) on X-axis, showing the straight proportional region (Hooke's Law zone) with slope labeled as E (Modulus of Elasticity), and the region beyond elastic limit shown as a curve",
+                          "image_purpose": "To visually demonstrate Hooke's Law as the linear portion of a stress-strain curve"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "lesson_title": "Lesson 3.2: Stress-Strain Diagram and Elastic Constants",
+              "lesson_outcomes": [
+                "Interpret the stress-strain diagram for mild steel and identify key points",
+                "Define Poisson's ratio, bulk modulus, and shear modulus",
+                "Derive and apply the relationship between elastic constants E, G, and K"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Stress-Strain Diagram for Mild Steel",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Key Points on the Stress-Strain Curve",
+                      "content": "The stress-strain curve is the most crucial graphical representation of a material's mechanical behavior. It is generated empirically by subjecting a standard machined specimen to a gradually increasing axial tensile load in a Universal Testing Machine (UTM) until fracture. For a highly ductile material like low-carbon mild steel, the curve exhibits distinct, universally recognized phases and critical points: (1) Proportional Limit (Point P): The absolute highest stress value up to which the stress-strain graph forms a perfect straight line. Hooke's law is strictly valid only up to this point. (2) Elastic Limit (Point E): Situated slightly above the proportional limit. Up to this point, the material acts like a perfect spring; if the load is entirely removed, the specimen will snap back to its exact original length with zero permanent deformation. (3) Yield Points (Upper Y1 and Lower Y2): The critical stress threshold where the atomic lattice begins to slip. The material starts yielding (deforming plastically) rapidly without any significant increase in applied load. Mild steel exhibits a unique upper and lower yield point due to interstitial carbon atoms pinning the dislocations. (4) Strain Hardening Region: Beyond yielding, the material undergoes micro-structural changes that increase its resistance to further deformation, requiring increasing stress. (5) Ultimate Tensile Strength (Point U): The absolute peak of the curve representing the maximum engineering stress the material can endure. At this point, 'necking' begins—a localized, dramatic reduction in cross-sectional area. (6) Rupture/Fracture Point (Point R): The point of catastrophic failure where the specimen snaps in two. Because engineering stress is calculated using the original, un-necked area, the curve appears to dip downward before fracture, though the true physical stress is actually peaking at fracture.",
+                      "examples": [
+                        "Standard Mild steel exhibits a distinct yield strength of ≈250 MPa, and an ultimate tensile strength of ≈400 MPa",
+                        "Cast iron, a brittle material, has a drastically different curve: it lacks a yield point entirely and fractures suddenly with almost negligible plastic deformation"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A complete stress-strain curve for mild steel showing: origin O, proportional limit P, elastic limit E, upper yield point Y1, lower yield point Y2, ultimate strength U, and rupture R, with the elastic and plastic zones shaded in different colors. Inset showing necking in the specimen at the rupture stage.",
+                          "image_purpose": "To provide a comprehensive reference diagram for the most important graph in materials engineering"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Elastic Constants",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Poisson's Ratio and Lateral Strain",
+                      "content": "In 1827, Siméon Denis Poisson observed a fundamental phenomenon of material elasticity: when an axial tensile force stretches a prismatic bar, causing a positive longitudinal strain, the bar simultaneously and unavoidably narrows in its transverse (lateral) dimensions, experiencing a negative lateral strain. Conversely, axial compression causes the material to bulge laterally. Poisson's Ratio (denoted by μ or ν) mathematically quantifies this behavior. It is defined as the absolute ratio of the induced lateral strain to the applied longitudinal strain, strictly within the elastic limit. Formula: μ = |Lateral Strain / Longitudinal Strain| = |(δb/b) / (δL/L)|. Because it is a ratio of strains, Poisson's ratio is a dimensionless constant. For most stable, isotropic engineering metals (like steel, aluminium, titanium), the value of μ falls tightly between 0.25 and 0.35 (Steel ≈ 0.30). A theoretical maximum of 0.5 represents a perfectly incompressible material—one whose volume remains completely constant under uniaxial deformation. Natural rubber closely approaches this limit at μ ≈ 0.499. Cork is a rare material with a Poisson's ratio of nearly 0, meaning it does not bulge laterally when compressed (which is exactly why it is perfectly suited for plugging wine bottles). Auxetic materials (metamaterials) possess a negative Poisson's ratio, actually expanding laterally when stretched.",
+                      "examples": [
+                        "Problem Scenario: A solid steel rod of length 2000 mm and diameter 20 mm is subjected to a 100 kN tensile force. Given E = 200 GPa and μ = 0.3. The longitudinal strain is calculated as σ/E. The lateral strain is found by multiplying the longitudinal strain by 0.3. The physical decrease in the 20mm diameter is then the lateral strain multiplied by 20 mm."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A 3D diagram of a rectangular bar showing: longitudinal elongation (δL) in the axial direction and lateral contraction (δb) in the perpendicular direction when tensile force P is applied, with Poisson's ratio formula displayed",
+                          "image_purpose": "To visually demonstrate the relationship between longitudinal and lateral deformation"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Bulk Modulus (K) and Shear Modulus (G)",
+                      "content": "While Young's Modulus (E) governs 1D axial stretching, other moduli govern different loading states. Bulk Modulus (K): Defines the material's resistance to uniform volumetric compression. When a solid body is submerged in a pressurized fluid, it experiences an equal, isotropic compressive stress from all directions (hydrostatic pressure), resulting in a uniform volumetric shrinkage. K is the ratio of this direct volumetric stress to the resulting volumetric strain: K = Normal Stress / Volumetric Strain = σ / (δV/V). A material with a massive Bulk Modulus is highly resistant to volume change (highly incompressible). Shear Modulus or Modulus of Rigidity (G): Defines the material's resistance to angular shape distortion. When pure shear stresses are applied to parallel faces of a material element, the element skews into a rhomboid. G is the ratio of the applied shear stress (τ) to the resulting angular shear strain (γ): G = τ / γ. For mild steel, G is approximately 80 GPa. The Shear Modulus is the paramount material property utilized in the design calculations for torsion in rotating shafts, helical springs, and shear pins.",
+                      "examples": [
+                        "Water possesses a Bulk Modulus of roughly 2.2 GPa; while it is a fluid, this high K value makes it practically incompressible for most engineering calculations like hydraulics",
+                        "Steel (G = 80 GPa) is extraordinarily rigid against twisting forces, whereas rubber (G ≈ 0.0003 GPa) twists effortlessly"
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "Two diagrams side by side: (1) A cube with equal pressure arrows from all six sides showing volumetric compression for Bulk Modulus, (2) A rectangular block with shear forces showing angular deformation for Shear Modulus — each with formula labels",
+                          "image_purpose": "To contrast the physical meaning of Bulk Modulus and Shear Modulus through geometric deformation illustrations"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Relationships Between Elastic Constants E, G, and K",
+                      "content": "For any isotropic, homogeneous, and linearly elastic material, the mechanical behavior is completely governed by its elastic constants. Strikingly, the four main constants—Young's Modulus (E), Shear Modulus (G), Bulk Modulus (K), and Poisson's ratio (μ)—are mathematically interdependent. If any two constants are established through laboratory testing, the remaining two can be instantly calculated using fundamental algebraic relationships derived from the theory of elasticity. The three primary equations are: (1) E = 2G(1 + μ): This links tensile stiffness to shear stiffness via the lateral contraction factor. (2) E = 3K(1 - 2μ): This links tensile stiffness to volumetric compressibility. (3) E = 9GK / (3K + G): This formulation eliminates Poisson's ratio entirely, providing a direct mathematical triad between the moduli. Additionally, rearranging the second equation reveals a profound physical boundary limit: μ = 0.5 - (E / 6K). Since E and K must be positive for stable materials, Poisson's ratio mathematically cannot exceed 0.5. If μ = 0.5, the denominator (1 - 2μ) approaches zero, driving the Bulk Modulus (K) to infinity, theoretically defining a perfectly incompressible material where volume cannot change under any pressure.",
+                      "examples": [
+                        "Analytical check: Given standard steel properties E = 200 GPa and μ = 0.3. Calculating G = E / [2(1+μ)] = 200 / [2(1.3)] = 76.92 GPa. Calculating K = E / [3(1-2μ)] = 200 / [3(0.4)] = 166.67 GPa.",
+                        "Verification using triad formula: E = (9 × 76.92 × 166.67) / ((3 × 166.67) + 76.92) = 115383 / 576.93 ≈ 200 GPa. The mathematical closure is perfect."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A triangular relationship diagram with E, G, and K at each vertex and Poisson's ratio μ at the center, with the three key formulas written along each edge of the triangle connecting the constants",
+                          "image_purpose": "To provide an intuitive visual map of how the three elastic constants are interrelated through Poisson's ratio"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "lesson_title": "Lesson 3.3: Bars of Uniform Strength, Compound Bars, and Thermal Stresses",
+              "lesson_outcomes": [
+                "Analyze stress and deformation in bars of varying and uniform cross-sections",
+                "Solve problems involving compound bars under common loads",
+                "Calculate thermal stresses in restrained members under temperature changes"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Bars of Uniform and Non-Uniform Cross Sections",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Elongation of Uniform and Stepped Bars",
+                      "content": "Understanding axial deformation is the bedrock of structural analysis. For a simple prismatic bar (uniform, constant cross-section A) subjected to a strictly axial load P over a length L, the total linear elongation δ is derived by substituting Stress and Strain definitions into Hooke's Law: δ = (P × L) / (A × E). However, real engineering structures, like rotating machine shafts or support columns, are frequently 'stepped'—meaning they consist of distinct segments with varying diameters and lengths connected in series. To find the total deformation of a stepped bar, one must apply the Principle of Superposition. The total elongation is the algebraic sum of the individual deformations of each specific segment: δ_total = δ₁ + δ₂ + ... = Σ(Pᵢ × Lᵢ) / (Aᵢ × Eᵢ). Care must be taken to determine the internal load Pᵢ acting on each segment using free body diagrams, as intermediate axial loads may change the force distribution. Furthermore, for a bar with a continuously varying, tapered circular cross-section (where the diameter smoothly changes from D₁ at one end to D₂ at the other) subjected to an axial load P, standard integration over the length yields a specialized deformation formula: δ = (4 × P × L) / (π × E × D₁ × D₂). This mathematical proof highlights that a continuously tapered bar will inherently undergo greater total deformation than a uniform bar possessing the exact same volume of material, because the stress concentration severely peaks at the narrower end.",
+                      "examples": [
+                        "Stepped bar analysis: Segment A (L=0.5m, Area=200mm², E=200GPa, Internal Load=20kN tension), Segment B (L=0.5m, Area=100mm², E=200GPa, Internal Load=20kN tension). Total δ = [(20,000 × 0.5) / (200×10⁻⁶ × 200×10⁹)] + [(20,000 × 0.5) / (100×10⁻⁶ × 200×10⁹)] = 0.25mm + 0.50mm = 0.75mm total extension.",
+                        "A tapered steel rod reducing smoothly from 40mm to 20mm diameter over 1 meter length under a 10kN load will stretch exactly δ = (4 × 10,000 × 1) / (π × 200×10⁹ × 0.04 × 0.02) = 0.079 mm."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "Two diagrams: (1) A stepped bar with three sections of different diameters under axial load, with each section labeled with P, L, and A values and individual δ arrows showing deformation per section. (2) A linearly tapered bar with diameter d at one end and D at the other, with the deformation formula displayed",
+                          "image_purpose": "To visually differentiate stepped vs tapered bar deformation analysis"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Compound Bars",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Analysis of Compound Bars Under Common Loading",
+                      "content": "A compound bar (or composite system) is an assembly constructed by rigidly fixing two or more parallel structural members of completely different materials together, such that they are forced to act as a single, unified load-bearing unit. Ubiquitous examples in civil and mechanical engineering include steel-reinforced concrete pillars, or bimetallic overhead electrical transmission cables consisting of a high-strength steel core jacketed by highly conductive aluminium wire. The static analysis of a composite bar hinges on two absolute boundary conditions. First, the Compatibility Condition (Geometric constraint): Because the members are rigidly bound at both ends, they must undergo the exact same longitudinal deformation (δ) under load, forcing them to experience identical strain (ε₁ = ε₂ = ε_common), assuming initial lengths were equal. Second, the Equilibrium Condition (Force constraint): The total external applied load (W) must be fully balanced by the sum of the internal resisting forces carried by each individual material. Thus, W = P₁ + P₂ = (σ₁ × A₁) + (σ₂ × A₂). Because strain is equal but Young's Moduli differ, the stresses in the materials will be entirely unequal. The stiffer material (higher E) will automatically shoulder a proportionally larger share of the total load. By substituting σ = E × ε into the equilibrium equation, engineers can derive the shared common extension: δ = (W × L) / (E₁A₁ + E₂A₂). The combined denominator term Σ(EA) is frequently referred to as the composite axial stiffness of the system.",
+                      "examples": [
+                        "Analysis scenario: A composite pillar consists of a central steel rod (Area = 1000mm², E = 200GPa) perfectly encased in a brass tube (Area = 800mm², E = 100GPa) carrying a central compressive load of 180kN. We know strains are equal. Therefore, σ_steel / 200 = σ_brass / 100, which means the stress in the steel will be exactly twice the stress in the brass. Using equilibrium: (σ_steel × 1000) + (σ_brass × 800) = 180,000 N. Solving these simultaneous equations reveals the exact load distribution."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A diagram showing multiple bars (steel and brass) fixed at top and joined at bottom to a rigid plate carrying load W, with labels for each bar's area, length, and Young's modulus, and an arrow showing common extension x",
+                          "image_purpose": "To clearly show the physical setup of a compound bar system for problem visualization"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Thermal Stresses",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Thermal Expansion and Stress Development",
+                      "content": "All structural materials undergo dimensional changes in response to temperature fluctuations. When heated, kinetic energy increases atomic vibration, causing the material lattice to expand; when cooled, it contracts. The magnitude of this free, unrestricted dimensional change is calculated as: δL = L × α × ΔT. Here, 'α' is the Coefficient of Linear Thermal Expansion (a fundamental material property measuring expansion per degree Celsius), 'L' is the original length, and 'ΔT' is the change in temperature. A critical, often misunderstood engineering principle is that if a structural member is completely free to expand or contract (e.g., resting freely on rollers), absolutely zero thermal stress is induced within the material, regardless of the magnitude of temperature change. Thermal stress only materializes when this natural expansion or contraction is physically restricted by external constraints (statically indeterminate structures). If a steel beam is bolted rigidly between two immovable walls and then heated, the walls apply massive reactive compressive forces to perfectly nullify the beam's attempted expansion, inducing severe internal compressive thermal stress. The prevented thermal strain is ε_t = α × ΔT. The corresponding induced thermal stress is σ_t = E × α × ΔT. The scenario becomes highly complex in compound bimetallic bars (e.g., a steel rod brazed inside a copper tube). Copper has a significantly higher α than steel. When the assembly is heated, the copper attempts to expand much more than the steel. Because they are rigidly bonded, they are forced to expand to a final compromise length. The copper is forcibly held back by the steel (inducing internal compressive stress in the copper), while the steel is forcibly dragged forward by the copper (inducing internal tensile stress in the steel). To solve this, engineers balance a geometric compatibility equation against a static equilibrium equation.",
+                      "examples": [
+                        "A continuous welded railway line (L=10m) is bolted down tightly at 10°C. In summer, the rail hits 40°C (ΔT=30°C). For steel, α = 12×10⁻⁶/°C and E = 200GPa. The induced compressive thermal stress acting attempting to buckle the track is: σ = 200×10³ MPa × 12×10⁻⁶ × 30 = 72 MPa.",
+                        "Bimetallic strips used in mechanical thermostats operate entirely on the principle of differential thermal expansion, bending predictably to break electrical circuits as temperature rises."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "Three-stage diagram: (a) Steel-brass compound bar at initial temperature, (b) Free expansion positions if members were not bonded (showing brass expanding more), (c) Final constrained position of compound bar with stress arrows — tension in steel, compression in brass",
+                          "image_purpose": "To make the concept of thermal stress development in compound bars intuitive through sequential visual stages"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module_title": "Module 3: Fluid Mechanics and Hydraulic Machines",
+      "module_objective": "Introduce students to the fundamental properties of fluids, flow analysis using continuity and Bernoulli's equations, pipe flow concepts, and the working principles of hydraulic turbines and pumps.",
+      "chapters": [
+        {
+          "chapter_title": "Chapter 4: Properties of Fluids and Flow Analysis",
+          "chapter_summary": "This chapter covers fluid properties like pressure, density, viscosity, and surface tension. Students learn to classify fluid flow, apply the continuity equation, understand Bernoulli's theorem, and analyze pipe systems in series and parallel.",
+          "lessons": [
+            {
+              "lesson_title": "Lesson 4.1: Fluid Properties and Flow Classification",
+              "lesson_outcomes": [
+                "Define and differentiate between fluid and solid behavior",
+                "Explain key fluid properties with SI units",
+                "Distinguish between streamlines, streaklines, and pathlines"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Fundamental Properties of Fluids",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Pressure, Density, and Viscosity",
+                      "content": "A 'fluid' is rigorously defined in physics as a state of matter (encompassing both liquids and gases) that fundamentally cannot sustain a shear stress while at rest; it will deform continuously and flow under the application of any shear force, no matter how infinitesimally small. Solids, conversely, undergo finite, measurable deformation under shear and find a new static equilibrium. To mathematically analyze fluid systems, engineers rely on several intrinsic bulk properties. (1) Mass Density (ρ - rho): Defined as the mass of the fluid per unit of its physical volume (ρ = mass/volume). Standard SI unit: kg/m³. Density is heavily temperature-dependent for gases but relatively constant for liquids (Water ≈ 1000 kg/m³, Air at sea level ≈ 1.225 kg/m³). (2) Pressure (p): The normal (perpendicular) compressive force exerted by the fluid particles randomly colliding per unit area. SI unit: Pascal (N/m²). (3) Dynamic Viscosity (μ - mu): The most critical property governing fluid flow. It represents the internal molecular friction or resistance of fluid layers sliding over one another. It is mathematically governed by Newton's Law of Viscosity, which states that shear stress (τ) in a fluid is directly proportional to the transverse velocity gradient (du/dy). Fluids obeying this linear relationship are 'Newtonian' (water, air, oil). 'Non-Newtonian' fluids (blood, cornstarch pastes, toothpaste) defy this linearity, exhibiting variable viscosity under stress. (4) Bulk Modulus (Ev): A metric of compressibility, representing the ratio of applied pressure change to the resulting volumetric strain. Gases are highly compressible (low Ev), while liquids are treated mathematically as incompressible for almost all standard engineering applications (high Ev). (5) Surface Tension (σ - sigma): A cohesive, microscopic force acting at the interface boundary of a liquid and a gas (or another immiscible liquid), caused by unbalanced intermolecular attractive forces at the surface pulling inward. It results in liquid surfaces attempting to contract into the absolute minimum possible surface area, forming spherical droplets.",
+                      "examples": [
+                        "The massive difference in viscosity explains why emptying a jar of room-temperature honey (μ ≈ 10,000 cP) takes minutes, while the same volume of water (μ ≈ 1 cP) empties instantly.",
+                        "Surface tension at 20°C (0.0728 N/m for water) is the physical mechanism that allows a steel razor blade or water-strider insect to rest entirely on the surface of a pond without sinking."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A visual properties card layout showing 5 fluid properties: Pressure (manometer icon), Density (scale icon), Viscosity (fluid layers with velocity profile), Bulk Modulus (compressed cylinder), and Surface Tension (water droplet on surface with molecular force arrows)",
+                          "image_purpose": "To present all key fluid properties in a single memorable visual reference card"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Streamlines, Streaklines, and Pathlines",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Flow Visualization Lines Explained",
+                      "content": "To bridge the gap between abstract fluid mathematics and physical reality, engineers utilize three distinct graphical 'lines' to visualize and analyze flow fields. (1) Streamlines: These are purely theoretical, instantaneous curves drawn through a flow field such that the velocity vector of every fluid particle on that line is perfectly tangent to the curve at that exact moment in time. Because the velocity vector is tangent, there is absolutely zero fluid flow crossing over a streamline. Furthermore, streamlines can mathematically never intersect; if they did, a single fluid particle at the intersection would possess two different velocity directions simultaneously, an impossibility. (2) Pathlines: This represents the actual physical trajectory traced out by one specific, individual fluid particle as it travels through space over a period of time. It is a historical record of where that single particle has been (a Lagrangian perspective). (3) Streaklines: This is defined as the locus of all the distinct fluid particles that have sequentially passed through one specific, fixed spatial coordinate at some time in the past. It provides a snapshot of where those specific particles are currently located. A practical streakline is created in a laboratory by continuously injecting dye into a water stream or smoke into an aerodynamic wind tunnel from a fixed nozzle. Crucial analytical rule: In a 'steady flow' regime (where flow velocity and properties at every spatial point remain perfectly constant with respect to time), all three lines—streamlines, pathlines, and streaklines—are identical and superimpose exactly on top of each other. In 'unsteady flow' (like turbulent eddies or pulsating pumps), they diverge into completely different geometric curves.",
+                      "examples": [
+                        "In automotive aerodynamic testing, the visible smoke trails passing over a car model inside a wind tunnel are physical streaklines that approximate the theoretical streamlines of the airflow.",
+                        "Watching a single glowing ember fly out of a campfire and tracing its erratic flight through the turbulent night air maps out a chaotic pathline."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A side-by-side flow visualization diagram showing: (1) Multiple curved streamlines around a cylinder in steady flow with velocity tangent arrows, (2) A streakline from a fixed dye injection point in unsteady flow showing a curved trace, (3) A pathline showing a single particle's zigzag path over time — all three in unsteady flow clearly showing they are different",
+                          "image_purpose": "To visually distinguish the three flow visualization methods, which is a common area of student confusion"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "lesson_title": "Lesson 4.2: Continuity Equation and Bernoulli's Principle",
+              "lesson_outcomes": [
+                "Derive and apply the continuity equation for steady flow",
+                "State and derive Bernoulli's theorem from energy conservation",
+                "Solve problems using Bernoulli's equation"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Continuity Equation",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Derivation and Application of Continuity Equation",
+                      "content": "The continuity equation is the mathematical expression of one of the most fundamental laws of classical physics applied to fluid mechanics: the Law of Conservation of Mass. For a fluid flowing steadily through a defined control volume (like a pipe or a duct), if no mass is accumulating inside or leaking out, the rate at which mass enters the system must be perfectly balanced by the rate at which mass exits. For a simple stream tube with an inlet section 1 and outlet section 2, the mass flow rate (m_dot) is defined by density × area × velocity. Therefore: ρ₁ × A₁ × V₁ = ρ₂ × A₂ × V₂. This is the generalized continuity equation valid for all fluids, including highly compressible gases. However, in the vast majority of civil and mechanical engineering applications dealing with liquids (like water or hydraulic oil), the fluid is virtually incompressible. This means the density remains constant throughout the system (ρ₁ = ρ₂). The density terms cancel out, simplifying the equation to the volumetric flow rate (Q): A₁ × V₁ = A₂ × V₂ = Constant. This simplified, immensely powerful equation dictates a strict inverse relationship between flow area and flow velocity. If a pipe physically narrows (Area decreases), the fluid velocity must proportionally accelerate to maintain the constant volume throughput. In complex junction networks with multiple branches, the algebraic sum of all mass flow rates entering a node must equal the sum of all mass flow rates exiting that node.",
+                      "examples": [
+                        "Placing a thumb over the end of a garden hose physically reduces the exit Area (A₂); according to continuity (A₁V₁ = A₂V₂), the exit Velocity (V₂) must drastically increase, creating a high-speed jet.",
+                        "In a municipal water system, a massive 2.0m² intake duct with water flowing at a leisurely 1 m/s branches into four equal 0.25m² supply pipes. The velocity in each small pipe must surge to 2.0 m/s to balance the flow."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A converging pipe section showing: wide diameter at left (A₁, V₁, ρ₁) and narrow diameter at right (A₂, V₂, ρ₂) with the continuity equation A₁V₁ = A₂V₂ displayed, and velocity vectors showing increased speed at the narrow section",
+                          "image_purpose": "To make the physical meaning of continuity equation (area vs velocity relationship) immediately intuitive"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Bernoulli's Theorem",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Bernoulli's Equation and Its Physical Meaning",
+                      "content": "First published by Daniel Bernoulli in 1738, Bernoulli's theorem is effectively the application of the Principle of Conservation of Energy to flowing fluids. It states that for a steady, continuous, incompressible, and ideal (frictionless, inviscid) fluid flowing along a streamline, the total mechanical energy of any fluid particle remains absolutely constant throughout its journey. The fluid possesses energy in three distinct forms: Kinetic Energy (due to its velocity), Potential Energy (due to its elevation above a datum reference), and Flow Energy (or pressure energy, due to internal fluid pressure). Bernoulli’s equation normalizes these energies per unit weight of fluid, resulting in terms known as 'heads', expressed linearly in meters of fluid: (v²/2g) + z + (p/ρg) = Constant Total Head (H). Here, v²/2g is the Velocity Head (kinetic component), z is the Datum/Elevation Head (potential component), and p/ρg is the Pressure Head. The profound physical implication of this equation is the inverse relationship between velocity and pressure in horizontal flow (where z is constant). If a fluid is forced to accelerate through a narrowing pipe, its kinetic energy spikes. To rigorously conserve total energy, the pressure energy must simultaneously plummet. This explains why high-velocity flow regions inherently experience low pressure. This counter-intuitive principle is the driving force behind numerous engineering marvels and measuring devices, including aircraft wing lift, carburetor atomization, Venturi flow meters, and the drafting effect in racing cars.",
+                      "examples": [
+                        "In a Venturi flow meter, the central pipe 'throat' is deliberately constricted. As water accelerates through the throat, the localized pressure drops significantly. Engineers measure this precise pressure drop using manometers to calculate the exact flow rate.",
+                        "An airplane wing's asymmetric camber forces air to travel faster over the top surface than the bottom. Bernoulli's principle dictates that this higher velocity creates a low-pressure zone on top, generating the upward force known as aerodynamic Lift."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A horizontal pipe with a narrowing and widening section showing: pressure gauges at three points (wide, narrow, wide), velocity arrows (small at wide sections, large at narrow), and energy line diagrams showing velocity head and pressure head summing to constant total head H",
+                          "image_purpose": "To demonstrate Bernoulli's principle through a classic pipe flow example showing the inverse relationship between velocity and pressure"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Hydraulic Gradient Line (HGL) and Total Energy Line (TEL)",
+                      "content": "To visually analyze the fluctuating energy states of a fluid as it travels through complex piping networks, engineers construct two critical graphical profiles: The Hydraulic Gradient Line (HGL) and the Total Energy Line (TEL, also known as Energy Grade Line, EGL). The HGL is plotted by summing only the Pressure Head and Elevation Head at every point along the pipe system: HGL = (p/ρg) + z. Physically, if one were to drill tiny holes along the top of a pipeline and insert vertical open-ended piezometer tubes, the water would rise in each tube to a specific height—a line connecting the top surfaces of the water in all these tubes forms the HGL. The Total Energy Line (TEL) represents the absolute sum of all three energy components. It is obtained by adding the Dynamic Velocity Head (v²/2g) on top of the HGL: TEL = HGL + (v²/2g). Under theoretical, ideal conditions with a perfectly frictionless fluid, the TEL is a perfectly horizontal, flat line, indicating that total energy is eternally conserved. However, real-world fluids possess viscosity. As real fluid flows, friction against the pipe walls irrecoverably dissipates mechanical energy into waste heat. Consequently, in any real pipe flow, the TEL must slope steadily downward in the direction of flow. The vertical gap between the TEL and the HGL at any given cross-section always explicitly equals the velocity head (v²/2g) at that exact location.",
+                      "examples": [
+                        "In a perfectly horizontal pipe whose diameter suddenly expands, the flow velocity drops. Consequently, the velocity head shrinks, causing the HGL to step upward toward the TEL, indicating a recovery of static pressure.",
+                        "In long-distance municipal water mains, the steady downward slope of the TEL visually demonstrates the continuous head loss due to pipe wall friction, dictating exactly where booster pumps must be installed to maintain adequate residential pressure."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A longitudinal pipe cross-section diagram showing a pipe with varying diameter at different sections. Above the pipe: two lines — TEL (higher, dashed) and HGL (lower, solid) — with vertical arrows showing the velocity head gap between them at each section, and datum reference line at bottom",
+                          "image_purpose": "To help students visualize the spatial relationship between TEL, HGL, velocity head, pressure head, and datum head"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "lesson_title": "Lesson 4.3: Flow Through Pipe Systems",
+              "lesson_outcomes": [
+                "Analyze flow through pipes connected in series and parallel",
+                "Apply head loss equations for each configuration",
+                "Solve numerical problems involving pipe networks"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Pipes in Series and Parallel",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Pipes in Series",
+                      "content": "A 'pipes in series' configuration, often called a compound pipe, occurs when multiple pipes of varying diameters, lengths, or internal roughness coefficients are connected end-to-end sequentially, routing the entire fluid flow from a single source to a single destination. The fundamental hydraulic law governing series networks dictates two rules. First, under steady-state conditions, the volumetric discharge (flow rate Q) must remain absolutely constant through every single segment of the series string to satisfy the continuity equation: Q_total = Q₁ = Q₂ = Q₃ = ... = Q_n. Second, the total frictional head loss across the entire composite system is the cumulative sum of the individual head losses occurring in each discrete pipe segment: H_Loss_Total = h_f1 + h_f2 + h_f3 + ... + h_fn. (This neglects minor losses like sudden expansions or bends for simplicity). The frictional loss in any single pipe is calculated using the Darcy-Weisbach equation: h_f = (f × L × v²) / (2 × g × d). By substituting v = Q / (πd²/4), the equation can be expressed in terms of flow rate Q: h_f = (8 × f × L × Q²) / (π² × g × d⁵). This formulation reveals a critical design insight: head loss is inversely proportional to the fifth power of the diameter (d⁵). A slight reduction in pipe diameter causes a catastrophic, exponential spike in frictional energy loss.",
+                      "examples": [
+                        "A gravity-fed irrigation system connects a reservoir to a farm via two pipes in series: Pipe A (L=1000m, d=0.5m) and Pipe B (L=500m, d=0.3m). The total pressure head required to drive a specific flow Q is calculated by summing the friction loss of the 1000m section with the highly magnified friction loss of the restrictive 500m section."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A schematic showing two tanks at different water levels connected by three pipes in series (with different diameters shown as varying tube widths), with head loss h_f1, h_f2, h_f3 labeled on each pipe section and total H_L shown as the difference in water surface levels",
+                          "image_purpose": "To show how total head loss distributes across pipes in series"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Pipes in Parallel",
+                      "content": "A 'pipes in parallel' configuration occurs when a primary pipeline splits at a junction node into two or more separate branch pipes, which later converge back together at a downstream junction node. This creates multiple simultaneous pathways for the fluid to travel between the same two points. The hydraulic laws governing parallel networks are the inverse of series networks. First, the total fluid discharge entering the upstream node splits among the branches, so the total flow Q is the sum of the individual branch flows: Q_total = Q₁ + Q₂ + Q₃. Second, and most critically, the total frictional head loss across every parallel branch must be exactly identical, regardless of the branch's diameter, length, or roughness: h_f1 = h_f2 = h_f3 = Head Loss between Node A and Node B. Nature dictates that fluid automatically distributes itself so that the pressure drop across all possible paths equalizes. By equating the Darcy-Weisbach equations for two parallel branches (e.g., h_f1 = h_f2), engineers can solve for the unknown flow distribution: (f₁L₁Q₁²) / (d₁⁵) = (f₂L₂Q₂²) / (d₂⁵). Parallel piping is standard in municipal water distribution grids to ensure robust reliability; if one main pipe ruptures and is isolated by valves, water simply reroutes through parallel lines, preventing a total blackout of supply.",
+                      "examples": [
+                        "Two parallel pipes connect a water tower to a factory. Pipe 1 is a new, smooth, large-diameter pipe; Pipe 2 is old, rough, and narrow. The head loss across both pipes is identical, but the mathematics will dictate that Pipe 1 carries 90% of the total flow rate (Q₁), while Pipe 2 carries a mere trickle (Q₂)."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A schematic showing two tanks connected by two parallel pipes (labeled Pipe 1 and Pipe 2, different diameters), with identical head loss H_L across both pipes, and individual flow rates Q₁ and Q₂ with arrows, summing to total Q",
+                          "image_purpose": "To visually contrast pipes in parallel with pipes in series, highlighting the key difference in head loss behavior"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "chapter_title": "Chapter 5: Hydraulic Turbines and Pumps",
+          "chapter_summary": "This chapter covers the working principles of hydraulic turbines (Pelton, Francis, Kaplan) and pumps. Students learn to classify turbines by energy type and flow direction, draw velocity triangles, and understand the energy transfer mechanism.",
+          "lessons": [
+            {
+              "lesson_title": "Lesson 5.1: Classification and Working of Hydraulic Turbines",
+              "lesson_outcomes": [
+                "Define a hydraulic turbine and explain its working principle",
+                "Classify turbines based on energy type, flow direction, and head",
+                "Describe Pelton, Francis, and Kaplan turbines and their applications"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Hydraulic Turbines — Principles and Classification",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Working Principle of Hydraulic Turbines",
+                      "content": "A hydraulic turbine is a massive rotary prime mover designed to harness the energy of flowing or falling water and convert it into usable mechanical shaft work. This rotational mechanical energy is then almost exclusively coupled directly to an alternator/generator to produce commercial hydroelectric power. The fundamental physics governing turbine operation is rooted in Newton’s Second Law of Motion and the Principle of Impulse and Momentum. When a high-velocity jet or massive volume of water impacts the intricately curved blades (or buckets) of the turbine runner, the water is forced to abruptly change its direction and magnitude of velocity. This forced change in fluid momentum generates a massive hydrodynamic reactive force pushing against the blades. Because the blades are fixed radially to a central shaft, this linear force translates into a powerful torque, rotating the multi-ton runner assembly. The overarching energy conversion chain in a hydroelectric facility follows a strict sequence: Potential Energy (massive reservoirs of water held high behind a dam) is transformed into Kinetic Energy (as water plummets down through massive sloping pipes called penstocks). This Kinetic Energy impacts the runner, transferring into Mechanical Energy (shaft rotation). Finally, the coupled electromagnetic generator converts this rotation into Electrical Energy for the grid.",
+                      "examples": [
+                        "At the massive Hoover Dam, water drops roughly 180 meters through penstocks, building immense velocity before smashing into Francis turbines, converting the raw hydraulic head into gigawatts of electrical power.",
+                        "Small-scale 'micro-hydro' turbines operate on identical principles, using modest 5-meter drops in rural streams to generate sufficient electricity for isolated communities."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "An energy conversion flowchart for a hydroelectric plant: Dam (Potential Energy) → Penstock (Kinetic Energy build-up) → Turbine Runner (Mechanical Energy) → Generator (Electrical Energy), with arrows and simplified icons at each stage",
+                          "image_purpose": "To show the complete energy transformation chain in a hydroelectric system"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Classification of Hydraulic Turbines",
+                      "content": "The selection of a hydraulic turbine is absolutely dictated by the topography of the site (available head) and the river flow rate. Engineers classify turbines rigorously across four primary parameters. (1) By Hydrodynamic Energy Type at Inlet: Impulse Turbines (e.g., Pelton wheel) are driven entirely by high-speed water jets; the entire pressure drop from the dam occurs in the nozzle before the water hits the runner. The pressure inside the turbine casing remains fully atmospheric. Reaction Turbines (e.g., Francis, Kaplan) are completely submerged. Water enters the runner under immense pressure, and the pressure progressively drops as the water glides through the moving blades, creating a reactive lift force (similar to an airplane wing). (2) By Flow Direction through the Runner: Tangential flow (water hits the rim tangentially - Pelton), Radial flow (water flows strictly inward toward the center - older Francis designs), Mixed flow (water enters radially inward but turns 90 degrees to exit axially - modern Francis), and purely Axial flow (water flows parallel to the shaft, like a boat propeller - Kaplan). (3) By Operating Head (Height of water drop): High head turbines operate efficiently from 150m up to extreme drops of 2000m+ (Pelton). Medium head turbines dominate the 30m to 150m range (Francis). Low head turbines handle massive flow volumes with drops under 30m, common on flat rivers (Kaplan). (4) By Specific Speed (Ns): A dimensionless parameter used to classify turbines. Low Ns strictly correlates to Pelton wheels, medium Ns to Francis, and high Ns to Kaplan runners.",
+                      "examples": [
+                        "The Pelton wheels at Switzerland's Bieudron Hydroelectric Station utilize a world-record, staggering 1,883-meter head of water, requiring extreme impulse design to handle the supersonic water jets.",
+                        "The Three Gorges Dam primarily utilizes massive mixed-flow Francis turbines, highly optimized for large flow volumes and medium head drops."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A three-column comparison infographic for Pelton, Francis, and Kaplan turbines showing: turbine sketch, type (impulse/reaction), flow direction arrow, head range, and typical power plant setting (mountain, medium terrain, river)",
+                          "image_purpose": "To provide a comprehensive turbine comparison reference for students"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Velocity Triangle for Francis Turbine",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Inlet and Outlet Velocity Triangles",
+                      "content": "To mathematically analyze how much power a turbine runner can extract from the water, engineers employ a vector tool known as the 'Velocity Triangle'. Because both the water and the turbine blades are moving simultaneously, the analysis must isolate the absolute and relative fluid velocities. Focusing on a mixed-flow Francis turbine runner, the inlet velocity triangle is constructed using several critical vectors: (1) V₁: The absolute velocity of the water jet emerging from the stationary guide vanes, angled at 'α₁' from the tangent of the runner. (2) U₁: The tangential, peripheral velocity of the rotating metal blade itself at the inlet radius, calculated as U₁ = (π × D₁ × N) / 60, where N is RPM. (3) Vr₁: The relative velocity of the water perceived by an observer riding on the moving blade. For smooth, shock-free entry (maximizing efficiency), Vr₁ must perfectly align with the physical blade angle 'β₁'. The absolute velocity V₁ is mathematically decomposed into two orthogonal components: the tangential 'Whirl' component (Vw₁), which is the sole driver of the rotational torque, and the radial 'Flow' component (Vf₁), which dictates the total volumetric flow rate discharging through the turbine. At the exit, an outlet velocity triangle is drawn. The holy grail of turbine design is to shape the blades so that the exit whirl component (Vw₂) is exactly zero. This means the water drops straight down out of the runner with no residual swirling kinetic energy, meaning 100% of the rotational energy was successfully transferred to the shaft. The power developed by the runner is governed by Euler’s Turbine Equation: Power = mass_flow_rate × (Vw₁U₁ ± Vw₂U₂).",
+                      "examples": [
+                        "Calculative scenario: If a Francis turbine has a flow velocity component Vf₁ = 5 m/s, guide vane angle α₁ = 30°, and blade angle β₁ = 45°: The whirl velocity Vw₁ = Vf₁ / tan(30°) = 5 × 1.732 = 8.66 m/s. The required blade speed U₁ = Vf₁ × (cot 30° + cot 45°) = 5 × (1.732 + 1) = 13.66 m/s. Assuming optimal exit (Vw₂ = 0), the specific energy extracted per kg of water = Vw₁ × U₁ = 8.66 × 13.66 = 118.3 Joules/kg."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A velocity triangle diagram at the inlet of a Francis turbine runner showing: absolute velocity V₁ at angle α₁, peripheral velocity U₁ as horizontal arrow, relative velocity Vr₁ at blade angle β₁, and decomposed components Vw₁ (horizontal) and Vf₁ (vertical), with all labels and angles clearly marked. Below it, outlet velocity triangle showing Vf₂ with Vw₂ = 0.",
+                          "image_purpose": "To give students a detailed and labeled velocity triangle they can practice drawing and using for numerical calculations"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module_title": "Module 4: Internal Combustion Engines and Thermodynamic Principles",
+      "module_objective": "Develop understanding of thermodynamic laws and apply them to the working of internal combustion engines. Students will learn engine classification, component functions, operating cycles, and performance parameters.",
+      "chapters": [
+        {
+          "chapter_title": "Chapter 6: Basics of Thermodynamics and Laws",
+          "chapter_summary": "This chapter introduces thermodynamic systems, definitions, energy forms, and the fundamental laws of thermodynamics. Students gain conceptual clarity that forms the basis for understanding heat engines.",
+          "lessons": [
+            {
+              "lesson_title": "Lesson 6.1: Introduction to Thermodynamics",
+              "lesson_outcomes": [
+                "Define thermodynamics and identify thermodynamic systems",
+                "Distinguish between reversible and irreversible processes",
+                "State and explain all three laws of thermodynamics"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Thermodynamic Systems and Processes",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "System, Surroundings, and Universe",
+                      "content": "Thermodynamics is the branch of macroscopic physics that governs the principles of energy, heat, work, and entropy, detailing how energy is transferred and transformed within the physical universe. To apply these laws systematically, engineers mentally isolate the subject of study by defining a 'Thermodynamic System'. A System is defined strictly as a prescribed quantity of matter or a specific region of three-dimensional space chosen for analytical study. Everything physically external to this system boundary is defined as the 'Surroundings'. The System combined with its Surroundings constitutes the 'Universe'. The boundary itself can be real (like the steel walls of a gas cylinder) or imaginary, and it can be fixed in volume or flexible. Systems are rigorously classified into three distinct categories based on their interaction across this boundary: (1) Open System (Control Volume): Both mass and energy are freely permitted to cross the boundary. Most practical engineering devices, such as jet engines, compressors, and water pumps, operate as open systems where fluid continuously flows in and out while work is extracted or inputted. (2) Closed System (Control Mass): Only thermal and mechanical energy can cross the boundary; mass remains permanently trapped inside. A sealed piston-cylinder device expanding gas is the classic analytical model of a closed system. (3) Isolated System: A purely theoretical construct where neither mass nor energy of any kind can cross the boundary. The system is perfectly insulated and rigidly sealed. A flawless vacuum thermos flask approaches this, and theoretically, the entire universe is treated as an isolated system. A core analytical concept is the 'Quasi-static Process'—an idealized, infinitely slow transformation where the system is deemed to be in perfect thermodynamic equilibrium at every single micro-step along its path, allowing complex calculus to be applied to the process.",
+                      "examples": [
+                        "An operating internal combustion engine is a classic open system—it continuously intakes a fresh fuel-air mass, burns it, and exhausts the burnt mass, while outputting mechanical work and heat.",
+                        "A sealed, rigid propane tank sitting in the hot sun is a closed system—no gas escapes, but heat energy crosses the steel boundary, raising the internal pressure."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "Three side-by-side boxes showing: (1) Open System — arrows for mass and energy crossing boundary (turbine sketch), (2) Closed System — only energy arrows cross boundary (piston cylinder), (3) Isolated System — no arrows cross boundary (thermos flask) — each with system boundary clearly drawn as dashed lines",
+                          "image_purpose": "To visually distinguish three thermodynamic system types which students frequently confuse"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Zeroth, First, and Second Laws of Thermodynamics",
+                      "content": "The absolute foundation of thermodynamics rests on three phenomenological laws derived from centuries of empirical observation. (1) The Zeroth Law (Law of Temperature): Formulated late but placed first logically, it states that if Body A is in thermal equilibrium with Body B, and Body B is in thermal equilibrium with Body C, then Body A and Body C must be in thermal equilibrium with each other. This establishes the very concept of 'temperature' as a measurable property and forms the irrefutable basis for all thermometry (allowing thermometers to function). (2) The First Law (Conservation of Energy): Originating from Joule’s experiments, it asserts that energy cannot be magically created from nothing, nor destroyed into nothingness; it can only undergo transformation from one physical form to another. For a closed system undergoing a process, the mathematical statement is: Q - W = ΔU (Net heat energy transferred into the system minus the net work energy performed by the system strictly equals the absolute change in the internal molecular energy of the system). A profound engineering implication is the absolute impossibility of a Perpetual Motion Machine of the First Kind (PMM1)—a fictional engine that continuously outputs mechanical work without consuming an equivalent amount of fuel or heat. (3) The Second Law (Directionality and Entropy): While the First Law says energy must balance, the Second Law imposes a strict directionality on nature. Heat naturally, spontaneously, and irreversibly flows downhill from a high-temperature source to a low-temperature sink. It requires external work (like a compressor in a refrigerator) to force heat backward. The law is defined by two classical statements. The Kelvin-Planck Statement governs engines: It is physically impossible to build a cyclic heat engine that operates at 100% thermal efficiency; some waste heat MUST be rejected to a cold sink to complete the cycle. The Clausius Statement governs refrigerators: It is impossible to construct a device operating in a cycle whose sole effect is transferring heat from a cold body to a hot body without the input of external work.",
+                      "examples": [
+                        "First Law Application: If a gas in a cylinder absorbs 1000 Joules of heat from a burner, and simultaneously expands to do 400 Joules of mechanical work pushing a piston, its internal energy must have increased by exactly 600 Joules.",
+                        "Second Law Application: A hot cup of coffee will always spontaneously cool down to room temperature, dispersing its heat. The heat from the room will never spontaneously gather back into the cup to boil the coffee."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A three-panel diagram: (1) Zeroth Law — three bodies A, B, C with equality arrows, (2) First Law — energy balance diagram with Q_in, W_out, and ΔU arrows for a piston-cylinder, (3) Second Law — heat engine diagram showing heat input Q_H from hot reservoir, work output W, and heat rejection Q_L to cold reservoir with efficiency η = W/Q_H highlighted",
+                          "image_purpose": "To present all three laws in a single organized visual for comparative study and exam review"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "chapter_title": "Chapter 7: Internal Combustion Engines",
+          "chapter_summary": "This chapter covers IC engine classification, major components, the working cycles of 2-stroke and 4-stroke petrol and diesel engines, comparison of engine types, and key performance parameters.",
+          "lessons": [
+            {
+              "lesson_title": "Lesson 7.1: IC Engine Classification and Components",
+              "lesson_outcomes": [
+                "Define internal combustion engine and distinguish from external combustion engines",
+                "Classify IC engines by multiple criteria",
+                "Identify and describe the function of each major engine component"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Introduction to IC Engines",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Definition and Distinction from EC Engines",
+                      "content": "Heat engines are prime movers designed to convert the latent chemical energy trapped in fossil fuels into thermal energy, and finally into useful mechanical work. They are broadly categorized into two main families based on where the combustion occurs. An Internal Combustion (IC) Engine is defined by the fact that the burning of the fuel-air mixture happens directly inside the main power cylinder itself. The extremely high-pressure, high-temperature exhaust gases produced by this internal explosion act directly upon the face of the moving piston to generate mechanical work. Because combustion is internal, these engines require highly refined, clean-burning fuels (petrol, diesel, aviation fuel) to prevent the internal moving parts from seizing due to ash and soot. In stark contrast, an External Combustion (EC) Engine separates the combustion from the power generation. A fire is maintained in an external furnace or boiler, which transfers heat to a separate working fluid (historically water turning to high-pressure steam). This steam is then piped into a distinct power cylinder to push a piston or spin a turbine. IC engines boast massive advantages: they possess a highly superior power-to-weight ratio, are far more compact, and can start up instantly from cold. EC engines (like historic steam locomotives or modern nuclear steam plants) are overwhelmingly bulky and slow to start, but they possess the distinct advantage of fuel flexibility—they can burn literally anything (coal, wood, trash) since the dirty combustion gases never touch the delicate precision parts of the moving engine.",
+                      "examples": [
+                        "The V8 petrol engine in a sports car is a classic IC engine, optimized for rapid acceleration, light weight, and high RPM operation.",
+                        "A classic 19th-century steam locomotive is a prime example of an EC engine, carrying massive quantities of coal to burn externally in a firebox to boil water.",
+                        "Jet engines on commercial airliners are continuous-flow IC engines, burning kerosene internally to spin turbines and produce thrust."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "Two side-by-side schematic diagrams: (1) IC Engine showing combustion occurring inside the cylinder with the piston directly receiving force from expanding gases. (2) EC Engine showing external boiler producing steam that then enters a cylinder to push a piston — with labels distinguishing combustion location in each.",
+                          "image_purpose": "To make the fundamental difference between IC and EC engines visually clear"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Major Components of IC Engines",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Functions of Key Engine Components",
+                      "content": "A reciprocating IC engine is a marvel of metallurgical engineering, consisting of hundreds of precision parts. The primary components that facilitate the thermodynamic cycle include: (1) Cylinder Block and Cylinder: The massive, rigidly cast main structure of the engine containing perfectly machined cylindrical bores where combustion occurs. It is usually water-jacketed for cooling. (2) Piston: A cylindrical metal plunger (usually lightweight aluminium alloy) that slides up and down within the cylinder, forming the moving boundary of the combustion chamber. It must withstand explosive pressures of over 100 bar and temperatures exceeding 2000°C. (3) Piston Rings: Highly engineered split rings of cast iron fitted into grooves on the piston. Compression rings provide a dynamic, gas-tight sliding seal preventing high-pressure combustion gases from 'blowing by' into the crankcase. Oil control rings scrape excess lubricating oil off the cylinder walls to prevent it from burning in the combustion chamber. (4) Connecting Rod: A forged steel linkage connecting the piston to the crankshaft, acting as the critical transmitter of the immense downward force. (5) Crankshaft: The massive, complexly balanced main rotating shaft that acts like a bicycle crank, converting the violent, linear reciprocating motion of the piston into smooth, continuous rotational motion to drive the wheels. (6) Valvetrain (Camshaft and Valves): The synchronization system of the engine. Intake valves pop open to admit the fresh air-fuel charge; exhaust valves open to expel the burnt, toxic exhaust gases. Both must seal perfectly tight during the explosive power stroke. The camshaft, driven by the crankshaft via a timing belt/chain, features eccentric lobes that physically push the valves open at precisely timed micro-second intervals (rotating exactly at half the speed of the crankshaft in 4-stroke engines). (7) Spark Plug (in Spark-Ignition/Petrol engines): Generates a 20,000-volt electrical arc to ignite the compressed mixture at the exact millisecond required. (8) Sump (Oil Pan): A bolted reservoir at the absolute bottom of the engine storing gallons of vital lubricating oil.",
+                      "examples": [
+                        "Failure of the piston rings leads to a condition known as 'blow-by', drastically reducing engine compression/power, and causes the engine to visibly burn thick blue oil smoke out of the tailpipe.",
+                        "If the timing belt linking the crankshaft to the camshaft snaps, the valves stop moving. In 'interference engines', the rapidly moving pistons will instantly smash into the stuck-open valves, destroying the engine."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A detailed cross-sectional cutaway diagram of a 4-stroke single-cylinder IC engine showing all major components labeled: cylinder block, cylinder head, spark plug, intake valve, exhaust valve, piston, piston rings, connecting rod, crankshaft, camshaft, and sump — with leader lines pointing to each component",
+                          "image_purpose": "To give students a comprehensive labeled reference diagram of IC engine internal architecture"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "lesson_title": "Lesson 7.2: Working of 4-Stroke and 2-Stroke Engines",
+              "lesson_outcomes": [
+                "Describe the four strokes of a 4-stroke petrol and diesel engine",
+                "Explain the two strokes of a 2-stroke petrol and diesel engine",
+                "Compare 2-stroke and 4-stroke engines across key performance parameters"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Four-Stroke Engine Cycle",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Four Strokes of a Petrol (SI) Engine",
+                      "content": "The four-stroke Spark Ignition (SI) petrol engine operates on the theoretical Otto Cycle. It requires four distinct, sequential strokes of the piston (two upward movements, two downward movements) spanning exactly two full 360-degree revolutions of the crankshaft (720 degrees total) to complete one single power-producing thermodynamic cycle. The sequence is executed as follows: (1) Suction (Intake) Stroke: The piston begins at Top Dead Centre (TDC). As the crankshaft pulls it downward to Bottom Dead Centre (BDC), the intake valve is cammed open. The downward movement creates a partial vacuum in the cylinder, sucking in a highly volatile, pre-mixed charge of vaporized petrol and air (typically mixed by a carburetor or electronic fuel injection at an ideal 14.7:1 ratio). The exhaust valve remains tightly closed. (2) Compression Stroke: The intake valve snaps shut, sealing the cylinder completely. The massive momentum of the spinning flywheel forces the piston back up from BDC to TDC. This brutally compresses the trapped air-fuel mixture into a tiny clearance volume at the top of the cylinder, raising its pressure to ~10-15 bar and its temperature to ~400°C. The ratio of the total cylinder volume to this clearance volume is the Compression Ratio (usually between 8:1 and 10:1 for petrol). (3) Power (Expansion) Stroke: A fraction of a millisecond before the piston hits TDC, the spark plug fires a high-voltage arc. The highly compressed, hot fuel-air mixture violently ignites and detonates. The burning gases rapidly expand, creating an immense pressure spike (up to 50 bar) that slams the piston downward to BDC with tremendous force. This single stroke provides all the mechanical work output for the entire cycle. Both valves remain firmly closed to harness the pressure. (4) Exhaust Stroke: As the piston hits BDC, the exhaust valve opens. The piston travels back up to TDC, physically sweeping and pushing the spent, toxic combustion gases out through the exhaust manifold. The cycle then repeats continuously at thousands of times per minute. A colloquial engineering memory aid for this cycle is: 'Suck, Squeeze, Bang, Blow'.",
+                      "examples": [
+                        "A typical 4-cylinder car engine cruising at 3000 RPM is executing this complete 4-stroke cycle 1500 times per minute in each of its four cylinders.",
+                        "Four-stroke engines dominate the automotive world due to their excellent fuel economy, strict separation of lubrication and combustion, and highly controlled, clean exhaust emissions."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A four-panel sequential diagram showing the piston position in each stroke: (1) Intake — piston at BDC, intake valve open, air-fuel mixture entering (blue arrow), (2) Compression — piston at TDC, both valves closed, compressed mixture shown, spark plug sparking, (3) Power — piston pushed to BDC by expanding gases (orange arrow), (4) Exhaust — piston at TDC, exhaust valve open, burnt gases exiting (grey arrows) — each panel labeled with stroke name and crankshaft rotation degree",
+                          "image_purpose": "To provide a definitive 4-panel visual reference that students can use to explain or draw the 4-stroke cycle in exams"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Four Strokes of a Diesel (CI) Engine",
+                      "content": "The four-stroke Compression Ignition (CI) diesel engine shares the identical mechanical architecture and physical four-stroke sequence as the petrol engine, but operates on entirely different thermodynamic principles, specifically the theoretical Diesel Cycle. The fundamental distinction is how the fuel is introduced and ignited. (1) Intake Stroke: The intake valve opens as the piston moves down. Crucially, ONLY pure, fresh air is drawn into the cylinder—absolutely no fuel is present. (2) Compression Stroke: The intake valve closes and the piston moves up, compressing this pure air to an extreme degree. Diesel engines operate at massively high Compression Ratios, typically between 16:1 and 24:1. This extreme, rapid compression performs immense thermodynamic work on the air, heating it adiabatically to blistering temperatures of 600°C to 800°C—which is significantly higher than the auto-ignition point of diesel fuel. (3) Power Stroke: Because there is no spark plug, ignition relies entirely on this heat. Just as the piston reaches TDC, a highly sophisticated, high-pressure fuel injector atomizes pure diesel liquid directly into the superheated compressed air. The diesel fuel immediately and spontaneously combusts upon contact with the hot air (auto-ignition). The burning occurs gradually as the fuel is injected, pushing the piston down in a sustained power stroke. (4) Exhaust Stroke: Identical to the petrol engine; the exhaust valve opens and the rising piston scavenges the burnt gases. Because of the extreme compression ratios required, diesel engine blocks must be cast much thicker and heavier than petrol engines to withstand the internal detonation forces, explaining their weight and distinct 'clattering' acoustic signature.",
+                      "examples": [
+                        "Heavy-duty commercial trucks, freight trains, and cargo ships rely almost exclusively on massive 4-stroke diesel engines because the high compression ratio grants them vastly superior thermodynamic efficiency and torque compared to petrol engines.",
+                        "Diesel generators are preferred for hospital and industrial power backup because diesel fuel is significantly less volatile and safer to store in bulk than highly flammable petrol."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A four-panel diesel engine cycle diagram similar to petrol engine but with key differences highlighted in red: (1) Only air intake labeled, (2) Very high compression (CR 16-20) with temperature arrow, fuel injector labeled at TDC with diesel spray, (3) Power stroke showing auto-ignition (no spark plug), (4) Exhaust stroke same as petrol",
+                          "image_purpose": "To help students clearly see and remember the distinctions between petrol and diesel 4-stroke cycles"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Two-Stroke Engine",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Working of 2-Stroke Petrol Engine",
+                      "content": "The two-stroke cycle ingeniously compresses the entire thermodynamic process into just two strokes of the piston (one upward, one downward), completing a full power cycle in a single 360-degree revolution of the crankshaft. This means every time the piston is pushed down, it is producing power, doubling the power frequency compared to a 4-stroke. To achieve this, the 2-stroke engine eliminates the complex, heavy valvetrain (no camshaft, no valves). Instead, it relies on precisely machined 'ports' (holes) cut directly into the side walls of the cylinder, which the sliding piston acts as a valve to cover and uncover. Furthermore, the sealed crankcase below the piston acts as a vital secondary pumping chamber. Stroke 1 — Upward Stroke (Compression & Intake): The piston moves upward from BDC to TDC. Above the piston, the previously transferred air-fuel mixture is being compressed in the cylinder, followed by spark ignition near TDC. Simultaneously, below the piston, the upward movement creates a strong vacuum in the crankcase, causing the inlet port to open (usually via a reed valve) and sucking fresh air-fuel-oil mixture from the carburetor directly into the crankcase. Stroke 2 — Downward Stroke (Power & Exhaust/Transfer): The ignited gases explode, forcing the piston violently downward (the Power Stroke). As the piston descends, it first uncovers the Exhaust Port, allowing high-pressure burnt gases to blast out into the exhaust pipe. Milliseconds later, continuing its descent, the piston uncovers the Transfer Port. Meanwhile, this downward movement is heavily compressing the fresh mixture trapped in the crankcase. This compressed fresh charge shoots up through the transfer port into the cylinder. Because the exhaust port is still open, the incoming fresh charge violently sweeps the remaining exhaust gases out of the cylinder—a highly chaotic fluid dynamic process known as 'Scavenging'. Because the fuel must pass through the crankcase, lubricating oil is physically mixed directly into the petrol, which is why 2-strokes burn oil and produce smoky emissions.",
+                      "examples": [
+                        "Handheld equipment like chainsaws and string trimmers utilize 2-stroke petrol engines because they have extremely high power-to-weight ratios and can operate perfectly upside-down, as they lack an oil sump.",
+                        "A 50cc 2-stroke scooter engine fires once every single revolution, granting it zippy acceleration, but it suffers poor fuel economy because unburnt fresh fuel inevitably escapes out the exhaust port during the chaotic scavenging phase."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A two-panel diagram showing a 2-stroke engine: (1) Upward stroke — piston moving up, intake port open in crankcase (blue arrow for fresh charge entering crankcase), compression happening in cylinder above piston, spark at TDC. (2) Downward stroke — burnt gases exiting exhaust port (grey arrow), fresh charge from crankcase entering cylinder through transfer port (blue arrow), with piston position labeled and port locations clearly marked.",
+                          "image_purpose": "To clarify the simultaneous actions in cylinder and crankcase during each stroke of a 2-stroke engine"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "lesson_title": "Lesson 7.3: Engine Performance Parameters",
+              "lesson_outcomes": [
+                "Define and calculate Indicated Power, Brake Power, and Friction Power",
+                "Compute Specific Fuel Consumption and thermal efficiencies",
+                "Understand and calculate Mechanical Efficiency"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Power and Efficiency Parameters",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Indicated Power (IP), Brake Power (BP), and Friction Power (FP)",
+                      "content": "Evaluating engine performance requires distinguishing between the power generated internally by the combustion process and the actual usable power that makes it out of the engine. Indicated Power (IP) represents the total, theoretical raw power developed directly inside the engine cylinder by the violently expanding combustion gases pushing against the piston face. It is mathematically calculated by integrating the area under a pressure-volume indicator diagram to find the Mean Effective Pressure (P_mep). The formula is IP = (P_mep × L × A × N × k) / 60. Where P_mep is the average pressure during the power stroke (in Pascals), L is the stroke length (m), A is the piston cross-sectional area (m²), N is engine speed in RPM, and 'k' is the cycles per revolution factor (1 for 2-stroke, 0.5 for 4-stroke). Brake Power (BP) is the actual, tangible, usable mechanical power delivered at the engine's output shaft (crankshaft) to drive the vehicle's transmission. It is empirically measured in a testing laboratory using a dynamometer (historically called a Prony brake, hence the term 'Brake' Power) that applies a measurable resisting torque. The formula is BP = (2 × π × N × T) / 60, where T is the measured torque in Newton-meters (N·m). Friction Power (FP) accounts for the unavoidable mechanical losses inherent in the system. An engine expends a massive amount of its internally generated power just overcoming the immense sliding friction of the piston rings scraping against the cylinder walls, spinning the heavy crankshaft in its bearings, and driving auxiliary accessories like the water pump and valvetrain. The relationship is strictly governed by conservation of energy: IP = BP + FP. Therefore, Friction Power = IP - BP.",
+                      "examples": [
+                        "Calculation: A single-cylinder 4-stroke engine runs at 1500 RPM. P_mep = 600 kPa (600,000 Pa), Stroke L = 0.1m, Area A = 0.005m². The Indicated Power IP = (600,000 × 0.1 × 0.005 × 1500 × 0.5) / 60 = 3750 Watts = 3.75 kW generated inside the cylinder.",
+                        "If that same engine is hooked to a dynamometer and the measured output at the shaft (BP) is only 3.2 kW, then the engine is wasting 0.55 kW of power internally to overcome mechanical friction (FP = 3.75 - 3.2 = 0.55 kW)."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A power flow diagram for an IC engine showing: Fuel Chemical Energy → Heat Released (combustion) → Indicated Power (IP) → after subtracting Friction Power (FP) → Brake Power (BP at shaft), displayed as a horizontal bar with labeled sections and percentage-like proportions",
+                          "image_purpose": "To show the power hierarchy from combustion to output shaft in a single visual"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Thermal Efficiencies and Specific Fuel Consumption",
+                      "content": "To judge the economic viability and thermodynamic perfection of an engine, engineers utilize precise efficiency metrics. Fuel Power (FP_fuel) is the total rate of chemical energy entering the engine, calculated as the mass flow rate of the fuel (kg/s) multiplied by the fuel's Calorific Value (Joules/kg). Indicated Thermal Efficiency (η_ith) is the ratio of Indicated Power to Fuel Power (η_ith = IP / FP_fuel). It reveals how efficiently the combustion process converts raw chemical energy into gas pressure work, ignoring mechanical friction. Brake Thermal Efficiency (η_bth) is the ratio of Brake Power to Fuel Power (η_bth = BP / FP_fuel). This is the most crucial, real-world metric because it represents the ultimate overall efficiency of the engine from fuel tank to output shaft. Even the best modern petrol engines struggle to exceed an η_bth of 30-35%, meaning roughly 70% of the energy in petrol is completely wasted as exhaust heat and engine block heat. Mechanical Efficiency (η_mech) bridges the gap between the two thermal efficiencies. It is the ratio of output power to internally generated power (η_mech = BP / IP). It measures purely how much of the internal power survives the mechanical friction of the moving parts to reach the shaft. Lastly, Specific Fuel Consumption (SFC) is the economic benchmark of fuel economy. It measures exactly how much mass of fuel the engine must consume per hour to sustain one unit of power output. Brake Specific Fuel Consumption (BSFC) = Fuel Mass Flow Rate (kg/hr) / Brake Power (kW). A lower BSFC number indicates a vastly superior, highly fuel-efficient engine design.",
+                      "examples": [
+                        "A heavy-duty marine diesel engine operates at a BP of 50 kW, consuming 15 kg of diesel per hour. Given diesel's CV is roughly 44,000 kJ/kg, the Fuel Power is (15 kg / 3600 s) × 44,000,000 J/kg = 183.3 kW. The Brake Thermal Efficiency is a remarkable (50 / 183.3) = 27.3%.",
+                        "The BSFC for that marine engine is calculated simply as 15 kg/hr divided by 50 kW = 0.3 kg/kWh. Engine manufacturers compete fiercely to lower this specific number to offer better fuel economy to fleet operators."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A layered efficiency diagram showing: at the bottom, Fuel Chemical Energy (100%), then Indicated Thermal Efficiency showing how much becomes IP (~40%), then Mechanical Efficiency showing how much IP becomes BP (~90%), with losses labeled as heat losses and friction losses at each step using colored bars and percentage labels",
+                          "image_purpose": "To provide students with a clear visual of energy losses at each stage of engine energy conversion"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module_title": "Module 5: Power Transmission Systems — Belts, Ropes, Chains, and Gear Trains",
+      "module_objective": "Understand the principles, types, and design considerations of mechanical power transmission systems. Students will analyze belt drives, rope drives, chain drives, and gear train systems including simple, compound, reverted, and epicyclic configurations.",
+      "chapters": [
+        {
+          "chapter_title": "Chapter 8: Belt, Rope, and Chain Drives",
+          "chapter_summary": "This chapter covers flexible power transmission elements — belts, ropes, and chains. Students learn about velocity ratio, slip, belt tensions, power transmitted, and the differences between open and cross belt arrangements.",
+          "lessons": [
+            {
+              "lesson_title": "Lesson 8.1: Introduction to Belt Drives and Types",
+              "lesson_outcomes": [
+                "Explain the principle of belt drive power transmission",
+                "Classify belt drives by type of belt and drive arrangement",
+                "Calculate velocity ratio, slip, and length of belt"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Belt Drive Fundamentals",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Principle and Factors Affecting Power Transmission",
+                      "content": "A belt drive is a highly prevalent flexible power transmission system engineered to transfer rotational mechanical power from a high-speed driving shaft (usually a prime mover like an electric motor) to a driven follower shaft located at a considerable distance. The transmission is achieved through a continuous, endless loop of flexible material (the belt) tightly wrapped over two or more pulleys. The entire physics of power transmission in a belt drive relies absolutely on the fundamental force of friction generated at the contact interface between the inner surface of the belt and the rim of the pulley. Without friction, the belt would simply slide continuously, transferring zero power. Belt drives offer immense industrial advantages: they can easily bridge large center distances (up to 15 meters), they inherently absorb shock loads and vibration isolating the delicate driven machinery, and they serve as an automatic mechanical fuse against catastrophic overloads (the belt will harmlessly slip off the pulley rather than shearing expensive gears). The absolute amount of power a given belt can successfully transmit is dictated by four critical factors: (1) The linear velocity of the belt—higher speeds theoretically transfer more power, up to an aerodynamic limit where centrifugal forces lift the belt off the pulley. (2) The total tension differential—power is directly proportional to the difference between the high tension on the 'tight side' and the low tension on the 'slack side'. (3) The angle of wrap (arc of contact)—a larger angle of contact, particularly on the smaller driving pulley, massively increases the frictional grip. (4) The coefficient of friction (μ)—dependent on the material pairing (e.g., leather on cast iron offers high friction).",
+                      "examples": [
+                        "In early 19th-century textile mills, massive central steam engines drove dozens of individual looms simultaneously via an intricate overhead network of long flat leather belts.",
+                        "Modern automotive engines utilize serpentine V-belt drives to silently and smoothly power critical auxiliary accessories like the high-output alternator, power steering hydraulic pump, and air conditioning compressor directly from the main crankshaft pulley."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A diagram showing a driver pulley and driven pulley connected by a belt, with labels identifying: tight side (high tension T₁), slack side (low tension T₂), arc of contact θ, center distance C, and power flow direction arrow on both pulleys",
+                          "image_purpose": "To introduce all key parameters of a belt drive system in a single labeled visual"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Types of Belts: Flat, V-Belt, and Circular (Rope)",
+                      "content": "Engineers select from three primary geometries of belts, each offering distinct mechanical advantages depending on the torque required and the spatial constraints of the shafts. (1) Flat Belt: Featuring a simple rectangular cross-section, flat belts run on smooth, slightly convex (crowned) flat pulleys. They are highly efficient, inexpensive, and ideal for transmitting moderate power across relatively long distances (up to 8 meters). Their primary disadvantage is a high susceptibility to slip if not tensioned perfectly. (2) V-Belt: Engineered with a distinct trapezoidal (wedge-shaped) cross-section, V-belts are designed to seat deeply into matching V-shaped grooves machined into the pulley rim. This wedge geometry is mechanically brilliant; as the belt bends around the pulley under tension, it wedges itself tightly into the groove, multiplying the normal force and dramatically increasing the frictional grip. This allows V-belts to transmit significantly higher torque without slipping, making them the standard for compact, short-distance drives (like under a car hood). However, they suffer slightly higher bending stress and friction losses than flat belts. (3) Circular Belt (Rope Drive): Featuring a perfectly circular cross-section, rope drives (made of cotton, hemp, or wound steel wire) run in specially contoured grooved pulleys. They are deployed when immense power must be transmitted over distances exceeding 8 meters, where flat belts would flap wildly and V-belts are impractical. Multiple ropes can be run side-by-side in multi-groove pulleys to provide massive power transfer with built-in redundancy (if one rope snaps, the others continue carrying the load), widely used in massive mining hoists and heavy elevator lifting mechanisms.",
+                      "examples": [
+                        "V-belts are ubiquitous in washing machines, where the motor sits just inches away from the drum pulley, requiring high torque transmission in a highly confined space.",
+                        "Massive multi-strand wire rope drives are the standard safety mechanism for heavy commercial elevator shafts, transmitting enormous lifting torque over hundreds of vertical feet."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "Three cross-sectional profiles side by side: (1) Flat belt on a flat-faced pulley (rectangular cross section), (2) V-belt seated in V-groove pulley (trapezoidal cross section with wedge action arrows showing increased normal force), (3) Circular rope in a V-groove (circular cross section in groove) — each labeled with name and typical use case",
+                          "image_purpose": "To help students instantly distinguish the three belt types by their cross-sectional profile and pulley contact"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Open Belt and Cross Belt Drives",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Open Belt Drive",
+                      "content": "An open belt drive is the standard, most frequently deployed belt configuration. In this arrangement, the endless belt passes directly from the top of the driver pulley to the top of the driven pulley, and from bottom to bottom, without crossing over itself. The defining mechanical characteristic of an open belt drive is that it forces both the driving and the driven shafts to rotate in the exact same direction. In a horizontal setup, gravity plays a crucial role: the driving shaft should ideally be arranged so that the 'tight side' (the side under high tension pulling the load) is on the bottom, and the 'slack side' (the relaxed return side) is on the top. This allows the natural sag of the slack side to drape further around the pulleys, actively increasing the crucial arc of contact and thereby improving frictional grip. A geometric limitation of the open drive is that the wrap angle (arc of contact) on the smaller pulley will always be inherently less than 180 degrees, which limits its maximum power capacity. The exact length of an open belt is determined by complex trigonometry, factoring in the radii of both pulleys (r₁, r₂) and the center-to-center distance (C) between the shafts. The standard approximation formula is: L_open = π(r₁ + r₂) + 2C + (r₁ - r₂)² / C. Because the belt never rubs against itself, open drives enjoy a long operational lifespan.",
+                      "examples": [
+                        "A standard airport baggage conveyor system utilizes open flat belt drives, ensuring that the electric motor driving the roller causes the belt to move continuously forward in the same direction.",
+                        "A benchtop drill press uses a stepped open V-belt drive, allowing the operator to easily move the belt between different pulley tiers to change spindle speeds without reversing direction."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A diagram of an open belt drive showing two pulleys of different diameters connected by a belt that does not cross, with: tight side (bottom) and slack side (top) labeled, arc of contact angle θ on smaller pulley shown, center distance C labeled, and both pulleys rotating in the same direction (arrows)",
+                          "image_purpose": "To show the geometry and rotation characteristics of an open belt drive"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Cross Belt Drive",
+                      "content": "A cross belt drive is a specialized configuration where the belt physically crosses over itself in the space between the two shafts—running from the top of the driving pulley to the bottom of the driven pulley, tracing a distinct 'figure-eight' pattern. This crossed routing fundamentally alters the mechanics of the system: it forces the driven shaft to rotate in the exact opposite direction of the driving shaft. Geometrically, crossing the belt provides a massive mechanical advantage: it forces the belt to wrap tightly around a much larger circumference of both pulleys. The arc of contact on both pulleys is guaranteed to be significantly greater than 180 degrees. Because power transmission capacity scales exponentially with the wrap angle (as defined by Euler's belt equation), a cross belt drive can transmit substantially more power than an equivalent open belt drive without slipping. The formula for the length of a crossed belt relies on the sum of the radii rather than the difference in the final term: L_cross = π(r₁ + r₂) + 2C + (r₁ + r₂)² / C. However, this system harbors a severe design flaw: at the central intersection point, the two sides of the rapidly moving belt continuously rub against each other. This constant frictional abrasion generates heat, rapidly wears away the belt material, and significantly reduces the service life of the belt. Therefore, cross belts are only used when rotational reversal is absolutely mandatory and gears cannot be used.",
+                      "examples": [
+                        "In early industrial workshops, vintage line-shaft driven lathes frequently utilized a cross belt arrangement specifically to quickly reverse the rotational direction of the cutting spindle without having to shut down or reverse the massive central steam engine.",
+                        "Certain legacy agricultural milling machines employed crossed belts to synchronize massive counter-rotating crushing rollers."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A diagram of a cross belt drive showing two pulleys connected by a belt that crosses in the middle, with arrows showing opposite rotation directions of the two pulleys, arc of contact > 180° shown on both pulleys, and the crossover contact point labeled with a friction note",
+                          "image_purpose": "To visually contrast cross belt with open belt drive in terms of belt path and rotation direction"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Belt Tensions and Power Transmitted",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Ratio of Friction Tensions (Belt Equation)",
+                      "content": "When a belt drive is actively transmitting torque, the tension in the belt is not uniform. The side of the belt being forcefully pulled by the driving pulley toward the driven load is taut, possessing a high tension denoted as T₁ (Tight side). The side returning from the driven pulley is relatively relaxed, possessing a lower tension denoted as T₂ (Slack side). It is the mathematical difference between these two pulling forces that actually transmits the mechanical power. The relationship between these limiting tensions is governed by Euler's Belt Friction Equation, a fundamental formula derived using the calculus of a small differential element of the belt at the brink of slipping. For a flat belt, the equation states that the ratio of the tight side to the slack side tension increases exponentially with the angle of wrap and the friction coefficient: T₁ / T₂ = e^(μθ). Where 'e' is the mathematical constant (2.718), 'μ' is the static coefficient of friction between the belt material and pulley surface, and 'θ' is the precise angle of wrap (arc of contact) on the smaller pulley, strictly measured in radians. This exponentially powerful equation proves why increasing the wrap angle (using an idler pulley or a cross-belt) drastically prevents slipping. For V-belts, the wedging action physically amplifies the normal force, modifying the equation to T₁ / T₂ = e^(μθ / sin α), where '2α' is the V-groove angle (typically 40 degrees). The actual power transmitted by the drive is the product of the net force and the linear belt velocity (v, in meters/second): Power (Watts) = (T₁ - T₂) × v.",
+                      "examples": [
+                        "Analytical Check: A flat belt drive has a friction coefficient μ = 0.3, and an arc of contact θ = 150° (which must be converted to 2.618 radians). Euler's equation states T₁/T₂ = e^(0.3 × 2.618) = e^0.785 = 2.19. This means the tight side tension can be pushed to 2.19 times the slack side tension before catastrophic slip occurs.",
+                        "Power Calculation: If a belt operates at a brisk 10 m/s, with a tight tension T₁ = 2000 N and slack tension T₂ = 800 N, the Power transmitted is the net force multiplied by velocity: P = (2000 - 800) N × 10 m/s = 12,000 Watts = 12 kW."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A free body diagram of a small belt element on a pulley surface showing: centripetal acceleration, normal force dN, friction force μdN, and tension forces T and T+dT on both sides of the element, with the angle dθ labeled, and the final integrated belt equation T₁/T₂ = e^(μθ) displayed",
+                          "image_purpose": "To show the derivation basis of the belt friction equation for students studying the underlying mechanics"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Centrifugal Tension and Initial Tension",
+                      "content": "While basic belt theory considers only the pulling tensions (T₁ and T₂), high-speed industrial drives must account for dynamic physics, specifically Centrifugal Tension (Tc). As a heavy belt races around the curved perimeter of the pulleys at high velocities, standard centrifugal force pushes the mass of the belt radially outward, away from the center of the pulley. This outward force acts to lift the belt physically off the pulley face, thereby severely reducing the vital normal force, which in turn kills the frictional grip. This internal centrifugal tension is calculated as Tc = m × v², where 'm' is the mass of the belt per unit length (kg/m) and 'v' is the linear velocity (m/s). Because Tc adds uniformly to the entire belt loop, it increases the total stress on the belt material but contributes absolutely zero to torque transmission. Therefore, the effective tensions doing the actual work are reduced: Effective Tight Side = (T₁ - Tc) and Effective Slack Side = (T₂ - Tc). These effective values must be used in Euler's equation. Furthermore, before any power is transmitted, a stationary belt must be stretched over the pulleys with a specific tightness to create initial frictional grip. This is the Initial Tension (T₀). Assuming the belt is perfectly elastic and obeys Hooke's Law (length remains constant), when the machine starts and power is transmitted, the tight side tension increases by exactly the same amount that the slack side tension decreases. Thus, the sum of tensions remains constant: T₁ + T₂ = 2 × T₀. If operating at high speeds, centrifugal tension must be factored into this balance: T₁ + T₂ + 2Tc = 2T₀.",
+                      "examples": [
+                        "High-Speed Detriment: A heavy rubber belt (m = 0.5 kg/m) running at a blistering 20 m/s generates a centrifugal tension Tc = 0.5 × (20)² = 200 N. This 200 N is a 'ghost tension'—it stresses the belt to the breaking point but steals 200 N of effective gripping force from both the tight and slack sides, requiring the engineer to re-calculate the slip threshold.",
+                        "Static Balance: If a mechanic tensions a stationary belt to T₀ = 1200 N, and under heavy load the tight side spikes to T₁ = 1800 N, the slack side must mathematically drop to T₂ = (2 × 1200) - 1800 = 600 N (ignoring centrifugal effects)."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A belt wrapped around a pulley with: centrifugal force arrows pointing radially outward from the belt, and a tension diagram showing T₀ (initial) splitting into T₁ (tight side) and T₂ (slack side) during operation, with Tc labeled on each side of the belt",
+                          "image_purpose": "To show how initial tension distributes into tight side and slack side tensions during operation, with centrifugal effect included"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "chapter_title": "Chapter 9: Gear Trains",
+          "chapter_summary": "This chapter covers the classification of gears, calculation of gear train velocity ratios, and analysis of simple, compound, reverted, and epicyclic gear trains. Students learn the advantages of each type and their industrial applications.",
+          "lessons": [
+            {
+              "lesson_title": "Lesson 9.1: Gear Classification and Velocity Ratios",
+              "lesson_outcomes": [
+                "Classify gears by axis orientation and tooth profile",
+                "Calculate velocity ratio for simple and compound gear trains",
+                "Explain the working and advantages of each gear type"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Classification of Gears",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Parallel Axes Gears",
+                      "content": "Gears are robust, highly precise mechanical components with cut teeth designed to transmit exact, slip-free rotational power and torque between shafts. When the driving and driven shafts are perfectly parallel to each other, three primary types of gears are deployed depending on load and acoustic requirements. (1) Spur Gears: The most fundamental and widely used gear type. They are cylindrical discs with teeth cut perfectly straight and parallel to the axis of rotation. They are highly efficient (up to 99%), economical to manufacture, and excel at low to moderate speeds. However, because the entire width of a spur gear tooth engages its mating tooth instantaneously across the entire face, they suffer from sudden impact loading, producing a distinct whining noise and vibration at high speeds. (2) Helical Gears: To solve the noise issue of spur gears, helical gears feature teeth that are cut at an angle (the helix angle) to the axis of rotation. This brilliant geometry ensures that teeth engage gradually, starting at one end of the tooth and smoothly rolling across the face. This gradual engagement allows helical gears to run silently and smoothly at extremely high speeds, while carrying heavier loads since multiple teeth are in contact simultaneously. The major engineering drawback is that the angled teeth generate an unwanted 'axial thrust' force, pushing the gear sideways along the shaft, necessitating expensive thrust bearings. (3) Double Helical (Herringbone) Gears: To eliminate the problematic axial thrust of standard helical gears, herringbone gears combine two opposing helical gears on a single blank. The opposing helix angles generate equal and opposite thrust forces that cancel each other out perfectly internally, allowing for massive power transmission in heavy machinery without thrust bearings. (4) Rack and Pinion: A specialized pairing where a standard rotating spur gear (pinion) meshes with a straight, flat bar featuring gear teeth (the rack, effectively a gear with an infinite radius). This uniquely converts rotational motion directly into precise linear translation.",
+                      "examples": [
+                        "Spur gears are the standard choice for low-speed, cost-sensitive applications like the internal timing mechanisms of mechanical clocks or the agitator drives in washing machines.",
+                        "Almost all modern automotive manual transmissions exclusively utilize helical gears for the forward speeds to ensure whisper-quiet operation while driving at highway speeds.",
+                        "The steering mechanism in most passenger cars utilizes a rack and pinion system, converting the driver's rotational steering wheel input directly into the linear push/pull motion required to turn the front wheels."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A five-panel grid showing: (1) Two meshing spur gears (straight teeth), (2) Helical gear pair with helix angle shown, (3) Double helical (herringbone) gear, (4) A gear rack meshing with a spur pinion with linear motion arrow, (5) An internal gear with external pinion inside a ring — each labeled with name and key feature",
+                          "image_purpose": "To provide a complete visual taxonomy of parallel axes gear types for identification and comparison"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Intersecting and Non-Intersecting Axes Gears",
+                      "content": "When mechanical power must be transmitted around corners or between shafts that are not parallel, specialized 3D gear geometries are required. Intersecting Axes Gears are used when the shaft centerlines would physically cross each other, typically at a perfect 90-degree angle. (1) Straight Bevel Gears: These gears are cut on conical blanks rather than cylindrical ones. The teeth are straight, pointing directly toward the apex of the intersecting cone. Like spur gears, they are noisy at high speeds but are simple and cheap to manufacture. They are widely used in hand drills and simple differentials. (2) Spiral Bevel Gears: Similar to the helical upgrade for spur gears, spiral bevel gears feature curved, oblique teeth on the conical blank. This provides the smooth, quiet, high-load capability required for demanding applications like automotive rear-axle differentials. Non-Intersecting, Non-Parallel Axes Gears are used when shafts cross over each other in space without touching. (1) Worm Gear Set: Consists of a threaded cylindrical screw (the worm) meshing with a toothed wheel (the worm gear). This is an incredibly powerful mechanism capable of staggering speed reduction ratios (e.g., 100:1) in a single compact mesh. Crucially, it features a unique 'self-locking' property: the worm can easily turn the gear, but the gear cannot back-drive the worm due to immense sliding friction. This makes it a profound safety feature in elevators and lifting hoists. However, this same sliding friction makes worm gears terribly inefficient (sometimes losing 50% of power to heat). (2) Hypoid Gears: Visually similar to spiral bevel gears, but the pinion axis is intentionally offset, dropping below the center of the larger gear. This highly complex geometry is explicitly designed for rear-wheel-drive automobiles, as lowering the driveshaft allows the passenger cabin floor to be significantly lower, improving the vehicle's center of gravity and interior space.",
+                      "examples": [
+                        "A manual hand drill utilizes straight bevel gears to convert the vertical rotation of the hand crank into the horizontal rotation of the drill bit intersecting at a 90-degree angle.",
+                        "The tuning pegs on an acoustic guitar utilize miniature worm gears; the high reduction allows precise tuning, and the self-locking geometry ensures the massive tension of the guitar string cannot pull the peg backward out of tune."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A four-panel diagram showing: (1) Straight bevel gear pair at 90° intersection, (2) Spiral bevel gear pair, (3) Worm and worm wheel with 90° crossing axes and self-lock note, (4) Hypoid gear pair showing offset axes — each with the shaft orientation marked clearly",
+                          "image_purpose": "To visually distinguish gear types by their shaft axis orientation and tooth geometry"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Gear Train Velocity Ratio",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Velocity Ratio Calculation for Gear Trains",
+                      "content": "A 'gear train' is a highly engineered mechanical assembly consisting of multiple interlocking gears used to transmit motion from an input power source to an output load, purposefully altering the speed, torque, or rotational direction. The fundamental mathematical metric of a gear train is its Velocity Ratio (VR), strictly defined as the ratio of the rotational speed of the driven (output) gear to the rotational speed of the driver (input) gear. Because gears mesh tooth-for-tooth without any slippage, the speeds are inversely proportional to the physical size of the gears. Therefore, VR = N_output / N_input = T_input / T_output = d_input / d_output. (Where N is Speed in RPM, T is the absolute number of teeth, and d is the pitch circle diameter). By the fundamental law of energy conservation (Power = Torque × Angular Velocity), if a gear train reduces the speed (VR < 1), it must simultaneously multiply the torque by the exact same proportion (ignoring minor frictional losses). This is the core reason gearboxes exist. For a Simple Gear Train (where every shaft holds only one single gear), the overall Velocity Ratio is breathtakingly simple: VR = T_first_driver / T_last_driven. Any intermediate 'idler' gears placed in the middle of the train have absolutely zero mathematical effect on the final speed or torque; their sole mechanical purpose is to bridge large physical gaps between shafts or to reverse the final direction of rotation. For a Compound Gear Train (where intermediate shafts carry two rigidly connected gears of different sizes that spin at the same RPM), the overall VR is the multiplied product of the individual ratios of each meshing pair: Overall VR = (T_driver1 / T_driven1) × (T_driver2 / T_driven2). This compounding allows engineers to achieve massive speed reductions in a highly compact physical space.",
+                      "examples": [
+                        "Simple Gear Train logic: An electric motor spins a small 15-tooth driver gear at 1000 RPM, which meshes directly with a large 60-tooth driven gear. The Velocity Ratio = 15/60 = 0.25 (or 1:4). The large gear will rotate at a slow 250 RPM, but it will output four times the crushing torque of the motor.",
+                        "Compound Gear Train logic: Stage 1 connects a 15-tooth driver to a 45-tooth driven gear (VR = 1/3). This 45-tooth gear shares a shaft with a small 20-tooth gear, which acts as the driver for Stage 2, meshing with a massive 80-tooth output gear (VR = 1/4). The overall system Velocity Ratio = 1/3 × 1/4 = 1/12. An input of 1200 RPM results in an output of exactly 100 RPM."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "Two diagrams: (1) Simple gear train — driver gear A (15 teeth) meshing with driven gear B (60 teeth) with speed ratio 4:1 labeled and rotation direction arrows. (2) Compound gear train — input shaft gear A → intermediate shaft gear B+C (B larger, C smaller, both on same shaft) → output shaft gear D, with individual VR calculations shown at each stage and overall VR calculation displayed",
+                          "image_purpose": "To demonstrate the step-by-step velocity ratio calculation methodology for both simple and compound gear trains"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "lesson_title": "Lesson 9.2: Types of Gear Trains",
+              "lesson_outcomes": [
+                "Describe simple, compound, reverted, and epicyclic gear trains",
+                "Explain the advantages of each type with industrial applications",
+                "Analyze epicyclic gear trains using the tabular method"
+              ],
+              "topics": [
+                {
+                  "topic_title": "Simple, Compound, and Reverted Gear Trains",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Simple and Compound Gear Trains",
+                      "content": "Engineers deploy different architectures of gear trains based on spatial restrictions and the required magnitude of speed reduction. A Simple Gear Train is the most basic arrangement, defined rigidly by the fact that every single shaft in the assembly carries one, and only one, gear. If power must be transmitted between two shafts that are physically far apart, inserting multiple 'idler' gears between the driver and driven gear bridges the gap. A profound characteristic of a simple gear train is that regardless of how many dozens of idler gears are inserted, the final Velocity Ratio depends exclusively on the very first and very last gear (VR = T_input / T_output). Idlers only dictate the final direction of rotation (an odd number of idlers means input and output spin in the same direction; an even number means opposite directions). However, a simple gear train is practically useless for massive speed reductions, because achieving a 100:1 reduction would require an output gear physically 100 times larger than the input gear, demanding absurd amounts of space. To solve this, engineers invented the Compound Gear Train. In this architecture, intermediate shafts carry two distinct gears rigidly keyed together, so they rotate at the identical RPM. The first gear acts as a driven gear receiving power from the previous stage, while the second (usually smaller) gear acts as a driver sending power to the next stage. Because the ratios multiply at every stage, compound gear trains can achieve staggering speed reductions and torque multiplications within a highly compact, box-like footprint. This makes them the foundational architecture for nearly all manual automotive gearboxes and industrial speed reducers.",
+                      "examples": [
+                        "A mechanical analog wristwatch is a masterpiece of compound gear trains. It must take the relatively fast, high-tension uncoiling of the mainspring and compound it down through multiple tiny gear stages to precisely rotate the second hand once a minute, and further compound it to rotate the hour hand once every 12 hours.",
+                        "The multi-speed gearbox on a machinist's lathe utilizes a sliding compound gear train, allowing the operator to physically shift gears along splined shafts to select various spindle speeds and immense torque levels for cutting tough metals."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "Two diagrams: (1) Simple gear train showing four gears on separate shafts in a line — Driver(1) → Idler(2) → Idler(3) → Driven(4), with note that only gear 1 and gear 4 tooth counts determine VR. (2) Compound gear train showing: Input shaft (gear A) → Intermediate shaft (gears B and C, both fixed to same shaft) → Output shaft (gear D), with both stages labeled and combined VR formula shown",
+                          "image_purpose": "To contrast simple and compound gear trains through their mechanical architecture and VR calculation approach"
+                        }
+                      ]
+                    },
+                    {
+                      "subtopic_title": "Reverted Gear Train",
+                      "content": "A Reverted Gear Train is a highly specialized, elegantly engineered subset of the compound gear train. Its defining physical characteristic is that the primary input (driver) shaft and the final output (driven) shaft are perfectly co-axial—meaning they lie on the exact same geometric centerline, though they rotate independently at completely different speeds. The power transmission path 'reverts' or folds back on itself. Power travels from the input gear down to a parallel lay-shaft (intermediate shaft) via a compound gear pair, and then travels back up from the lay-shaft to the output gear positioned directly in line with the input gear. To physically construct a reverted gear train, a strict geometric constraint must be perfectly satisfied during manufacturing: the center distance of the first gear pair must exactly equal the center distance of the second gear pair. Mathematically, the sum of the pitch radii of the first meshing pair must equal the sum of the pitch radii of the second pair (r₁ + r₂ = r₃ + r₄). If the gears all share the same tooth module, this translates to the sum of teeth being equal (T₁ + T₂ = T₃ + T₄). The paramount engineering advantage of a reverted gear train is its profound spatial efficiency. Because the input and output shafts share the same axis, the entire gear train can be packaged into a perfectly straight, compact cylindrical housing. This geometry is absolutely critical for inline mechanical systems where offsetting the output shaft is spatially impossible.",
+                      "examples": [
+                        "The classic clock face is the most ubiquitous reverted gear train. The minute hand shaft and the hour hand shaft are co-axial (one is a hollow tube spinning around the solid inner shaft of the other), driven from the same internal mechanism.",
+                        "The 'back gear' mechanism in a traditional metalworking lathe utilizes a reverted gear train. It allows the operator to dramatically drop the spindle speed and multiply cutting torque while keeping the chuck perfectly aligned with the main motor axis."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A diagram of a reverted gear train showing: Input shaft (left) with gear 1, intermediate shaft with gears 2 and 3 (compound), output shaft (right, co-axial with input) with gear 4, with the co-axial alignment highlighted by a dashed centerline running through input and output shafts, and the constraint r₁+r₂ = r₃+r₄ labeled",
+                          "image_purpose": "To clearly show the defining characteristic of a reverted gear train — co-axial input and output shafts"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "topic_title": "Epicyclic Gear Train",
+                  "subtopics": [
+                    {
+                      "subtopic_title": "Working and Analysis of Epicyclic (Planetary) Gear Train",
+                      "content": "The Epicyclic or Planetary Gear Train represents the pinnacle of complex mechanical transmission design. Unlike all simple and compound trains where gear shafts are permanently fixed in space, in an epicyclic train, the axes of certain gears are not fixed—they physically travel and revolve through space around the center of other gears, much like planets orbiting the sun. A standard epicyclic set consists of four main interacting components: (1) The Sun Gear: A central, externally toothed gear spinning on the main central axis. (2) The Planet Gears: Multiple smaller gears that simultaneously mesh with the sun gear and orbit around it. (3) The Ring Gear (Annulus): A massive outer ring with internal teeth that encapsulates the planets, meshing with them from the outside. (4) The Planet Carrier (Arm): A rigid spider-like bracket that connects the centers of all the planet gears together, forcing them to orbit in unison while allowing them to spin freely on their own pins. The sheer mechanical brilliance of the epicyclic train is its versatility. By selectively locking one of the three main elements (Sun, Ring, or Carrier) to the stationary housing using clutches or brakes, and using another as the input, the exact same compact gear set can yield three entirely different forward speed ratios, plus a reverse gear, without any gears physically meshing or unmeshing. This is the foundational technology enabling modern automatic automotive transmissions. To calculate the complex relative speeds of these components, engineers rely on the 'Tabular Method of Kinematic Analysis', a systematic approach involving two theoretical steps: Step 1 assumes the rotating Carrier arm is rigidly locked and calculates standard gear ratios as if it were a simple train. Step 2 unlocks the arm and gives the entire rigid assembly one full mathematical rotation. Summing the algebraic results of these two theoretical steps flawlessly predicts the absolute rotational velocities of the complex dynamic system.",
+                      "examples": [
+                        "Modern automatic car transmissions stack multiple epicyclic gear sets inline. By using hydraulic fluid pressure to automatically clamp brake bands and lock different ring gears or sun gears in fractions of a second, the transmission shifts smoothly through 6, 8, or even 10 gear ratios without the driver ever touching a clutch.",
+                        "High-end bicycle rear hubs (like the Rohloff Speedhub) pack complex epicyclic planetary gears entirely inside the rear wheel hub, offering up to 14 totally enclosed, maintenance-free mechanical gears replacing fragile external derailleurs."
+                      ],
+                      "illustrations": [
+                        {
+                          "image_prompt": "A schematic top-view of an epicyclic gear system showing: central Sun Gear (S) in the middle, three Planet Gears (P) arranged equally around the sun and meshing with it, a Ring Gear (R) as the outer ring with internal teeth meshing with all three planets, and the Planet Carrier (Arm) connecting the centers of the three planet gears — with rotation arrows for each element and a table below showing the tabular analysis method rows",
+                          "image_purpose": "To give students a clear architectural understanding of the epicyclic gear system and the tabular analysis approach"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

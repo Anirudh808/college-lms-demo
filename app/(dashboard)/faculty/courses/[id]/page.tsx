@@ -2,14 +2,14 @@
 
 import { useParams } from "next/navigation";
 import { getCourse, getUser, getDepartment, getAssignments, getSubmissions } from "@/lib/data";
-import { getCourseSyllabus } from "@/lib/syllabusMap";
+import { getCourseSyllabus, getCourseRawSyllabus } from "@/lib/syllabusMap";
 import type { SyllabusModule } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { FileText, ClipboardList, Video, Plus, Users, ChevronRight, Layers, FileSignature, Presentation, ArrowRight } from "lucide-react";
+import { FileText, ClipboardList, Video, Plus, Users, ChevronRight, Layers, FileSignature, Presentation, ArrowRight, BookOpen, GraduationCap } from "lucide-react";
 import { useState, useEffect } from "react";
 import { AssignmentSidePanel } from "@/components/AssignmentSidePanel";
 import { AssignmentForm } from "@/components/AssignmentForm";
@@ -36,6 +36,10 @@ export default function FacultyCourseDetailPage() {
   // Load syllabus from map (replaces old course.modules)
   const syllabusData = getCourseSyllabus(id);
   const syllabusModules: SyllabusModule[] = syllabusData?.course?.modules ?? [];
+  // Newly published courses use test_course.json flat schema
+  const rawSyllabus = getCourseRawSyllabus(id);
+  const rawModules: any[] = rawSyllabus?.modules ?? [];
+
 
   // Get enrolled students from new `enrollment` field (was enrollmentIds)
   const enrolledStudents = (course.enrollment ?? [])
@@ -75,9 +79,13 @@ export default function FacultyCourseDetailPage() {
         )}
       </div>
 
-      <Tabs defaultValue="content">
+      <Tabs defaultValue={rawModules.length > 0 ? "syllabus" : "content"}>
         <TabsList>
-          <TabsTrigger value="content">Content</TabsTrigger>
+          {rawModules.length > 0 ? (
+            <TabsTrigger value="syllabus">Syllabus & Modules</TabsTrigger>
+          ) : (
+            <TabsTrigger value="content">Content</TabsTrigger>
+          )}
           <TabsTrigger value="roster">Student Roster</TabsTrigger>
           <TabsTrigger value="assignments">Assignments</TabsTrigger>
           <TabsTrigger value="quizzes">Quizzes</TabsTrigger>
@@ -85,7 +93,92 @@ export default function FacultyCourseDetailPage() {
           <TabsTrigger value="live">Live Sessions</TabsTrigger>
         </TabsList>
 
-        {/* ── Content Tab: syllabus from linked JSON ── */}
+        {/* ── Syllabus Tab: full module/chapter/lesson/topic/subtopic for new courses ── */}
+        {rawModules.length > 0 && (
+          <TabsContent value="syllabus" className="mt-4">
+            <div className="space-y-4">
+              {rawModules.map((mod: any, mIdx: number) => {
+                const chapterCount = mod.chapters?.length ?? 0;
+                const lessonCount = (mod.chapters ?? []).reduce((s: number, ch: any) => s + (ch.lessons?.length ?? 0), 0);
+                return (
+                  <details key={mIdx} className="border rounded-xl overflow-hidden shadow-sm" open={mIdx === 0}>
+                    <summary className="bg-muted/30 p-4 flex items-center justify-between gap-3 cursor-pointer hover:bg-muted/50 list-none">
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 bg-primary/10 text-primary rounded-lg flex items-center justify-center font-bold text-sm shrink-0">{mIdx + 1}</div>
+                        <div>
+                          <h3 className="font-semibold text-sm">{mod.module_title}</h3>
+                          <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{mod.module_objective}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-2 shrink-0 text-xs text-muted-foreground">
+                        <span className="bg-muted rounded px-1.5 py-0.5">{chapterCount} chapters</span>
+                        <span className="bg-muted rounded px-1.5 py-0.5">{lessonCount} lessons</span>
+                      </div>
+                    </summary>
+                    <div className="divide-y">
+                      {(mod.chapters ?? []).map((ch: any, chIdx: number) => (
+                        <details key={chIdx} className="group">
+                          <summary className="p-4 pl-6 cursor-pointer hover:bg-muted/20 flex items-center gap-2 list-none">
+                            <ChevronRight className="w-3.5 h-3.5 text-muted-foreground group-open:rotate-90 transition-transform" />
+                            <p className="text-sm font-semibold">{ch.chapter_title}</p>
+                            <span className="ml-auto text-xs text-muted-foreground">{ch.lessons?.length ?? 0} lessons</span>
+                          </summary>
+                          <div className="pl-10 pb-3 space-y-1.5">
+                            {(ch.lessons ?? []).map((lesson: any, lIdx: number) => (
+                              <details key={lIdx} className="rounded-lg border overflow-hidden">
+                                <summary className="p-3 cursor-pointer hover:bg-muted/20 flex items-center gap-2 list-none">
+                                  <FileText className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+                                  <span className="text-sm font-medium flex-1">{lesson.lesson_title}</span>
+                                  <span className="text-xs text-muted-foreground">{lesson.topics?.length ?? 0} topics</span>
+                                </summary>
+                                {/* Lesson Outcomes */}
+                                {lesson.lesson_outcomes && (
+                                  <div className="px-4 pb-2 pt-0">
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Learning Outcomes</p>
+                                    <ul className="space-y-0.5">
+                                      {lesson.lesson_outcomes.map((o: string, oi: number) => (
+                                        <li key={oi} className="text-xs text-muted-foreground flex items-start gap-1.5">
+                                          <span className="text-green-500 mt-0.5 shrink-0">✓</span> {o}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )}
+                                {/* Topics & Subtopics */}
+                                {(lesson.topics ?? []).map((topic: any, tIdx: number) => (
+                                  <div key={tIdx} className="mx-4 mb-3 border rounded-lg overflow-hidden">
+                                    <div className="bg-muted/30 px-3 py-2">
+                                      <p className="text-xs font-semibold">{topic.topic_title}</p>
+                                    </div>
+                                    {(topic.subtopics ?? []).map((sub: any, sIdx: number) => (
+                                      <div key={sIdx} className="px-3 py-2 border-t">
+                                        <p className="text-xs font-bold text-primary mb-1">{sub.subtopic_title}</p>
+                                        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">{sub.content}</p>
+                                        {sub.examples?.length > 0 && (
+                                          <div className="mt-1.5 flex flex-wrap gap-1.5">
+                                            {sub.examples.map((ex: string, ei: number) => (
+                                              <span key={ei} className="text-xs bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-800">{ex}</span>
+                                            ))}
+                                          </div>
+                                        )}
+                                      </div>
+                                    ))}
+                                  </div>
+                                ))}
+                              </details>
+                            ))}
+                          </div>
+                        </details>
+                      ))}
+                    </div>
+                  </details>
+                );
+              })}
+            </div>
+          </TabsContent>
+        )}
+
+        {/* ── Content Tab: syllabus from linked JSON (legacy p1-p5) ── */}
         <TabsContent value="content" className="mt-4">
           <Card>
             <CardHeader>

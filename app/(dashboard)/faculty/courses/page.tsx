@@ -5,8 +5,9 @@ import { getCourses, getUsers } from "@/lib/data";
 import { getCourseSyllabus } from "@/lib/syllabusMap";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { BookOpen, Users, Layers } from "lucide-react";
+import { BookOpen, Users, Layers, Plus } from "lucide-react";
 
 export default function FacultyCoursesPage() {
   const { user } = useSession();
@@ -31,9 +32,17 @@ export default function FacultyCoursesPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">My Courses</h1>
-        <p className="text-muted-foreground">Manage your courses and content</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">My Courses</h1>
+          <p className="text-muted-foreground">Manage your courses and content</p>
+        </div>
+        <Button className="gap-2" asChild>
+          <Link href="/faculty/courses/create">
+            <Plus className="h-4 w-4" />
+            Create New Course
+          </Link>
+        </Button>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
