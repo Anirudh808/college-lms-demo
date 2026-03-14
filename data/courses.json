@@ -81,35 +81,5 @@
       "u2"
     ],
     "faculty": "f1"
-  },
-  {
-    "id": "p6_1773465875214",
-    "title": "test",
-    "program": "test",
-    "year": 4,
-    "semester": 7,
-    "university": "test",
-    "departmentId": [
-      "d2"
-    ],
-    "description": "adaf df adf  adfadfadfa dfa dfa a df",
-    "faculty": "f1",
-    "enrollment": [],
-    "syllabus": "./p6_1773465875214_course.json"
-  },
-  {
-    "id": "p7_1773466812631",
-    "title": "adfadf",
-    "program": "afdadfadf",
-    "year": 2,
-    "semester": 4,
-    "university": "sfgsfg",
-    "departmentId": [
-      "d1"
-    ],
-    "description": "sfgsfgsfgs  gfgfdgsd gsfgs gsfgsfgfs gsfgsf gsfg",
-    "faculty": "f1",
-    "syllabus": "./test_course.json",
-    "enrollment": []
   }
 ]
