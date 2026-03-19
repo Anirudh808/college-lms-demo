@@ -35,6 +35,8 @@ import announcementsData from "@/data/announcements.json";
 import aiUsageData from "@/data/aiUsage.json";
 import rawCoursesData from "@/data/courses.json";
 import rawAssessmentsData from "@/data/assessment_mock.json";
+import rawClassroomsData from "@/data/classrooms.json";
+import rawQuestionBankData from "@/data/questionBank.json";
 
 const tenants = tenantsData as Tenant[];
 const users = usersData as User[];
@@ -43,6 +45,8 @@ const programs = programsData as import("./types").Program[];
 // Cast courses from JSON — field names differ from old schema, cast via unknown
 const courses = rawCoursesData as unknown as Course[];
 const assessments = rawAssessmentsData as unknown as Assessment;
+const classrooms = rawClassroomsData as unknown as import("./types").Classroom[];
+const questions = rawQuestionBankData as unknown as import("./types").Question[];
 const lessons = lessonsData as Lesson[];
 let assignments = [...(assignmentsData as Assignment[])];
 let submissions = [...(submissionsData as Submission[])];
@@ -103,6 +107,18 @@ export function getCourses(facultyId?: string, departmentId?: string, enrollment
 
 export function getCourse(id: string) {
   return courses.find((c) => c.id === id);
+}
+
+export function getClassrooms() {
+  return classrooms;
+}
+
+export function getClassroomByCourseId(courseId: string) {
+  return classrooms.find((c) => c.courseId === courseId);
+}
+
+export function getQuestions() {
+  return questions;
 }
 
 export function getAssessment() {

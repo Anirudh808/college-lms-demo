@@ -15,7 +15,11 @@ import { AssignmentSidePanel } from "@/components/AssignmentSidePanel";
 import { AssignmentForm } from "@/components/AssignmentForm";
 import { AssignmentAttemptLayout } from "@/components/AssignmentAttemptLayout";
 import { LocalStorageService } from "@/components/LocalStorageService";
-import { Assessment, AssessmentSubmission } from "@/lib/types";
+import { Assessment, AssessmentSubmission, StudyMaterial } from "@/lib/types";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Download } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import {
   Table,
@@ -61,6 +65,32 @@ export default function FacultyCourseDetailPage() {
       setSubmissionsMap(subMap);
     });
   }, [id, isAssessmentPanelOpen]);
+
+  const [studyMaterials, setStudyMaterials] = useState<StudyMaterial[]>([]);
+  const [isAddMaterialOpen, setAddMaterialOpen] = useState(false);
+  const [newMaterial, setNewMaterial] = useState<Partial<StudyMaterial>>({ type: "pdf" });
+
+  useEffect(() => {
+    LocalStorageService.getStudyMaterials(id).then(setStudyMaterials);
+  }, [id]);
+
+  const handleAddMaterial = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newMaterial.title || !newMaterial.url) return;
+    const material: StudyMaterial = {
+      id: `mat-${Date.now()}`,
+      title: newMaterial.title,
+      description: newMaterial.description || "",
+      type: newMaterial.type || "pdf",
+      date: new Date().toISOString(),
+      url: newMaterial.url,
+      uploadedBy: course.faculty || "faculty",
+    };
+    await LocalStorageService.addStudyMaterial(id, material);
+    setStudyMaterials(await LocalStorageService.getStudyMaterials(id));
+    setAddMaterialOpen(false);
+    setNewMaterial({ type: "pdf" });
+  };
   return (
     <div className="space-y-6">
       <div>
@@ -89,6 +119,7 @@ export default function FacultyCourseDetailPage() {
           <TabsTrigger value="roster">Student Roster</TabsTrigger>
           <TabsTrigger value="assignments">Assignments</TabsTrigger>
           <TabsTrigger value="quizzes">Quizzes</TabsTrigger>
+          <TabsTrigger value="study-materials">Study Materials</TabsTrigger>
           <TabsTrigger value="assessments">Assessments</TabsTrigger>
           <TabsTrigger value="live">Live Sessions</TabsTrigger>
         </TabsList>
@@ -467,6 +498,96 @@ export default function FacultyCourseDetailPage() {
               <Button variant="outline" className="mt-4" disabled>
                 <Plus className="h-4 w-4 mr-1" /> Schedule
               </Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="study-materials" className="mt-4">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <div>
+                <CardTitle className="flex items-center gap-2">
+                  <BookOpen className="h-5 w-5 text-primary" />
+                  Study Materials
+                </CardTitle>
+                <p className="text-sm text-muted-foreground mt-1">Manage and share learning resources with your students.</p>
+              </div>
+              <Dialog open={isAddMaterialOpen} onOpenChange={setAddMaterialOpen}>
+                <DialogTrigger asChild>
+                  <Button className="bg-primary">
+                    <Plus className="h-4 w-4 mr-1" /> Upload Material
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Upload New Study Material</DialogTitle>
+                  </DialogHeader>
+                  <form onSubmit={handleAddMaterial} className="space-y-4 pt-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="title">Title</Label>
+                      <Input id="title" placeholder="e.g. Chapter 1 Notes" required value={newMaterial.title || ""} onChange={(e) => setNewMaterial({ ...newMaterial, title: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="description">Description (Optional)</Label>
+                      <Input id="description" placeholder="Brief description of the material" value={newMaterial.description || ""} onChange={(e) => setNewMaterial({ ...newMaterial, description: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="url">Resource URL</Label>
+                      <Input id="url" type="url" placeholder="https://..." required value={newMaterial.url || ""} onChange={(e) => setNewMaterial({ ...newMaterial, url: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="type">Material Type</Label>
+                      <Select value={newMaterial.type} onValueChange={(val) => setNewMaterial({ ...newMaterial, type: val })}>
+                        <SelectTrigger><SelectValue placeholder="Select type" /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="pdf">PDF Document</SelectItem>
+                          <SelectItem value="video">Video Link</SelectItem>
+                          <SelectItem value="link">External Link</SelectItem>
+                          <SelectItem value="zip">ZIP Archive</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="flex justify-end gap-2 pt-2">
+                      <Button type="button" variant="outline" onClick={() => setAddMaterialOpen(false)}>Cancel</Button>
+                      <Button type="submit">Save Material</Button>
+                    </div>
+                  </form>
+                </DialogContent>
+              </Dialog>
+            </CardHeader>
+            <CardContent>
+              {studyMaterials.length === 0 ? (
+                <div className="py-12 flex flex-col items-center justify-center text-center">
+                  <BookOpen className="h-12 w-12 text-muted-foreground/30 mb-4" />
+                  <p className="text-muted-foreground">No study materials uploaded yet.</p>
+                </div>
+              ) : (
+                <div className="grid gap-3 mt-4">
+                  {studyMaterials.map((mat) => (
+                    <div key={mat.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 bg-primary/10 text-primary rounded">
+                          <FileText className="h-5 w-5" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold">{mat.title}</h4>
+                          <p className="text-sm text-muted-foreground mt-1 line-clamp-1">{mat.description}</p>
+                          <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
+                            <Badge variant="secondary" className="capitalize">{mat.type}</Badge>
+                            <span>•</span>
+                            <span>{new Date(mat.date).toLocaleDateString()}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <Button variant="outline" size="sm" asChild>
+                        <a href={mat.url} target="_blank" rel="noopener noreferrer">
+                          <Download className="h-4 w-4 mr-1" /> View
+                        </a>
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>

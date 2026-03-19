@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/store/session";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
@@ -70,6 +70,7 @@ By the end of this lesson, students should be able to define, derive, classify, 
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 const uid = () => Math.random().toString(36).slice(2, 9);
+const DRAFT_KEY = "course-create-draft";
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function CreateCoursePage() {
@@ -77,11 +78,18 @@ export default function CreateCoursePage() {
   const { user } = useSession();
   const { toast } = useToast();
 
+  // Course form data — declared first so draft-restore useEffect can call setFormData
+  const [formData, setFormData] = useState({
+    title: "", program: "", year: "", semester: "",
+    university: "", departmentId: "d1", description: ""
+  });
+
   const [step, setStep] = useState(1);  // 1-3 wizard steps
   const [buildMode, setBuildMode] = useState<BuildMode>(null); // after step 3
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [draftRestored, setDraftRestored] = useState(false);
   const [aiMessage, setAiMessage] = useState("");
   const [aiChat, setAiChat] = useState<{ role: "ai" | "user"; text: string }[]>([
     { role: "ai", text: `I've analysed your uploaded materials and generated a comprehensive course draft. The structure on the right reflects the full syllabus. Feel free to ask me to modify any module, add assessments, or rewrite topics!` }
@@ -92,6 +100,9 @@ export default function CreateCoursePage() {
   const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set());
   const [expandedChapters, setExpandedChapters] = useState<Set<string>>(new Set());
 
+  // Ref for lesson file upload input
+  const genFileInputRef = useRef<HTMLInputElement>(null);
+
   // Lesson content generator dialog
   const defaultGenState: ContentGeneratorState = {
     open: false, lessonId: "", lessonTitle: "", moduleId: "", chapterId: "",
@@ -101,6 +112,60 @@ export default function CreateCoursePage() {
   };
   const [genState, setGenState] = useState<ContentGeneratorState>(defaultGenState);
   const setGen = (partial: Partial<ContentGeneratorState>) => setGenState(prev => ({ ...prev, ...partial }));
+
+  // ─── Draft persistence ────────────────────────────────────────────────────
+  // Restore draft on first mount
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (!raw) return;
+      const draft = JSON.parse(raw);
+      if (draft.formData) setFormData(draft.formData);
+      if (typeof draft.step === "number") setStep(draft.step);
+      if (draft.buildMode) setBuildMode(draft.buildMode);
+      if (Array.isArray(draft.manualModules)) setManualModules(draft.manualModules);
+      if (Array.isArray(draft.expandedModules)) setExpandedModules(new Set(draft.expandedModules));
+      if (Array.isArray(draft.expandedChapters)) setExpandedChapters(new Set(draft.expandedChapters));
+      setDraftRestored(true);
+    } catch { /* ignore corrupt drafts */ }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Save draft whenever relevant state changes
+  const saveDraft = useCallback(() => {
+    try {
+      const draft = {
+        formData,
+        step,
+        buildMode,
+        manualModules,
+        expandedModules: Array.from(expandedModules),
+        expandedChapters: Array.from(expandedChapters),
+      };
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+    } catch { /* quota exceeded — ignore */ }
+  }, [formData, step, buildMode, manualModules, expandedModules, expandedChapters]);
+
+  useEffect(() => {
+    saveDraft();
+  }, [saveDraft]);
+
+  const clearDraft = () => {
+    localStorage.removeItem(DRAFT_KEY);
+    setDraftRestored(false);
+  };
+
+  const handleDiscardDraft = () => {
+    clearDraft();
+    setStep(1);
+    setBuildMode(null);
+    setFormData({ title: "", program: "", year: "", semester: "", university: "", departmentId: "d1", description: "" });
+    setManualModules([]);
+    setExpandedModules(new Set());
+    setExpandedChapters(new Set());
+    setUploadedFiles([]);
+  };
+  // ─────────────────────────────────────────────────────────────────────────
 
   const openContentGenerator = (moduleId: string, chapterId: string, lesson: Lesson) => {
     setGenState({ ...defaultGenState, open: true, lessonId: lesson.id, lessonTitle: lesson.title, moduleId, chapterId, step: "choose" });
@@ -124,10 +189,6 @@ export default function CreateCoursePage() {
     toast({ title: "Content saved!", description: `Lesson content saved for “${genState.lessonTitle}”` });
   };
 
-  const [formData, setFormData] = useState({
-    title: "", program: "", year: "", semester: "",
-    university: "", departmentId: "d1", description: ""
-  });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -179,6 +240,7 @@ export default function CreateCoursePage() {
       });
       const result = await res.json();
       if (result.success) {
+        clearDraft(); // remove draft on successful publish
         toast({ title: "Course Published!", description: "Your course is now live." });
         router.push("/faculty/courses");
       } else throw new Error(result.error);
@@ -461,18 +523,42 @@ export default function CreateCoursePage() {
           {/* Step: Upload new file */}
           {genState.step === "upload" && (
             <div className="space-y-4 py-2">
-              <div className="border-2 border-dashed border-primary/20 bg-primary/5 rounded-xl p-8 flex flex-col items-center text-center relative cursor-pointer hover:bg-primary/10 transition-colors">
+              {/* Hidden native file input — triggered via ref */}
+              <input
+                ref={genFileInputRef}
+                type="file"
+                accept=".pdf,.docx,.doc,.txt"
+                className="hidden"
+                onChange={e => e.target.files?.[0] && setGen({ uploadedFile: e.target.files[0] })}
+              />
+              <div
+                className="border-2 border-dashed border-primary/20 bg-primary/5 rounded-xl p-8 flex flex-col items-center text-center cursor-pointer hover:bg-primary/10 transition-colors"
+                onClick={() => genFileInputRef.current?.click()}
+              >
                 <UploadCloud className="w-10 h-10 text-primary mb-3 opacity-70" />
-                <p className="font-semibold text-sm">
-                  {genState.uploadedFile ? genState.uploadedFile.name : "Drag & drop or click to upload"}
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {genState.uploadedFile
-                    ? `${(genState.uploadedFile.size / 1024).toFixed(1)} KB — ready to process`
-                    : "PDF, DOCX, TXT — specific material for this lesson"}
-                </p>
-                <Input type="file" className="absolute inset-0 opacity-0 cursor-pointer"
-                  onChange={e => e.target.files?.[0] && setGen({ uploadedFile: e.target.files[0] })} />
+                {genState.uploadedFile ? (
+                  <>
+                    <p className="font-semibold text-sm text-green-600">{genState.uploadedFile.name}</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {(genState.uploadedFile.size / 1024).toFixed(1)} KB — ready to process
+                    </p>
+                    <p className="text-xs text-primary mt-2 underline">Click to change file</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="font-semibold text-sm">Click to browse or drag &amp; drop</p>
+                    <p className="text-xs text-muted-foreground mt-1">PDF, DOCX, TXT — specific material for this lesson</p>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      className="mt-3"
+                      onClick={e => { e.stopPropagation(); genFileInputRef.current?.click(); }}
+                    >
+                      Browse Files
+                    </Button>
+                  </>
+                )}
               </div>
               <div className="flex justify-between">
                 <Button variant="outline" onClick={() => setGen({ step: "choose", uploadedFile: null })}>Back</Button>
@@ -776,9 +862,22 @@ export default function CreateCoursePage() {
   // ─────────────────────────────────────────────────────────────────────────
   return (
     <div className="max-w-5xl mx-auto space-y-6 pb-20">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Create New Course</h1>
-        <p className="text-muted-foreground mt-1">Design, structure, and publish a new course for your students.</p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Create New Course</h1>
+          <p className="text-muted-foreground mt-1">Design, structure, and publish a new course for your students.</p>
+        </div>
+        {draftRestored && (
+          <div className="flex items-center gap-3 bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-400 rounded-lg px-4 py-2.5 text-sm shrink-0">
+            <span>✦ Draft restored</span>
+            <button
+              onClick={handleDiscardDraft}
+              className="underline text-amber-600 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-100 font-medium"
+            >
+              Discard
+            </button>
+          </div>
+        )}
       </div>
 
       <Card className="border-t-4 border-t-primary shadow-md">

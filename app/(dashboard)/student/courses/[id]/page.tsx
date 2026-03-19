@@ -9,16 +9,24 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import Link from "next/link";
 import {
   FileText, MessageSquare, ClipboardList, HelpCircle,
   PlayCircle, Download, CheckCircle2, Circle, Clock,
   Flame, Award, Target, BookOpen, AlertCircle, Bot,
-  GraduationCap, User, Layers, FileSignature
+  GraduationCap, User, Layers, FileSignature, Search
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { LocalStorageService } from "@/components/LocalStorageService";
-import { Assessment, AssessmentSubmission } from "@/lib/types";
+import { Assessment, AssessmentSubmission, StudyMaterial } from "@/lib/types";
 import { useSession } from "@/store/session";
 
 export default function StudentCourseDetailPage() {
@@ -36,6 +44,10 @@ export default function StudentCourseDetailPage() {
   const { user } = useSession();
   const [assessments, setAssessments] = useState<Assessment[]>([]);
   const [submissions, setSubmissions] = useState<Record<string, AssessmentSubmission>>({});
+
+  const [materialsSearchQuery, setMaterialsSearchQuery] = useState("");
+  const [materialsTypeFilter, setMaterialsTypeFilter] = useState("all");
+  const [materialsSortOrder, setMaterialsSortOrder] = useState("desc");
 
   useEffect(() => {
     LocalStorageService.getAssessments(id).then(async (data) => {
@@ -81,6 +93,31 @@ export default function StudentCourseDetailPage() {
     "CO2: Apply theoretical knowledge to solve practical problems.",
     "CO3: Analyse and evaluate complex scenarios using appropriate methodologies.",
   ];
+
+  const [studyMaterialsData, setStudyMaterialsData] = useState<StudyMaterial[]>([]);
+
+  useEffect(() => {
+    LocalStorageService.getStudyMaterials(id).then(setStudyMaterialsData);
+  }, [id]);
+
+  const getMaterialIcon = (type: string) => {
+    switch (type) {
+      case 'pdf': return { icon: FileText, bg: "bg-red-100 text-red-600" };
+      case 'video': return { icon: PlayCircle, bg: "bg-blue-100 text-blue-600" };
+      case 'zip': return { icon: Layers, bg: "bg-green-100 text-green-600" };
+      case 'link': 
+      default: return { icon: BookOpen, bg: "bg-gray-100 text-gray-600" };
+    }
+  };
+
+  const filteredMaterials = studyMaterialsData
+    .filter(m => (materialsTypeFilter === "all" || m.type === materialsTypeFilter))
+    .filter(m => m.title.toLowerCase().includes(materialsSearchQuery.toLowerCase()) || m.description?.toLowerCase().includes(materialsSearchQuery.toLowerCase()))
+    .sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return materialsSortOrder === "desc" ? dateB - dateA : dateA - dateB;
+    });
 
   return (
     <div className="space-y-6">
@@ -163,6 +200,7 @@ export default function StudentCourseDetailPage() {
               <TabsTrigger value="quizzes">Quizzes</TabsTrigger>
               <TabsTrigger value="assessments">Assessments</TabsTrigger>
               <TabsTrigger value="discussion">Discussion</TabsTrigger>
+              <TabsTrigger value="study-materials">Study Materials</TabsTrigger>
             </TabsList>
 
             {/* ── Syllabus Tab ── */}
@@ -394,6 +432,95 @@ export default function StudentCourseDetailPage() {
                   <Button variant="outline" asChild>
                     <Link href={`/student/courses/${id}/discussion`}>Open Discussion Room</Link>
                   </Button>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="study-materials" className="mt-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <BookOpen className="h-5 w-5 text-primary" />
+                    Study Materials
+                  </CardTitle>
+                  <CardDescription>Resources and documents provided by the instructor.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {/* Controls: Search, Filter, Sort */}
+                  <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                    <div className="relative flex-1">
+                      <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        placeholder="Search materials..."
+                        className="pl-9"
+                        value={materialsSearchQuery}
+                        onChange={(e) => setMaterialsSearchQuery(e.target.value)}
+                      />
+                    </div>
+                    <div className="flex gap-2 w-full sm:w-auto">
+                      <Select value={materialsTypeFilter} onValueChange={setMaterialsTypeFilter}>
+                        <SelectTrigger className="w-[140px]">
+                          <SelectValue placeholder="Type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Types</SelectItem>
+                          <SelectItem value="pdf">PDF</SelectItem>
+                          <SelectItem value="link">Links</SelectItem>
+                          <SelectItem value="zip">ZIP Files</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <Select value={materialsSortOrder} onValueChange={setMaterialsSortOrder}>
+                        <SelectTrigger className="w-[140px]">
+                          <SelectValue placeholder="Sort" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="desc">Newest First</SelectItem>
+                          <SelectItem value="asc">Oldest First</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  {filteredMaterials.length === 0 ? (
+                    <div className="py-8 text-center text-muted-foreground border border-dashed rounded-lg">
+                      <FileText className="h-8 w-8 mx-auto mb-3 opacity-20" />
+                      <p>No materials found matching your criteria.</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {filteredMaterials.map((material) => {
+                        const { icon: Icon, bg } = getMaterialIcon(material.type);
+                        return (
+                          <div key={material.id} className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+                            <div className="flex items-center gap-3">
+                              <div className={`p-2 rounded ${bg}`}>
+                                <Icon className="h-4 w-4" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-medium leading-none">{material.title}</p>
+                                <div className="flex items-center gap-2 mt-1">
+                                  <p className="text-xs text-muted-foreground">{material.description || material.type}</p>
+                                  <span className="text-xs text-muted-foreground">•</span>
+                                  <p className="text-xs text-muted-foreground font-mono">{new Date(material.date).toLocaleDateString()}</p>
+                                </div>
+                              </div>
+                            </div>
+                            {material.type === "link" || material.url?.startsWith("http") ? (
+                              <Button size="sm" variant="outline" className="flex gap-2" asChild>
+                                <a href={material.url || "#"} target="_blank" rel="noopener noreferrer">Open Link</a>
+                              </Button>
+                            ) : (
+                              <Button size="sm" variant="outline" className="flex gap-2" asChild>
+                                <a href={material.url || "#"} download>
+                                  <Download className="h-4 w-4" /> Download
+                                </a>
+                              </Button>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>

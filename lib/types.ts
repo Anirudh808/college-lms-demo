@@ -283,3 +283,49 @@ export interface AssessmentSubmission {
   studentAnswers: any[];
   submittedAt: number;
 }
+
+export interface StudyMaterial {
+  id: string;
+  title: string;
+  description: string;
+  type: string;
+  date: string;
+  url: string;
+  uploadedBy: string;
+}
+
+export interface Classroom {
+  id: string;
+  courseId: string;
+  materials: StudyMaterial[];
+}
+
+export interface QuestionTag {
+  co: string;
+  bloomLevel: string;
+  difficulty: "easy" | "medium" | "hard";
+  topic: string;
+}
+
+export interface Question {
+  id: string;
+  courseId: string;
+  type: "mcq" | "short_answer" | "long_answer" | "coding" | "case_analysis";
+  content: string;
+  options?: string[]; // Included for MCQ
+  correctAnswer: string | string[];
+  marks: number;
+  negativeMarks: number;
+  tags: QuestionTag;
+}
+
+export interface AssessmentBuilderTemplate {
+  id: string;
+  title: string;
+  courseId: string;
+  type: "quiz" | "exam" | "assignment";
+  timeLimit: number; // in minutes
+  randomizeQuestions: boolean;
+  weightage: number;
+  questionIds: string[];
+}

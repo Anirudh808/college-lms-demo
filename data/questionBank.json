@@ -1,0 +1,63 @@
+[
+  {
+    "id": "q1",
+    "courseId": "p1",
+    "type": "mcq",
+    "content": "Which of the following is an example of convective heat transfer?",
+    "options": ["Heating an iron rod", "Boiling water in a pot", "Solar radiation on Earth", "Heat conduction through a solid wall"],
+    "correctAnswer": "Boiling water in a pot",
+    "marks": 2,
+    "negativeMarks": 0.5,
+    "tags": {
+      "co": "CO1",
+      "bloomLevel": "Understanding",
+      "difficulty": "easy",
+      "topic": "Convection Basics"
+    }
+  },
+  {
+    "id": "q2",
+    "courseId": "p2",
+    "type": "short_answer",
+    "content": "Define 'Transfer Function' in the context of Control Systems.",
+    "correctAnswer": "The ratio of the Laplace transform of the output to the Laplace transform of the input under zero initial conditions.",
+    "marks": 5,
+    "negativeMarks": 0,
+    "tags": {
+      "co": "CO2",
+      "bloomLevel": "Remembering",
+      "difficulty": "medium",
+      "topic": "Transfer Functions"
+    }
+  },
+  {
+    "id": "q3",
+    "courseId": "p3",
+    "type": "coding",
+    "content": "Write a Python function to reverse a singly linked list.",
+    "correctAnswer": "def reverseList(head):\n    prev = None\n    current = head\n    while current:\n        next_node = current.next\n        current.next = prev\n        prev = current\n        current = next_node\n    return prev",
+    "marks": 10,
+    "negativeMarks": 0,
+    "tags": {
+      "co": "CO3",
+      "bloomLevel": "Applying",
+      "difficulty": "hard",
+      "topic": "Linked Lists"
+    }
+  },
+  {
+    "id": "q4",
+    "courseId": "p1",
+    "type": "case_analysis",
+    "content": "A perfectly insulated steam pipe is suddenly exposed to a very cold environment. Formulate a model to describe the transient temperature distribution in the pipe wall.",
+    "correctAnswer": "Requires setting up the 1D transient heat conduction equation in cylindrical coordinates with appropriate convective boundary condition at outer radius and insulated condition at inner radius.",
+    "marks": 15,
+    "negativeMarks": 0,
+    "tags": {
+      "co": "CO4",
+      "bloomLevel": "Analyzing",
+      "difficulty": "hard",
+      "topic": "Transient Conduction"
+    }
+  }
+]

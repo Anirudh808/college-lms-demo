@@ -1,0 +1,37 @@
+[
+  {
+    "id": "c1",
+    "courseId": "p1",
+    "materials": [
+      {
+        "id": "mat-1",
+        "title": "Heat and Mass Transfer Formularies",
+        "description": "A comprehensive list of formulas for the course.",
+        "type": "pdf",
+        "date": "2023-01-15T10:00:00Z",
+        "url": "#",
+        "uploadedBy": "f2"
+      }
+    ]
+  },
+  {
+    "id": "c2",
+    "courseId": "p2",
+    "materials": []
+  },
+  {
+    "id": "c3",
+    "courseId": "p3",
+    "materials": []
+  },
+  {
+    "id": "c4",
+    "courseId": "p4",
+    "materials": []
+  },
+  {
+    "id": "c5",
+    "courseId": "p5",
+    "materials": []
+  }
+]
