@@ -22,7 +22,8 @@ import {
   FileText, MessageSquare, ClipboardList, HelpCircle,
   PlayCircle, Download, CheckCircle2, Circle, Clock,
   Flame, Award, Target, BookOpen, AlertCircle, Bot,
-  GraduationCap, User, Layers, FileSignature, Search
+  GraduationCap, User, Layers, FileSignature, Search,
+  ShieldAlert, Timer
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { LocalStorageService } from "@/components/LocalStorageService";
@@ -338,6 +339,66 @@ export default function StudentCourseDetailPage() {
                       </Card>
                     );
                   })}
+
+                  {/* ── Final Exam Section ── */}
+                  <Card className="border-primary/20 bg-primary/5 shadow-md overflow-hidden relative group">
+                    <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                      <GraduationCap className="h-24 w-24" />
+                    </div>
+                    <CardHeader className="pb-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-none px-2 py-0 h-5 text-[10px] font-bold uppercase tracking-wider">
+                          Capstone
+                        </Badge>
+                        <Badge variant="outline" className="text-[10px] h-5 border-primary/20">
+                          Comprehensive
+                        </Badge>
+                      </div>
+                      <CardTitle className="text-xl flex items-center gap-2">
+                        <ShieldAlert className="h-5 w-5 text-primary" />
+                        Final Examination
+                      </CardTitle>
+                      <CardDescription className="max-w-md">
+                        This is a proctored, comprehensive exam covering all modules of the course. 
+                        Ensure you have a stable internet connection and webcam access.
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="pb-6">
+                      <div className="flex flex-wrap gap-4 mb-6">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Timer className="h-4 w-4" />
+                          <span>Duration: 3 Hours</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <ClipboardList className="h-4 w-4" />
+                          <span>Attempts: 1 Only</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Target className="h-4 w-4" />
+                          <span>Weightage: 100% Final Score</span>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4 mb-6">
+                        <div className="flex gap-3">
+                          <AlertCircle className="h-5 w-5 text-yellow-600 shrink-0 mt-0.5" />
+                          <div>
+                            <p className="text-sm font-semibold text-yellow-800">Proctoring Active</p>
+                            <p className="text-xs text-yellow-700 mt-1 leading-relaxed">
+                              This exam uses live audio/video monitoring and tab-switch detection. 
+                              Three violations will lead to automatic submission.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <Button className="w-full sm:w-auto px-8 gap-2 group" size="lg" asChild>
+                        <Link href={`/student/courses/${id}/final-exam/attempt`}>
+                          Begin Final Exam <PlayCircle className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
                 </div>
               )}
             </TabsContent>
